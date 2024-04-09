@@ -1,0 +1,4 @@
+
+cryptography==42.0.5
+pyinstaller==6.5.0
+pyinstaller-hooks-contrib==2024.3

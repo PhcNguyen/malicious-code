@@ -3,31 +3,14 @@
  ## SERVER
  - **Tính Năng**
 
- **Xử Lý Kết Nối Máy Khách:** *Máy chủ chấp nhận kết nối từ máy khách và xử lý dữ liệu đến.*
-
- **Đa Luồng:** *Sử dụng luồng để xử lý nhiều kết nối máy khách cùng một lúc.*
-
- **Ghi Nhật Ký Hoạt Động:** *Ghi nhật ký hoạt động của máy khách vào cơ sở dữ liệu SQLite.*
-
- **Ghi Nhật Ký Lỗi:** *Ghi nhật ký lỗi gặp phải bởi máy chủ vào cùng một cơ sở dữ liệu.*
+ *Máy chủ chấp nhận kết nối từ máy khách và xử lý dữ liệu đến. Sử dụng luồng để xử lý nhiều kết nối máy khách cùng một lúc. Ghi nhật ký hoạt động của máy khách vào cơ sở dữ liệu SQLite. Ghi nhật ký lỗi gặp phải bởi máy chủ vào cùng một cơ sở dữ liệu.*
 
  - **Cấu Trúc Mã**
-
- **Lớp Máy Chủ:** *Quản lý khởi tạo máy chủ, kết nối máy khách và xử lý dữ liệu.*
-
- **Lớp SQLiteLog:** *Xử lý các thao tác cơ sở dữ liệu bao gồm kết nối, tạo bảng và ghi nhật ký hoạt động/lỗi.*
-
- **Hàm Console:** *In các thông điệp ra cửa sổ console với đầu ra màu sắc.*
- 
- **Hàm Main:** *Khởi tạo máy chủ và bắt đầu lắng nghe các kết nối.*
+ *Quản lý khởi tạo máy chủ, kết nối máy khách và xử lý dữ liệu. Xử lý các thao tác cơ sở dữ liệu bao gồm kết nối, tạo bảng và ghi nhật ký hoạt động/lỗi. In các thông điệp ra cửa sổ console với đầu ra màu sắc. Khởi tạo máy chủ và bắt đầu lắng nghe các kết nối.*
 
  - **Xử Lý Lỗi**
 
  *Kịch bản bao gồm xử lý lỗi mạnh mẽ để xử lý ngoại lệ một cách nhẹ nhàng và ghi nhật ký lỗi để gỡ lỗi và bảo trì.*
-
- - **Đóng Góp**
-
- *Các đóng góp để cải thiện tính năng, tính bảo mật và hiệu suất của kịch bản là hoan nghênh. Fork kho lưu trữ, thực hiện các thay đổi của bạn và gửi yêu cầu kéo.*
 
  - **Giấy Phép**
 
