@@ -1,21 +1,25 @@
 #!user/bin/env python3
 # Import modules
 import os
+import sys
+import datetime
+import sqlite3
 from time import sleep, time
 from threading import Thread
-from modules import System, Col
+from modules.color import System, Col
 from socket import socket, AF_INET, SOCK_STREAM
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
 class Server:
-    def __init__(self, HOST, PORT):
+    def __init__(self, HOST: str, PORT: str) -> None:
         self.host = HOST
         self.port = PORT
+        self.logserver = SqliteLog()
         self.server = socket(AF_INET, SOCK_STREAM)
         self.client_connect_time = {}  # Lưu thời gian kết nối của mỗi client
 
     # Xử lý dữ liệu từ mỗi client
-    def HandleClient(self, client, address):
+    def HandleClient(self, client, address) -> None:
         connect_time = time()  # Thời điểm bắt đầu kết nối
         self.client_connect_time[address[0]] = connect_time
         while True:
@@ -25,16 +29,18 @@ class Server:
                     break
                 if not isinstance(data, bytes): 
                     data = data.encode('utf-8')
-                Console(address[0], data, 1)
+                Console(address[0], round(len(data)/1024, 3), 1)
+                self.logserver.activity(address[0], data)
             except Exception as error:
                 Console(address[0], error, 3)
+                self.logserver.error(error)
                 break
         client.close()
         disconnect_time = time()  # Thời điểm ngắt kết nối
-        self.calculate_connection_time(address[0], connect_time, disconnect_time)
+        self.Connection_time(address[0], connect_time, disconnect_time)
 
     # Xử lý các kết nối đến server
-    def HandleConnections(self):
+    def HandleConnections(self) -> None:
         while True:
             client, address = self.server.accept()
             Console(address[0], None, 0)
@@ -42,14 +48,14 @@ class Server:
             thread.start()
 
     # Tính toán thời gian kết nối của mỗi client
-    def calculate_connection_time(self, ip, connect_time, disconnect_time):
+    def Connection_time(self, ip, connect, disconnect) -> None:
         if ip in self.client_connect_time:
-            connection_time = disconnect_time - connect_time
+            connection_time = disconnect - connect
             Console(ip, f'Disconnect.  {connection_time:.2f} seconds', 2)
             del self.client_connect_time[ip]
 
     # Bắt đầu lắng nghe các kết nối đến server
-    def Listening(self):
+    def Listening(self) -> None:
         try:
             self.server.bind((self.host, self.port))
             self.server.listen()
@@ -57,7 +63,8 @@ class Server:
             thread = Thread(target=self.HandleConnections)
             thread.start()
         except OSError as error:
-            Console(None, 'Address already in use', 3)
+            Console('ERROR', 'Address already in use', 3)
+            self.logserver.error(error)
 
 # Lớp SqliteLog để lưu trữ các hoạt động và lỗi vào cơ sở dữ liệu SQLite
 class SqliteLog:
@@ -66,19 +73,19 @@ class SqliteLog:
         self.cursor = None
 
     # Kết nối đến cơ sở dữ liệu
-    def connect(self):
+    def connect(self) -> None:
         if not os.path.exists('data'):
             os.makedirs('data')
         self.conn = sqlite3.connect(f'data/server.db')
         self.cursor = self.conn.cursor()
 
     # Đóng kết nối đến cơ sở dữ liệu
-    def close(self):
+    def close(self) -> None:
         if self.conn:
             self.conn.close()
 
     # Tạo bảng trong cơ sở dữ liệu
-    def create_table(self, table_name):
+    def createTable(self, table_name) -> None:
         self.cursor.execute(f'''
                 CREATE TABLE IF NOT EXISTS {table_name} (
                     activity TEXT,
@@ -92,14 +99,15 @@ class SqliteLog:
         try:
             self.connect()
             IP = IP.replace('.', '_')
-            self.create_table(f'IP_{IP}')
+            self.createTable(f'IP_{IP}')
             timestamp = datetime.datetime.now().strftime('%m-%d %H:%M:%S')
             self.cursor.execute(f'''
                 INSERT INTO IP_{IP} (activity, timestamp) VALUES (?, ?)
             ''', (activity, timestamp))
             self.conn.commit()
-        except Exception as e:
-           Console('error', str(e), 3)
+        except Exception as error:
+           Console('ERROR', str(error), 3)
+           self.logserver.error(error)
         finally:
             self.close()
 
@@ -113,8 +121,9 @@ class SqliteLog:
                 INSERT INTO error_log (timestamp, message) VALUES (?, ?)
             ''', (timestamp, message))
             self.conn.commit()
-        except Exception as e:
-            Console('error', str(e), 3)
+        except Exception as error:
+            Console('ERROR', str(error), 3)
+            self.logserver.error(error)
         finally:
             self.close()
 
@@ -123,19 +132,13 @@ class SqliteLog:
         if self.conn:
             self.conn.close()
 
-# Hàm Console để in thông điệp ra console và ghi hoạt động và lỗi vào cơ sở dữ liệu
-def Console(ip: str, msg, select: int=0,) -> None:
-    log = SqliteLog()
-    if select == 1 and msg is not None:
-        log.activity(ip, msg)
-        msg = round(len(msg)/1024, 3)
-    elif select == 3 :
-        log.error(msg)
+# Hàm Console để in thông điệp ra console 
+def Console(ip: str, msg: str, select: int=0) -> None:
     messages = {
         0: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Green}Connect to the Server{Col.White}.",
         1: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Yellow}Packet data: {msg} KB{Col.White}.",
         2: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Purple}{msg}{Col.White}.",
-        3: f" [{Col.Pink}ERROR{Col.White}] --> {Col.Red}{msg}{Col.White}."
+        3: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Red}{msg}{Col.White}."
     }
     print(messages.get(select, f" [{Col.Pink}{ip}{Col.White}] --> Unknown message: {msg}"))
 
@@ -145,7 +148,7 @@ if __name__ == '__main__':
         System().clear()
         Server().Listening()
     except Exception as error:
-        Console(None, error, 3)
+        Console('ERROR', error, 3)
         sleep(10)
         os.execv(sys.executable, [sys.executable] + sys.argv)
 

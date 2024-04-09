@@ -1,5 +1,5 @@
+ ### Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!
  # RANSOMWARE
- *pyinstaller --onefile --noconsole encrypt.py*
  *Chương trình ransomware, một loại phần mềm độc hại thường sử dụng để mã hóa các tệp trên máy tính của người dùng và yêu cầu một khoản tiền chuộc để giải mã chúng.*
  ## SERVER
  - **1.** *Import các thư viện cần thiết: Chương trình sử dụng các thư viện như **os, sys, time, pathlib, socket** để thực hiện các chức năng liên quan đến tạo, mã hóa và gửi dữ liệu qua mạng.*
@@ -114,3 +114,4 @@ def Listfiles(self) -> dict:
             file_categories[extcategory[ext]].append(str(entry))
     return file_categories
  ```
+ ### Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!

