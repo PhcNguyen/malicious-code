@@ -1,20 +1,17 @@
  # RANSOMWARE
  *Chương trình ransomware, một loại phần mềm độc hại thường sử dụng để mã hóa các tệp trên máy tính của người dùng và yêu cầu một khoản tiền chuộc để giải mã chúng.*
  ## SERVER
- - **Tính Năng**
-
+ - **Tính Năng:**
  *Máy chủ chấp nhận kết nối từ máy khách và xử lý dữ liệu đến. Sử dụng luồng để xử lý nhiều kết nối máy khách cùng một lúc. Ghi nhật ký hoạt động của máy khách vào cơ sở dữ liệu SQLite. Ghi nhật ký lỗi gặp phải bởi máy chủ vào cùng một cơ sở dữ liệu.*
 
- - **Cấu Trúc Mã**
+ - **Cấu Trúc Mã:**
  *Quản lý khởi tạo máy chủ, kết nối máy khách và xử lý dữ liệu. Xử lý các thao tác cơ sở dữ liệu bao gồm kết nối, tạo bảng và ghi nhật ký hoạt động/lỗi. In các thông điệp ra cửa sổ console với đầu ra màu sắc. Khởi tạo máy chủ và bắt đầu lắng nghe các kết nối.*
 
- - **Xử Lý Lỗi**
-
+ - **Xử Lý Lỗi:**
  *Kịch bản bao gồm xử lý lỗi mạnh mẽ để xử lý ngoại lệ một cách nhẹ nhàng và ghi nhật ký lỗi để gỡ lỗi và bảo trì.*
 
- - **Giấy Phép**
-
- *Kịch bản này được cấp phép theo Giấy Phép MIT. Xem tệp LICENSE để biết thông tin chi tiết.*
+ - **Giấy Phép:**
+ *Cấp phép theo Giấy Phép MIT. Xem tệp LICENSE để biết thông tin chi tiết.*
  ## ENCRYPT
  - **__init__:**
   *Khởi tạo các biến cần thiết như địa chỉ IP và cổng máy chủ, khóa riêng tư (Private) được tạo từ **Fernet**.*
