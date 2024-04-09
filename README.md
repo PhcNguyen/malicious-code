@@ -141,4 +141,4 @@ def Listfiles(self) -> dict:
             file_categories[extcategory[ext]].append(str(entry))
     return file_categories
  ```
- # Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!
+ ### Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!

