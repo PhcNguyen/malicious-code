@@ -4,15 +4,21 @@
  - **Tính Năng**
 
  **Xử Lý Kết Nối Máy Khách:** *Máy chủ chấp nhận kết nối từ máy khách và xử lý dữ liệu đến.*
+
  **Đa Luồng:** *Sử dụng luồng để xử lý nhiều kết nối máy khách cùng một lúc.*
+
  **Ghi Nhật Ký Hoạt Động:** *Ghi nhật ký hoạt động của máy khách vào cơ sở dữ liệu SQLite.*
+
  **Ghi Nhật Ký Lỗi:** *Ghi nhật ký lỗi gặp phải bởi máy chủ vào cùng một cơ sở dữ liệu.*
 
  - **Cấu Trúc Mã**
 
  **Lớp Máy Chủ:** *Quản lý khởi tạo máy chủ, kết nối máy khách và xử lý dữ liệu.*
+
  **Lớp SQLiteLog:** *Xử lý các thao tác cơ sở dữ liệu bao gồm kết nối, tạo bảng và ghi nhật ký hoạt động/lỗi.*
+
  **Hàm Console:** *In các thông điệp ra cửa sổ console với đầu ra màu sắc.*
+ 
  **Hàm Main:** *Khởi tạo máy chủ và bắt đầu lắng nghe các kết nối.*
 
  - **Xử Lý Lỗi**
