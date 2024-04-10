@@ -3,10 +3,11 @@
 /.vscode/
 
 
-
+.specte
 .cache/
 __pycache__/
 
+/dist/
 /data/
 /build/
 .vscode/settings.json

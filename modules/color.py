@@ -1,5 +1,6 @@
 # IMPORT MODULES
-from os import system as _system, name as _os_name
+from os import execv, system as _system, name as _os_name
+from sys import executable, argv
 from collections import deque
 
 class Colors:
@@ -49,16 +50,21 @@ class System:
     def size(self, x: int, y: int):
         if self.Windows:
             return _system(f"mode {x}, {y}")
-        
+    
+    def reset(self):
+        execv(executable, [executable] + argv)   
 
 class Col:
-    White  = Colors.start('255;255;255')
+    Red = Colors.start('255;0;0')
+    
+    Blue = Colors.start('28;121;255')
+    Cyan = Colors.start('0;255;255')
+    Pink = Colors.start('255,192,203')
+
+    Black = Colors.start('0;0;0')
+    White = Colors.start('255;255;255')
+    Green = Colors.start('0;255;0')
+
     Purple = Colors.start('255;0;255')
-    Black  = Colors.start('0;0;0')
-    Blue   = Colors.start('28;121;255')
     Yellow = Colors.start('255;255;0')
-    Cyan   = Colors.start('0;255;255')
-    Red    = Colors.start('255;0;0')
-    Green  = Colors.start('0;255;0')
-    Pink   = Colors.start('255,192,203')
     Orange = Colors.start('255;165;0')
