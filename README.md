@@ -22,7 +22,6 @@ def __init__(self, host: str, port: str) -> None:
     self.server = socket(AF_INET, SOCK_STREAM)  # Tạo socket kết nối TCP
     self.key = Fernet.generate_key()  # Tạo khóa bí mật ngẫu nhiên
     self.Private = Fernet(self.key)  # Tạo đối tượng Fernet với khóa bí mật
-    self.system = os.uname().sysname  # Lấy tên hệ thống
  ```
 
  - **ConnectServer:**

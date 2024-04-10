@@ -1,4 +1,2 @@
 cryptography==42.0.5
-cffi==1.16.0
-pycparser==2.22
 PyYAML==6.0.1

@@ -1,32 +1,30 @@
 #!user/bin/env python3
 # Import modules
-import os
-import sqlite3
-import datetime
 from time import sleep
 from threading import Thread
-from ..modules.color import Col, Console
-from ..modules.system import System
+from modules.color import Col, Console
+from modules.system import System
+from modules.sqlite import SqliteLog
 from socket import socket, AF_INET, SOCK_STREAM
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
 class Server:
     def __init__(self, host: str, port: int) -> None:
+        self.log: SqliteLog = SqliteLog()
         self.host: str = host
         self.port: int = port
-        self.logserver = SqliteLog()
-        self.server = socket(AF_INET, SOCK_STREAM)
+        self.server: socket = socket(AF_INET, SOCK_STREAM)
 
     # Xử lý dữ liệu từ mỗi client
-    def HandleClient(self, client, address) -> None:
+    def HandleClient(self, client: socket, address) -> None:
         while True:
             try:
-                data = client.recv(4096)
+                data: bytes = client.recv(4096)
                 if not data:
                     break
                 if not isinstance(data, bytes): 
                     data = data.encode()
-                self.logserver.activity(address[0], data)
+                self.log.activity(address[0], data)
                 Console(address[0], 
                         f'Packet data: {round(len(data)/1024, 3)} KB',
                         'Yellow')
@@ -55,50 +53,6 @@ class Server:
         except:
             Console(self.host, 'Address already in use', 'Red')
 
-# Lớp SqliteLog để lưu trữ các hoạt động và lỗi vào cơ sở dữ liệu SQLite
-class SqliteLog:
-    def __init__(self) -> None:
-        self.conn = None
-        self.cursor = None
-
-    # Kết nối đến cơ sở dữ liệu
-    def connect(self) -> None:
-        if not os.path.exists('data'):
-            os.makedirs('data')
-        self.conn = sqlite3.connect(f'data/server.db')
-        self.cursor = self.conn.cursor()
-
-    # Tạo bảng trong cơ sở dữ liệu
-    def createTable(self, table_name) -> None:
-        self.cursor.execute(f'''
-                CREATE TABLE IF NOT EXISTS {table_name} (
-                    activity TEXT,
-                    timestamp TEXT
-                )
-            ''')
-        self.conn.commit()
-
-    # Ghi hoạt động của mỗi IP vào cơ sở dữ liệu
-    def activity(self, ip: str, activity: str) -> None:
-        try:
-            self.connect()
-            ip = ip.replace('.', '_')
-            self.createTable(f'IP_{ip}')
-            timestamp = datetime.datetime.now().strftime('%m-%d %H:%M:%S')
-            self.cursor.execute(f'''
-                INSERT INTO IP_{ip} (activity, timestamp) VALUES (?, ?)
-            ''', (activity, timestamp))
-            self.conn.commit()
-        except Exception as error:
-           Console('ERROR', str(error), 3)
-           self.logserver.error(error)
-        finally:
-            self.close()
-
-    # Đóng kết nối đến cơ sở dữ liệu
-    def close(self) -> None:
-        if self.conn:
-            self.conn.close()
 
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
 if __name__ == '__main__':
