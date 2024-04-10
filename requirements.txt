@@ -1,4 +1,4 @@
-
 cryptography==42.0.5
-pyinstaller==6.5.0
-pyinstaller-hooks-contrib==2024.3
+cffi==1.16.0
+pycparser==2.22
+PyYAML==6.0.1

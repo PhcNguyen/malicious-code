@@ -1,9 +1,4 @@
-
-/.idea/
-/.vscode/
-
-
-.specte
-.cache/
 __pycache__/
-.vscode/settings.json
+.venv/
+*.py[cod]
+*$py.class

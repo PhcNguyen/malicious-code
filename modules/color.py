@@ -1,6 +1,4 @@
 # IMPORT MODULES
-from os import execv, system as _system, name as _os_name
-from sys import executable, argv
 from collections import deque
 
 class Colors:
@@ -31,28 +29,7 @@ class Color:
         rgb = [list(map(int, Colors.remove_ansi(col).split(';'))) for col in colors]
         average_rgb = [round(sum(color[i] for color in rgb) / len(rgb)) for i in range(3)]
         rgb_string = ';'.join(map(str, average_rgb))
-        return Colors.start(rgb_string) if _start else rgb_string
-    
-class System:
-    def __init__(self):
-        self.Windows = _os_name == 'nt'
-
-    def init(self):
-        _system('')
-
-    def clear(self):
-        return _system("cls" if self.Windows else "clear")
-
-    def title(self, title: str):
-        if self.Windows:
-            return _system(f"title {title}")
-
-    def size(self, x: int, y: int):
-        if self.Windows:
-            return _system(f"mode {x}, {y}")
-    
-    def reset(self):
-        execv(executable, [executable] + argv)   
+        return Colors.start(rgb_string) if _start else rgb_string 
 
 class Col:
     Red = Colors.start('255;0;0')
@@ -68,3 +45,11 @@ class Col:
     Purple = Colors.start('255;0;255')
     Yellow = Colors.start('255;255;0')
     Orange = Colors.start('255;165;0')
+
+def Console(ip: str, msg: str, color: str) -> None:
+
+    color_code = getattr(Col, color)
+
+    message = f" [{Col.Green}{ip}{Col.White}] --> {color_code}{msg}{Col.White}."
+
+    print(message)

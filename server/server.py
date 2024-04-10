@@ -5,7 +5,8 @@ import sqlite3
 import datetime
 from time import sleep
 from threading import Thread
-from ..modules.color import System, Col
+from ..modules.color import Col, Console
+from ..modules.system import System
 from socket import socket, AF_INET, SOCK_STREAM
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
@@ -24,15 +25,16 @@ class Server:
                 if not data:
                     break
                 if not isinstance(data, bytes): 
-                    data = data.encode('utf-8')
+                    data = data.encode()
                 self.logserver.activity(address[0], data)
-                Console(address[0], round(len(data)/1024, 3), 1)
+                Console(address[0], 
+                        f'Packet data: {round(len(data)/1024, 3)} KB',
+                        'Yellow')
             except Exception as error:
-                Console(address[0], error, 3)
-                self.logserver.error(error)
+                Console(address[0], error, 'Red')
                 break
         client.close()
-        Console(address[0], 'Disconnect', 2)
+        Console(address[0], 'Disconnect', 'Blue')
 
     # Xử lý các kết nối đến server
     def HandleConnections(self) -> None:
@@ -47,11 +49,11 @@ class Server:
         try:
             self.server.bind((self.host, self.port))
             self.server.listen()
-            Console('SYSTEM', 'The server starts listening', 2)
+            Console(self.host, 'The server starts listening', 'Green')
             thread = Thread(target=self.HandleConnections)
             thread.start()
         except:
-            Console('ERROR', 'Address already in use', 3)
+            Console(self.host, 'Address already in use', 'Red')
 
 # Lớp SqliteLog để lưu trữ các hoạt động và lỗi vào cơ sở dữ liệu SQLite
 class SqliteLog:
@@ -98,16 +100,6 @@ class SqliteLog:
         if self.conn:
             self.conn.close()
 
-# Hàm Console để in thông điệp ra console 
-def Console(ip: str, msg: str, select) -> None:
-    messages = {
-        0: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Green}Connect to the Server{Col.White}.",
-        1: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Yellow}Packet data: {msg} KB{Col.White}.",
-        2: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Orange}{msg}{Col.White}.",
-        3: f" [{Col.Pink}{ip}{Col.White}] --> {Col.Red}{msg}{Col.White}."
-    }
-    print(messages.get(select, f" [{Col.Pink}{ip}{Col.White}] --> Unknown message: {msg}"))
-
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
 if __name__ == '__main__':
     Terminal = System()
@@ -118,7 +110,7 @@ if __name__ == '__main__':
         Terminal.init()
         Server('192.168.1.12', 19100).Listening()
     except Exception as error:
-        Console('ERROR', error, 3)
+        Console('127.0.0.0', error, 'Red')
         sleep(10)
         Terminal.reset()
         
