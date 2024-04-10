@@ -6,9 +6,4 @@
 .specte
 .cache/
 __pycache__/
-
-/myenv/
-/dist/
-/data/
-/build/
 .vscode/settings.json
