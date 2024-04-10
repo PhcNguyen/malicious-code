@@ -1,12 +1,11 @@
 #!user/bin/env python3
 # Import modules
 import os
-import sys
 import sqlite3
 import datetime
 from time import sleep
 from threading import Thread
-from modules.color import System, Col
+from ..modules.color import System, Col
 from socket import socket, AF_INET, SOCK_STREAM
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu

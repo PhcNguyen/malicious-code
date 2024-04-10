@@ -2,5 +2,5 @@
 #chmod +x start.sh
 cd
 source myenv/bin/activate
-cd Ransomware
+cd Ransomware/server
 python3 server.py
