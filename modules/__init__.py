@@ -1,1 +1,1 @@
-__all__ = ['color', 'crypto', 'smtp', 'sqlite', 'system']
+__all__ = ['color', 'crypto', 'smtp', 'sqlite', 'system', 'yaml']

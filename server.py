@@ -8,11 +8,13 @@ from socket import socket, AF_INET, SOCK_STREAM
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
 class Server:
+
     def __init__(self, host: str, port: int) -> None:
         self.log: SqliteLog = SqliteLog()
         self.host: str = host
         self.port: int = port
         self.server: socket = socket(AF_INET, SOCK_STREAM)
+
 
     # Xử lý dữ liệu từ mỗi client
     def HandleClient(self, client: socket, address) -> None:
@@ -33,6 +35,7 @@ class Server:
         client.close()
         Console(address[0], 'Disconnect', 'Blue')
 
+
     # Xử lý các kết nối đến server
     def HandleConnections(self) -> None:
         while True:
@@ -40,6 +43,7 @@ class Server:
             Console(address[0], None, 0)
             thread = Thread(target=self.HandleClient, args=(client, address))
             thread.start()
+
 
     # Bắt đầu lắng nghe các kết nối đến server
     def Listening(self) -> None:
@@ -66,5 +70,3 @@ if __name__ == '__main__':
         Console('127.0.0.0', error, 'Red')
         sleep(10)
         Terminal.reset()
-        
-

