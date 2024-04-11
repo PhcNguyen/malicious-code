@@ -1,4 +1,3 @@
-#!user/bin/env python3
 # Import modules
 from time import sleep
 from threading import Thread
