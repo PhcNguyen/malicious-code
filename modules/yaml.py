@@ -1,9 +1,8 @@
 def safe_load(stream):
-
     yaml_data = {}
     current_list = []
     current_key = None
-
+    # Duyệt qua từng dòng trong luồng dữ liệu
     for line in stream:
         # Loại bỏ các khoảng trắng ở đầu và cuối dòng
         stripped_line = line.strip()
@@ -20,7 +19,7 @@ def safe_load(stream):
             # Nếu danh sách hiện tại không trống, thì thêm nó vào dữ liệu YAML
             # dưới dạng giá trị của khóa hiện tại
             if current_list:
-                yaml_data[current_key] = '\n'.join(current_list)
+                yaml_data[current_key] = current_list
                 # Đặt lại danh sách hiện tại
                 current_list = []
 
@@ -36,10 +35,7 @@ def safe_load(stream):
     # Nếu danh sách hiện tại không trống sau khi duyệt qua tất cả các dòng,
     # thì thêm nó vào dữ liệu YAML dưới dạng giá trị của khóa hiện tại
     if current_list:
-        yaml_data[current_key] = '\n'.join(current_list)
+        yaml_data[current_key] = current_list
 
     # Trả về dữ liệu YAML
     return yaml_data
-
-
-
