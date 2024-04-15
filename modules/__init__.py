@@ -25,6 +25,7 @@
 #  │   └── client.py
 #  │
 #  ├── .gitidnore
+#  ├── LICENSE
 #  ├── README.md
 #  └── requirements.txt
 
