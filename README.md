@@ -28,21 +28,13 @@ def Process_Files(Private: Fernet, mode: str):
 Hàm *Process_Files* nhận vào hai tham số: *Private*, một đối tượng *Fernet* được sử dụng để mã hóa và giải mã, và *mode*, một chuỗi chỉ định chế độ hoạt động (‘encrypt’ hoặc ‘decrypt’).
 
 Hàm này sẽ duyệt qua tất cả các tệp tin được trả về bởi hàm *List_Files*.
-
 Đối với mỗi tệp, nó tạo một tệp tạm thời với tên là tên tệp gốc kèm theo ‘.temp’.
-
 Nó mở tệp gốc để đọc và tệp tạm thời để ghi, với kích thước bộ đệm là 4096*1024 byte.
-
 Nó sử dụng mmap để ánh xạ tệp gốc vào bộ nhớ.
-
 Nó sau đó đọc và xử lý từng ‘chunk’ của tệp gốc, với kích thước ‘chunk’ là 4096*1024 byte.
-
 Mỗi ‘chunk’ sau đó được mã hóa (nếu mode là ‘encrypt’) hoặc giải mã (nếu mode là ‘decrypt’) bằng cách sử dụng đối tượng Fernet, và sau đó được ghi vào tệp tạm thời.
-
-Khi tất cả các ‘chunk’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc
-.
+Khi tất cả các ‘chunk’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc.
 Nếu có lỗi xảy ra trong quá trình này, hàm sẽ bỏ qua lỗi và tiếp tục với tệp tiếp theo.
-
 Cuối cùng, nếu tệp tạm thời vẫn tồn tại (ví dụ, do một lỗi xảy ra), nó sẽ được xóa.
 
 
