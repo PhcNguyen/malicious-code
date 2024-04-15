@@ -56,6 +56,7 @@ def List_Files() -> dict:
 2. Tạo một từ điển *file_categories* với các khóa là các danh mục từ *exts* và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong *exts* là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
 
 3. Sau đó duyệt qua tất cả các tệp trong thư mục chính của người dùng. Nếu một mục là tệp và phần mở rộng của nó (được chuyển thành chữ thường) có trong *extcategory*, tệp đó sẽ được thêm vào danh mục tương ứng trong *file_categories*.
+
 **2.SYSTEM**
 ```python
 class System:
@@ -95,10 +96,12 @@ class System:
         return _system(command)
 ```
     1 variable:
-        Windows      |      Cho biết người dùng đang sử dụng hệ điều hành Windows hay không
-    5 functions:
-        Init()       |      khởi tạo terminal để cho phép sử dụng màu sắc
-        Clear()      |      xóa terminal
-        Title()      |      đặt tiêu đề của terminal, chỉ dành cho Windows
-        Size()       |      đặt kích thước của terminal, chỉ dành cho Windows
-        Command()    |      thực thi một lệnh shell trên hệ thống máy tính
+        Windows    |      cho biết người dùng đang sử dụng hệ điều hành Windows hay không
+    7 functions:
+        Init()     |      khởi tạo terminal để cho phép sử dụng màu sắc
+        Clear()    |      xóa terminal
+        Title()    |      đặt tiêu đề của terminal, chỉ dành cho Windows
+        Size()     |      đặt kích thước của terminal, chỉ dành cho Windows
+        Reset()    |      khởi động lại chương trình hiện tại
+        Mac()      |      địa chỉ MAC của máy tính
+        Command()  |      thực thi một lệnh shell trên hệ thống máy tính
