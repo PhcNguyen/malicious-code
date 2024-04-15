@@ -11,24 +11,24 @@ class System:
     def __init__(self) -> None:
         self.Windows = _os_name == 'nt'
  
-    def init(self) -> None:
+    def Init(self) -> None:
         _system('')
 
-    def clear(self) -> None:
+    def Clear(self) -> None:
         return _system("cls" if self.Windows else "clear")
 
-    def title(self, title: str):
+    def Title(self, title: str):
         if self.Windows:
             return _system(f"title {title}")
 
-    def size(self, x: int, y: int) -> None:
+    def Size(self, x: int, y: int) -> None:
         if self.Windows:
             return _system(f"mode {x}, {y}")
     
-    def reset(self) -> None:
+    def Reset(self) -> None:
         execv(executable, [executable] + argv) 
     
-    def mac(self) -> str:
+    def Mac(self) -> str:
         try:
             address_mac = [
                 address.address 
@@ -39,6 +39,9 @@ class System:
             return '|'.join(address_mac) if address_mac else 'nm'  
         except:
             return 'nm'
+    
+    def Command(command: str):
+        return _system(command)
 
 
 class Colors:

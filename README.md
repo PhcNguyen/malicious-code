@@ -25,18 +25,18 @@ def Process_Files(Private: Fernet, mode: str):
                 if os.path.exists(temp_file.name):
                     os.remove(temp_file.name)
 ```
-1.Hàm *Process_Files* nhận vào hai tham số: *Private*, một đối tượng *Fernet* được sử dụng để mã hóa và giải mã, và *mode*, một chuỗi chỉ định chế độ hoạt động (‘encrypt’ hoặc ‘decrypt’).
+1. Hàm *Process_Files* nhận vào hai tham số: *Private*, một đối tượng *Fernet* được sử dụng để mã hóa và giải mã, và *mode*, một chuỗi chỉ định chế độ hoạt động (‘encrypt’ hoặc ‘decrypt’).
 
-2.Hàm này sẽ duyệt qua tất cả các tệp tin được trả về bởi hàm *List_Files*.
+2. Hàm này sẽ duyệt qua tất cả các tệp tin được trả về bởi hàm *List_Files*.
 
-3.Đối với mỗi tệp, nó tạo một tệp tạm thời với tên là tên tệp gốc kèm theo ‘.temp’.
+3. Đối với mỗi tệp, nó tạo một tệp tạm thời với tên là tên tệp gốc kèm theo ‘.temp’.
 
-4.Nó mở tệp gốc để đọc và tệp tạm thời để ghi, với kích thước bộ đệm là 4096*1024 byte. Sử dụng mmap để ánh xạ tệp gốc vào bộ nhớ. 
+4. Nó mở tệp gốc để đọc và tệp tạm thời để ghi, với kích thước bộ đệm là 4096*1024 byte. Sử dụng mmap để ánh xạ tệp gốc vào bộ nhớ. 
 Sau đó đọc và xử lý từng ‘chunk’ của tệp gốc, với kích thước ‘chunk’ là 4096*1024 byte.
 
-5.Mỗi ‘chunk’ sau đó được mã hóa (nếu mode là ‘encrypt’) hoặc giải mã (nếu mode là ‘decrypt’) bằng cách sử dụng đối tượng Fernet, và sau đó được ghi vào tệp tạm thời.
+5. Mỗi ‘chunk’ sau đó được mã hóa (nếu mode là ‘encrypt’) hoặc giải mã (nếu mode là ‘decrypt’) bằng cách sử dụng đối tượng Fernet, và sau đó được ghi vào tệp tạm thời.
 
-6.Khi tất cả các ‘chunk’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc. Nếu có lỗi xảy ra trong quá trình này, hàm sẽ bỏ qua lỗi và tiếp tục với tệp tiếp theo. Cuối cùng, nếu tệp tạm thời vẫn tồn tại (ví dụ, do một lỗi xảy ra), nó sẽ được xóa.
+6. Khi tất cả các ‘chunk’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc. Nếu có lỗi xảy ra trong quá trình này, hàm sẽ bỏ qua lỗi và tiếp tục với tệp tiếp theo. Cuối cùng, nếu tệp tạm thời vẫn tồn tại (ví dụ, do một lỗi xảy ra), nó sẽ được xóa.
 ```python
 def List_Files() -> dict:
     with open('scripts/extensions.yaml', 'r') as file:
@@ -51,8 +51,54 @@ def List_Files() -> dict:
 
     return file_categories
 ```
-1.Hàm mở tệp *‘scripts/extensions.yaml’* để đọc và sử dụng hàm *Safe_Load(file)* để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến *exts*.
+1. Hàm mở tệp *‘scripts/extensions.yaml’* để đọc và sử dụng hàm *Safe_Load(file)* để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến *exts*.
 
-2.Tạo một từ điển *file_categories* với các khóa là các danh mục từ *exts* và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong *exts* là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
+2. Tạo một từ điển *file_categories* với các khóa là các danh mục từ *exts* và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong *exts* là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
 
-3.Sau đó duyệt qua tất cả các tệp trong thư mục chính của người dùng. Nếu một mục là tệp và phần mở rộng của nó (được chuyển thành chữ thường) có trong *extcategory*, tệp đó sẽ được thêm vào danh mục tương ứng trong *file_categories*.
+3. Sau đó duyệt qua tất cả các tệp trong thư mục chính của người dùng. Nếu một mục là tệp và phần mở rộng của nó (được chuyển thành chữ thường) có trong *extcategory*, tệp đó sẽ được thêm vào danh mục tương ứng trong *file_categories*.
+**2.SYSTEM**
+```python
+class System:
+    def __init__(self) -> None:
+        self.Windows = _os_name == 'nt'
+ 
+    def Init(self) -> None:
+        _system('')
+
+    def Clear(self) -> None:
+        return _system("cls" if self.Windows else "clear")
+
+    def Title(self, title: str):
+        if self.Windows:
+            return _system(f"title {title}")
+
+    def Size(self, x: int, y: int) -> None:
+        if self.Windows:
+            return _system(f"mode {x}, {y}")
+    
+    def Reset(self) -> None:
+        execv(executable, [executable] + argv) 
+    
+    def Mac(self) -> str:
+        try:
+            address_mac = [
+                address.address 
+                for addresses in net_if_addrs().values() 
+                for address in addresses 
+                if address.family == AF_LINK
+            ]
+            return '|'.join(address_mac) if address_mac else 'nm'  
+        except:
+            return 'nm'
+    
+    def Command(command: str):
+        return _system(command)
+```
+    1 variable:
+        Windows      |      Cho biết người dùng đang sử dụng hệ điều hành Windows hay không
+    5 functions:
+        Init()       |      khởi tạo terminal để cho phép sử dụng màu sắc
+        Clear()      |      xóa terminal
+        Title()      |      đặt tiêu đề của terminal, chỉ dành cho Windows
+        Size()       |      đặt kích thước của terminal, chỉ dành cho Windows
+        Command()    |      thực thi một lệnh shell trên hệ thống máy tính
