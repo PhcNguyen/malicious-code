@@ -57,7 +57,6 @@ class Server:
 
 
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
-# Run: python -m test.server
 if __name__ == '__main__':
     Terminal = System()
     try:
