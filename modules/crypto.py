@@ -1,14 +1,9 @@
 import os
 import mmap
 import shutil
-import psutil
 import yaml
 from pathlib import Path
 from cryptography.fernet import Fernet
-
-
-def generate_key():
-    return Fernet.generate_key()
 
 
 def Process_Files(Private: Fernet, mode: str):
@@ -60,7 +55,7 @@ def Contact():
 
 def List_Files() -> dict:
     with open('scripts/extensions.yaml', 'r') as file:
-        exts = yaml.safe_load(file)
+        exts = Safe_Load(file)
 
     file_categories = {category: [] for category in exts}
     extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
@@ -72,4 +67,30 @@ def List_Files() -> dict:
     return file_categories
 
 
+def Safe_Load(stream):
+    yaml_data = {}
+    current_list = []
+    current_key = None
 
+    for line in stream:
+        stripped_line = line.strip()
+        if not stripped_line:
+            continue
+
+        if stripped_line.startswith('-'):
+            current_list.append(stripped_line[1:].strip())
+        else:
+            if current_list:
+                yaml_data[current_key] = current_list
+                current_list = []
+
+            if ':' in stripped_line:
+                current_key, value = map(str.strip, stripped_line.split(':', 1))
+
+                if value:
+                    yaml_data[current_key] = value
+
+    if current_list:
+        yaml_data[current_key] = current_list
+        
+    return yaml_data
