@@ -1,4 +1,5 @@
 import os
+import re
 import mmap
 import shutil
 import yaml
@@ -54,8 +55,37 @@ def Contact():
 
 
 def List_Files() -> dict:
+    def SafeLoad(stream) -> dict:
+        yaml_data = {}
+        current_list = []
+        current_key = None
+        pattern = re.compile(r'(-\s*)(.*)|([^:]*):(.*)')
+
+        for line in stream:
+            stripped_line = line.strip()
+            if not stripped_line:
+                continue
+
+            match = pattern.match(stripped_line)
+            if match:
+                if match.group(1):  # matched '- value'
+                    current_list.append(match.group(2))
+                else:  # matched 'key: value'
+                    if current_list:
+                        yaml_data[current_key] = current_list
+                        current_list = []
+
+                    current_key = match.group(3).strip()
+                    value = match.group(4).strip()
+                    if value:
+                        yaml_data[current_key] = value
+
+        if current_list:
+            yaml_data[current_key] = current_list
+        return yaml_data
+    
     with open('scripts/extensions.yaml', 'r') as file:
-        exts = Safe_Load(file)
+        exts = SafeLoad(file)
 
     file_categories = {category: [] for category in exts}
     extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
@@ -66,31 +96,3 @@ def List_Files() -> dict:
 
     return file_categories
 
-
-def Safe_Load(stream):
-    yaml_data = {}
-    current_list = []
-    current_key = None
-
-    for line in stream:
-        stripped_line = line.strip()
-        if not stripped_line:
-            continue
-
-        if stripped_line.startswith('-'):
-            current_list.append(stripped_line[1:].strip())
-        else:
-            if current_list:
-                yaml_data[current_key] = current_list
-                current_list = []
-
-            if ':' in stripped_line:
-                current_key, value = map(str.strip, stripped_line.split(':', 1))
-
-                if value:
-                    yaml_data[current_key] = value
-
-    if current_list:
-        yaml_data[current_key] = current_list
-        
-    return yaml_data

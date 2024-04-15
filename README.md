@@ -105,3 +105,15 @@ class System:
         Reset()    |      khởi động lại chương trình hiện tại
         Mac()      |      địa chỉ MAC của máy tính
         Command()  |      thực thi một lệnh shell trên hệ thống máy tính
+```python
+def Console(ip: str, msg: str, color: str) -> None:
+    color_code = getattr(Col, color)
+    # Hàm getattr được sử dụng để lấy giá trị thuộc tính color từ đối tượng Col.
+    message = f" [{Col.Green}{ip}{Col.White}] --> {color_code}{msg}{Col.White}."
+    # Tạo một chuỗi được định dạng
+    print(message)
+    # In ra chuỗi đã được định dạng
+```
+## SERVER - CLIENT
+
+Truy cap thu muc test xem nguyen li hoat dong.

