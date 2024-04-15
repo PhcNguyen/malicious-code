@@ -1,8 +1,7 @@
 # Import modules
 from time import sleep
 from threading import Thread
-from modules.color import Col, Console
-from modules.system import System
+from modules.system import System, Console
 from modules.sqlite import SqliteLog
 from socket import socket, AF_INET, SOCK_STREAM
 
