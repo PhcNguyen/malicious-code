@@ -2,6 +2,7 @@ import os
 import sqlite3
 import datetime
 
+
 class SqliteLog:
     def __init__(self) -> None:
         self.conn = None

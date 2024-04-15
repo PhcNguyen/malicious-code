@@ -5,6 +5,7 @@ from modules.system import System, Console
 from modules.sqlite import SqliteLog
 from socket import socket, AF_INET, SOCK_STREAM
 
+
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
 class Server:
 

@@ -2,7 +2,6 @@ import os
 import re
 import mmap
 import shutil
-import yaml
 from pathlib import Path
 from cryptography.fernet import Fernet
 

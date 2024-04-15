@@ -1,9 +1,12 @@
+# Class System
 from os import execv, system as _system, name as _os_name
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from psutil import  net_if_addrs, AF_LINK
 from sys import executable, argv
+# Class Colors, Color
 from collections import deque
+# Class EmailSender
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import smtplib
 
 

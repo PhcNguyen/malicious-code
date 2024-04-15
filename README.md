@@ -122,5 +122,3 @@ def Console(ip: str, msg: str, color: str) -> None:
 **Server**: Máy chủ chấp nhận kết nối từ máy khách và xử lý dữ liệu đến. Sử dụng luồng để xử lý nhiều kết nối máy khách cùng một lúc.
 
 **Client**: kết nối thành công, gửi thông tin hệ thống và khóa đến máy chủ. Nếu không kết nối được sau 3 lần thử lại, thực hiện khởi động lại chương trình.
-
-# Chúng tôi không chịu trách nhiệm về các hành vi vi phạm pháp luật của các cá nhân hay tổ chức sử dụng trái phép mã nguồn mở này!
