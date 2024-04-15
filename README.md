@@ -37,8 +37,22 @@ Sau đó đọc và xử lý từng ‘chunk’ của tệp gốc, với kích t
 5.Mỗi ‘chunk’ sau đó được mã hóa (nếu mode là ‘encrypt’) hoặc giải mã (nếu mode là ‘decrypt’) bằng cách sử dụng đối tượng Fernet, và sau đó được ghi vào tệp tạm thời.
 
 6.Khi tất cả các ‘chunk’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc. Nếu có lỗi xảy ra trong quá trình này, hàm sẽ bỏ qua lỗi và tiếp tục với tệp tiếp theo. Cuối cùng, nếu tệp tạm thời vẫn tồn tại (ví dụ, do một lỗi xảy ra), nó sẽ được xóa.
-
-
-
 ```python
+def List_Files() -> dict:
+    with open('scripts/extensions.yaml', 'r') as file:
+        exts = Safe_Load(file)
+
+    file_categories = {category: [] for category in exts}
+    extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
+
+    for entry in Path.home().rglob('*'):
+        if entry.is_file() and (ext := entry.suffix.lower()) in extcategory:
+            file_categories[extcategory[ext]].append(str(entry))
+
+    return file_categories
 ```
+1.Hàm mở tệp *‘scripts/extensions.yaml’* để đọc và sử dụng hàm *Safe_Load(file)* để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến *exts*.
+
+2.Tạo một từ điển *file_categories* với các khóa là các danh mục từ *exts* và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong *exts* là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
+
+3.Sau đó duyệt qua tất cả các tệp trong thư mục chính của người dùng. Nếu một mục là tệp và phần mở rộng của nó (được chuyển thành chữ thường) có trong *extcategory*, tệp đó sẽ được thêm vào danh mục tương ứng trong *file_categories*.

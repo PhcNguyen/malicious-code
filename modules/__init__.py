@@ -2,9 +2,7 @@
 #/home/usr/Ransomware
 #  ├── modules
 #  │   ├── __init__.py
-#  │   ├── color.py
 #  │   ├── crypto.py
-#  │   ├── smtp.py
 #  │   ├── sqlite.py
 #  │   └── system.py
 #  │
