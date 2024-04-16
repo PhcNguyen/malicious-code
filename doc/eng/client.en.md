@@ -1,0 +1,5 @@
+# Client Documentation
+
+This Python module implements a simple ransomware that connects to a server, encrypts files, and decrypts them using the Fernet encryption algorithm. To use the ransomware, first import the necessary modules, including time, system utilities, encryption tools, and socket communication. Then, define the `Ransomware` class, initializing it with the server's host and port. Connect to the server using the `ConnectServer` method, which attempts to establish a connection and sends system information along with an encryption key. Once connected, you can encrypt files using the `Encrypted` method and decrypt them using the `Decrypted` method. Finally, instantiate the `Ransomware` class and execute the ransomware script, ensuring that the server's host and port are configured correctly.
+
+Please note: This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with legal regulations when using and developing open source code.

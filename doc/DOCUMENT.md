@@ -2,28 +2,30 @@
 
 Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 ```
-├──[ doc ]
-│    ├──────────────────────[ eng ]
-│    └──[ vie ]               ├── client.en.rst
-│         ├── client.vi.rst   ├── encdec.en.rst
-│         ├── encdec.vi.rst   ├── server.en.rst
-│         ├── server.vi.rst   └── system.en.rst
-│         └── system.vi.rst
-│
-├──[ modules ]        
-│    ├── __init__.py    
-│    ├── encdec.py
-│    └── system.py
-├─────────────────────[ scripts ]
-├──[ test ]             ├── extensions.yaml
-│    ├── __init__.py    └── info.txt
-│    ├── server.py 
-│    └── client.py
-│
-├── .gitignore
-├── LICENSE
-├── README.md
-└── requirements.txt
+[ Ransomware ]
+  ├──[ doc ]
+  │    ├── DOCUMENT.md
+  │    ├──────────────────────[ eng ]
+  │    └──[ vie ]               ├── client.en.rst
+  │         ├── client.vi.rst   ├── encdec.en.rst
+  │         ├── encdec.vi.rst   ├── server.en.rst
+  │         ├── server.vi.rst   └── system.en.rst
+  │         └── system.vi.rst
+  │
+  ├──[ modules ]        
+  │    ├── __init__.py    
+  │    ├── encdec.py
+  │    └── system.py
+  ├─────────────────────[ scripts ]
+  ├──[ test ]             ├── extensions.yaml
+  │    ├── __init__.py    └── info.txt
+  │    ├── server.py 
+  │    └── client.py
+  │
+  ├── .gitignore 
+  ├── LICENSE
+  ├── README.md
+  └── requirements.txt
 ```
 - `doc`: Thư mục này chứa tài liệu hướng dẫn sử dụng mã nguồn.
     - `eng`: Chứa các tệp `.rst` hướng dẫn bằng tiếng Anh.
