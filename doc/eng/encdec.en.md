@@ -2,21 +2,21 @@
 
 This Python code includes several functions for file processing.
 
-## 1. Fernet Initialization
+1. Fernet Initialization
 Before calling the `Encrypt` or `Decrypt` functions, you need to initialize a `Fernet` object with a secret key. `Fernet` is a secure symmetric encryption system provided by the `cryptography` library.
 
     ```python
-    from cryptography.fernet import Fernet
     key = Fernet.generate_key()
     cipher_suite = Fernet(key)
     ```
+
 2. File Encryption
 The Encrypt function will encrypt all files listed by the List_Files function. Each file will be read and encrypted in chunks, then written to a temporary file. Finally, the temporary file will replace the original file.
 
     ```python
     Encrypt(cipher_suite)
     ```
-    
+
 3. File Decryption
 The Decrypt function will decrypt all files that have been encrypted by the Encrypt function, similar to the encryption process but in reverse.
 
