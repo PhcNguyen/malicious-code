@@ -35,5 +35,5 @@ This Python code includes several functions for file processing.
 
 - The `List_Files` function will return a list of files based on the file extensions defined in the `scripts/extensions.yaml` file. This function uses `Path.home().rglob('*')` to list all files in the user's home directory.
 
-**Note**: *This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with the law when using and developing open source code.*
+**Please note**: *This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with the law when using and developing open source code.*
 

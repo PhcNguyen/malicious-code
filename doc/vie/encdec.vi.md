@@ -35,4 +35,4 @@ Mã Python này bao gồm một số hàm để xử lý tệp.
 
 - Hàm `List_Files` sẽ trả về một danh sách các tệp dựa trên các phần mở rộng tệp được xác định trong tệp `scripts/extensions.yaml`. Hàm này sử dụng `Path.home().rglob('*')` để liệt kê tất cả các tệp trong thư mục chính của người dùng.
 
-**Lưu ý:** Mã này chỉ nên được sử dụng cho mục đích học tập. Sử dụng nó để thực hiện các hoạt động phi pháp (như tấn công mạng) có thể dẫn đến hậu quả pháp lý nghiêm trọng. Luôn tuân thủ pháp luật khi sử dụng và phát triển mã nguồn mở.
+**Lưu ý:** *Mã này chỉ nên được sử dụng cho mục đích học tập. Sử dụng nó để thực hiện các hoạt động phi pháp (như tấn công mạng) có thể dẫn đến hậu quả pháp lý nghiêm trọng. Luôn tuân thủ pháp luật khi sử dụng và phát triển mã nguồn mở.*
