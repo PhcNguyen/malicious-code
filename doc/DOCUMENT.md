@@ -1,29 +1,30 @@
 # Ransomware
 
-- [doc](./doc)
-  - [eng](./doc/eng)
-    - [client.rst](./doc/eng/client.rst)
-    - [encdec.rst](./doc/eng/encdec.rst)
-    - [server.rst](./doc/eng/server.rst)
-    - [system.rst](./doc/eng/system.rst)
-  - [vie](./doc/vie)
-    - [client.rst](./doc/vie/client.rst)
-    - [encdec.rst](./doc/vie/encdec.rst)
-    - [server.rst](./doc/vie/server.rst)
-    - [system.rst](./doc/vie/system.rst)
-- [scripts](./scripts)
-  - [modules](./scripts/modules)
-    - [extensions.yaml](./scripts/modules/extensions.yaml)
-    - [info.txt](./scripts/modules/info.txt)
-    - [__init__.py](./scripts/modules/__init__.py)
-    - [encdec.py](./scripts/modules/encdec.py)
-    - [system.py](./scripts/modules/system.py)
-- [test](./test)
-  - [__init__.py](./test/__init__.py)
-  - [client.py](./test/client.py)
-  - [server.py](./test/server.py)
-- [.gitignore](./.gitignore)
-- [LICENSE](./LICENSE)
-- [README.md](./README.md)
-- [requirements.txt](./requirements.txt)
+├── **doc**
+│ ├── **eng**
+│ │   ├── client.rst
+│ │   ├── encdec.rst
+│ │   ├── server.rst
+│ │   └── system.rst
+│ │
+│ └── **vie**
+│     ├── client.rst
+│     ├── encdec.rst
+│     ├── server.rst
+│     └── system.rst
+├───────────────────── **scripts**
+├── **modules**            ├── extensions.yaml
+│ ├── init.py           └── info.txt
+│ ├── encdec.py
+│ └── system.py
+│
+├── **test**
+│ ├── init.py
+│ ├── server.py
+│ └── client.py
+│
+├── .gitidnore
+├── LICENSE
+├── README.md
+└── requirements.txt
 
