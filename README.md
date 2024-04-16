@@ -27,6 +27,9 @@ The `Ransomware` project consists of the following directories and files:
   ├── VIE.md
   └── requirements.txt
 ```
+
+# Language English
+
 - `doc`: This directory contains documentation files.
     - `eng`: Contains English language `.md` files.
     - `vie`: Contains Vietnamese language `.md` files.
@@ -46,7 +49,7 @@ The `Ransomware` project consists of the following directories and files:
 - `README.md`: This file contains introduction and usage instructions for the project.
 - `requirements.txt`: This file contains a list of Python libraries required for the project.
 
-# Cấu trúc thư mục Ransomware
+# Ngôn ngữ Tiếng Việt
 
 Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 
