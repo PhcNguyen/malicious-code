@@ -3,16 +3,11 @@
 Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 ```
 ├──[ doc ]
-│    ├──[ eng ]
-│    │    ├── client.rst
-│    │    ├── encdec.rst
-│    │    ├── server.rst
-│    │    └── system.rst
-│    │
-│    └──[ vie ]
-│         ├── client.rst
-│         ├── encdec.rst
-│         ├── server.rst
+│    ├───────────────────[ vie ]
+│    └──[ eng ]            ├── client.rst
+│         ├── client.rst   ├── encdec.rst
+│         ├── encdec.rst   ├── server.rst
+│         ├── server.rst   └── system.rst
 │         └── system.rst
 │
 ├──[ modules ]        
