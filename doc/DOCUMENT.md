@@ -50,3 +50,30 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
     ├── README.md
     └── requirements.txt
 ```
+├── doc
+│   ├── eng
+│   │   ├── client.rst
+│   │   ├── encdec.rst
+│   │   ├── server.rst
+│   │   └── system.rst
+│   │
+│   └── vie
+│       ├── client.rst
+│       ├── encdec.rst
+│       ├── server.rst
+│       └── system.rst
+├───────────────────── scripts
+├── modules            ├── extensions.yaml
+│   ├── __init__.py    └── info.txt
+│   ├── encdec.py
+│   └── system.py
+│
+├── test
+│   ├── __init__.py
+│   ├── server.py
+│   └── client.py
+│
+├── .gitignore
+├── LICENSE
+├── README.md
+└── requirements.txt
