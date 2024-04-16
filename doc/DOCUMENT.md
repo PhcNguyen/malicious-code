@@ -22,34 +22,6 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 - `requirements.txt`: Tệp này chứa danh sách các thư viện Python cần thiết cho dự án.
 
 ```
-    ├── doc
-    │ ├── eng
-    │ │ ├── client.rst
-    │ │ ├── encdec.rst
-    │ │ ├── server.rst
-    │ │ └── system.rst
-    │ │
-    │ └── vie
-    │ ├── client.rst
-    │ ├── encdec.rst
-    │ ├── server.rst
-    │ └── system.rst
-    ├───────────────────── scripts
-    ├── modules            ├── extensions.yaml
-    │ ├── init.py          └── info.txt
-    │ ├── encdec.py
-    │ └── system.py
-    │
-    ├── test
-    │ ├── init.py
-    │ ├── server.py
-    │ └── client.py
-    │
-    ├── .gitidnore
-    ├── LICENSE
-    ├── README.md
-    └── requirements.txt
-```
 ├── doc
 │   ├── eng
 │   │   ├── client.rst
@@ -77,3 +49,4 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 ├── LICENSE
 ├── README.md
 └── requirements.txt
+```
