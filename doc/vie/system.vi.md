@@ -1,4 +1,4 @@
-# SYSTEM DOCUMENT
+# Hướng dẫn chi tiết System
 
 Đoạn mã Python này bao gồm một số lớp và hàm cho các hoạt động hệ thống, xử lý màu sắc, gửi email, ghi log SQLite, và in thông báo lên console.
 

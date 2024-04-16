@@ -1,4 +1,4 @@
-# Client Documentation
+# Hướng dẫn chi tiết Client 
 
 Module Python này triển khai một ransomware đơn giản kết nối với máy chủ, mã hóa tệp và giải mã chúng bằng thuật toán mã hóa Fernet. Để sử dụng ransomware, trước tiên hãy nhập các Module cần thiết, bao gồm thời gian, tiện ích hệ thống, công cụ mã hóa và giao tiếp ổ cắm. Sau đó, định nghĩa lớp `Ransomware`, khởi tạo nó với máy chủ và cổng của máy chủ. Kết nối với máy chủ bằng phương pháp `ConnectServer`, phương pháp này cố gắng thiết lập kết nối và gửi thông tin hệ thống cùng với khóa mã hóa. Sau khi kết nối, bạn có thể mã hóa các tệp bằng phương pháp `Encrypted` và giải mã chúng bằng phương pháp `Decrypted`. Cuối cùng, khởi tạo lớp `Ransomware` và thực thi tập lệnh ransomware, đảm bảo rằng máy chủ và cổng của máy chủ được định cấu hình chính xác.
 

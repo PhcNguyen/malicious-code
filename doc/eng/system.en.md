@@ -1,5 +1,5 @@
 
-# Detailed Guide on Using the Python Code
+# System Detailed Guide
 
 
 This Python code includes several classes and functions for system operations, color handling, email sending, SQLite logging, and console printing.

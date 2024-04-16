@@ -1,5 +1,4 @@
-
-# Hướng Dẫn Sử Dụng Lớp Server
+# Hướng dẫn chi tiết Server
 
 Đoạn mã đã cung cấp tạo ra một lớp `Server` với các phương thức để xử lý các kết nối và truyền dữ liệu.
 
