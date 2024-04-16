@@ -100,7 +100,7 @@ class Col:
 
 
 class EmailSender:
-    def __init__(self, email, password):
+    def __init__(self, email: str, password: str) -> None:
         self.sender_email = email
         self.password = password
 
@@ -116,7 +116,7 @@ class EmailSender:
                 server.login(self.sender_email, self.password)
                 server.sendmail(self.sender_email, receiver_email, msg.as_string())
             return True
-        except Exception:
+        except:
             return False
 
 
