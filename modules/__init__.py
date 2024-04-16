@@ -11,8 +11,7 @@
 #  │
 #  ├── modules
 #  │   ├── __init__.py
-#  │   ├── crypto.py
-#  │   ├── sqlite.py
+#  │   ├── encdec.py
 #  │   └── system.py
 #  │
 #  ├── scripts
@@ -30,4 +29,5 @@
 #  └── requirements.txt
 
 
-__all__ = ['crypto', 'sqlite', 'system']
+__all__ = ['encdec', 'system']
+__version__ = '1.0.5'

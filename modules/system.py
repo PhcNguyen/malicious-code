@@ -8,6 +8,10 @@ from collections import deque
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+# Class Sqlite
+import os.path
+import sqlite3
+from datetime import datetime
 
 
 class System:
@@ -114,6 +118,46 @@ class EmailSender:
             return True
         except Exception:
             return False
+
+
+class SqliteLog:
+    def __init__(self) -> None:
+        self.conn = None
+        self.cursor = None
+
+    def _connect(self) -> None:
+        if not os.path.exists('data'):
+            os.makedirs('data')
+        self.conn = sqlite3.connect('data/server.db')
+        self.cursor = self.conn.cursor()
+
+    def _create_table(self, table_name: str) -> None:
+        self.cursor.execute(f'''
+            CREATE TABLE IF NOT EXISTS {table_name} (
+                activity TEXT,
+                timestamp TEXT
+            )
+        ''')
+        self.conn.commit()
+
+    def _close(self) -> None:
+        if self.conn:
+            self.conn.close()
+
+    def activity(self, ip: str, activity: str) -> str:
+        try:
+            self._connect()
+            ip = ip.replace('.', '_')
+            self._create_table(f'IP_{ip}')
+            timestamp = datetime.now().strftime('%m-%d %H:%M:%S')
+            self.cursor.execute(f'''
+                INSERT INTO IP_{ip} (activity, timestamp) VALUES (?, ?)
+            ''', (activity, timestamp))
+            self.conn.commit()
+        except Exception as error:
+            Console(ip, error, 'Red')
+        finally:
+            self._close()
 
 
 def Console(ip: str, msg: str, color: str) -> None:

