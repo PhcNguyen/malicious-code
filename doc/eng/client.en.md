@@ -9,7 +9,7 @@ This Python module implements a simple ransomware that connects to a server, enc
    from modules.encdec import Fernet, Encrypt, Decrypt
    from socket import socket, AF_INET, SOCK_STREAM
    ```
-This Python module implements a simple ransomware that connects to a server, encrypts files, and decrypts them using the Fernet encryption algorithm.
+- This Python module implements a simple ransomware that connects to a server, encrypts files, and decrypts them using the Fernet encryption algorithm.
 
 2. **Class Ransomware**:
     ```python
@@ -21,7 +21,7 @@ This Python module implements a simple ransomware that connects to a server, enc
         self.server: socket = socket(AF_INET, SOCK_STREAM)
         self.Private = Fernet(self.key)
     ```
-- Generate a random encryption key, initialize System object. 
+- Generate a random encryption key, initialize `System` object. 
 - Create a `socket` for communication and a `Fernet` instance for encryption/decryption.
 
     ```python
