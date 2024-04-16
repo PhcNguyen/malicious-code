@@ -20,3 +20,32 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 - `LICENSE`: Tệp này chứa thông tin về giấy phép của dự án.
 - `README.md`: Tệp này chứa thông tin giới thiệu và hướng dẫn sử dụng dự án.
 - `requirements.txt`: Tệp này chứa danh sách các thư viện Python cần thiết cho dự án.
+
+
+    ├── doc
+    │ ├── eng
+    │ │ ├── client.rst
+    │ │ ├── encdec.rst
+    │ │ ├── server.rst
+    │ │ └── system.rst
+    │ │
+    │ └── vie
+    │ ├── client.rst
+    │ ├── encdec.rst
+    │ ├── server.rst
+    │ └── system.rst
+    ├───────────────────── scripts
+    ├── modules            ├── extensions.yaml
+    │ ├── init.py          └── info.txt
+    │ ├── encdec.py
+    │ └── system.py
+    │
+    ├── test
+    │ ├── init.py
+    │ ├── server.py
+    │ └── client.py
+    │
+    ├── .gitidnore
+    ├── LICENSE
+    ├── README.md
+    └── requirements.txt
