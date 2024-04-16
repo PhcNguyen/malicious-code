@@ -29,9 +29,10 @@ def Process_Files(Private: Fernet, mode: str):
 - This function iterates through all files returned by the `List_Files` function.
 - For each file, it creates a temporary file with the name of the original file appended with *.temp*.
 - It opens the original file for reading and the temporary file for writing, with a buffer size of 4096*1024 bytes. It uses mmap to map the original file into memory. 
-Then it reads and processes each `chunk` of the original file, with the `chunk` size being 4096*1024 bytes.
+- Then it reads and processes each `chunk` of the original file, with the `chunk` size being 4096*1024 bytes.
 - Each `chunk` is then encrypted (if mode is `encrypt`) or decrypted (if mode is `decrypt`) using the `Fernet` object, and then written to the temporary file.
-- Once all chunks have been processed, the temporary file is renamed to the name of the original file, replacing the original file. If an error occurs during this process, the function will ignore the error and continue with the next file. Finally, if the temporary file still exists, it will be deleted.
+- Once all chunks have been processed, the temporary file is renamed to the name of the original file, replacing the original file. If an error occurs during this process, the function will ignore the error and continue with the next file. 
+- Finally, if the temporary file still exists, it will be deleted.
 ```python
 def List_Files() -> dict:
     with open('scripts/extensions.yaml', 'r') as file:
@@ -104,7 +105,7 @@ def Console(ip: str, msg: str, color: str) -> None:
     print(message)
 ```
 
-- The getattr function is used to retrieve the value of the color attribute from the Col object.
+- The `getattr` function is used to retrieve the value of the color attribute from the `Col` object.
 - It creates a formatted string and prints the formatted string.
 
 ## SERVER - CLIENT
