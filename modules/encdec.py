@@ -22,8 +22,7 @@ def Process_Files(Private: Fernet, mode: str) -> None:
                             temp_file.write(processed_chunk)
                             offset += len(chunk)
                 shutil.move(temp_file.name, file)
-            except Exception as e: pass
-            finally:
+            except Exception:
                 if os.path.exists(temp_file.name):
                     os.remove(temp_file.name)
 
