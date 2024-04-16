@@ -21,6 +21,7 @@
   │
   ├── .gitignore 
   ├── LICENSE
+  ├── main.sh
   └── README.md
 ```
 ---

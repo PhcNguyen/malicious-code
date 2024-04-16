@@ -1,4 +1,5 @@
-import __init__
+# Import modules
+from __init__ import *
 from time import sleep
 from modules.system import System
 from modules.encdec import Fernet, Encrypt, Decrypt

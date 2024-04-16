@@ -1,5 +1,5 @@
 # Import modules
-import __init__
+from __init__ import *
 from time import sleep
 from threading import Thread
 from modules.system import System, SqliteLog, Console
@@ -69,5 +69,5 @@ if __name__ == '__main__':
         
     except Exception as error:
         Console('127.0.0.0', error, 'Red')
-        sleep(10)
-        Terminal.reset()
+        sleep(20)
+        Terminal.Reset()
