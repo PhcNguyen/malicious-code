@@ -3,27 +3,27 @@
 Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 ```
 ├──[ doc ]
-│   ├──[ eng ]
-│   │   ├── client.rst
-│   │   ├── encdec.rst
-│   │   ├── server.rst
-│   │   └── system.rst
-│   │
-│   └──[ vie ]
-│       ├── client.rst
-│       ├── encdec.rst
-│       ├── server.rst
-│       └── system.rst
-├─────────────────────[ scripts ]
-├──[ modules ]         ├── extensions.yaml
-│   ├── __init__.py    └── info.txt
-│   ├── encdec.py
-│   └── system.py
+│    ├──[ eng ]
+│    │    ├── client.rst
+│    │    ├── encdec.rst
+│    │    ├── server.rst
+│    │    └── system.rst
+│    │
+│    └──[ vie ]
+│         ├── client.rst
+│         ├── encdec.rst
+│         ├── server.rst
+│         └── system.rst
 │
-├──[ test ]
-│   ├── __init__.py
-│   ├── server.py
-│   └── client.py
+├──[ modules ]        
+│    ├── __init__.py    
+│    ├── encdec.py
+│    └── system.py
+├─────────────────────[ scripts ]
+├──[ test ]             ├── extensions.yaml
+│    ├── __init__.py    └── info.txt
+│    ├── server.py 
+│    └── client.py
 │
 ├── .gitignore
 ├── LICENSE
