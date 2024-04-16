@@ -6,11 +6,11 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
   ├──[ doc ]
   │    ├── DOCUMENT.md
   │    ├──────────────────────[ eng ]
-  │    └──[ vie ]               ├── client.en.rst
-  │         ├── client.vi.rst   ├── encdec.en.rst
-  │         ├── encdec.vi.rst   ├── server.en.rst
-  │         ├── server.vi.rst   └── system.en.rst
-  │         └── system.vi.rst
+  │    └──[ vie ]               ├── client.en.md
+  │         ├── client.vi.md    ├── encdec.en.md
+  │         ├── encdec.vi.md    ├── server.en.md
+  │         ├── server.vi.md    └── system.en.md
+  │         └── system.vi.md
   │
   ├──[ modules ]        
   │    ├── __init__.py    
