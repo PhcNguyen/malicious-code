@@ -5,12 +5,11 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 [ Ransomware ]
   ├──[ doc ]
   │    ├── DOCUMENT.md
-  │    ├──────────────────────[ eng ]
-  │    └──[ vie ]               ├── client.en.md
-  │         ├── client.vi.md    ├── encdec.en.md
-  │         ├── encdec.vi.md    ├── server.en.md
-  │         ├── server.vi.md    └── system.en.md
-  │         └── system.vi.md
+  │    ├─────────────────────[ eng ]
+  │    └─[ vie ]               ├── client.en.md
+  │        ├── encdec.vi.md    ├── server.en.md
+  │        ├── system.vi.md    └── ...
+  │        └── ...
   │
   ├──[ modules ]        
   │    ├── __init__.py    
@@ -24,12 +23,13 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
   │
   ├── .gitignore 
   ├── LICENSE
-  ├── README.md
+  ├── ENG.md
+  ├── VIE.md
   └── requirements.txt
 ```
 - `doc`: Thư mục này chứa tài liệu hướng dẫn sử dụng mã nguồn.
-    - `eng`: Chứa các tệp `.rst` hướng dẫn bằng tiếng Anh.
-    - `vie`: Chứa các tệp `.rst` hướng dẫn bằng tiếng Việt.
+    - `eng`: Chứa các tệp `.md` hướng dẫn bằng tiếng Anh.
+    - `vie`: Chứa các tệp `.md` hướng dẫn bằng tiếng Việt.
 - `modules`: Thư mục này chứa các module Python.
     - `__init__.py`
     - `encdec.py`
