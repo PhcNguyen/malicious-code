@@ -23,7 +23,7 @@
   ├── LICENSE
   └── README.md
 ```
-
+---
 ### Language English
 
 The `Ransomware` project consists of the following directories and files:
@@ -46,7 +46,7 @@ The `Ransomware` project consists of the following directories and files:
 - `.gitignore`: This file specifies intentionally untracked files to ignore by Git.
 - `LICENSE`: This file contains information about the project's license.
 - `README.md`: This file contains project introduction information.
-
+---
 ### Ngôn ngữ Tiếng Việt
 
 Dự án `Ransomware` bao gồm các thư mục và tệp sau:
