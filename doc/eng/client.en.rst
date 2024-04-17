@@ -7,10 +7,10 @@ This Python module implements a simple ransomware that connects to a server, enc
 
 .. code-block:: python
     :linenos:
-        from time import sleep
-        from modules.system import System
-        from modules.encdec import Fernet, Encrypt, Decrypt
-        from socket import socket, AF_INET, SOCK_STREAM
+    from time import sleep
+    from modules.system import System
+    from modules.encdec import Fernet, Encrypt, Decrypt
+    from socket import socket, AF_INET, SOCK_STREAM
 
 This Python module implements a simple ransomware that connects to a server, encrypts files, and decrypts them using the Fernet encryption algorithm.
 
