@@ -8,11 +8,9 @@ from collections import deque
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-# Class Sqlite
-import os.path
-import sqlite3
-from datetime import datetime
-
+# Class GoogleSheet
+from google.oauth2 import service_account as SACC # type: ignore
+from googleapiclient.discovery import build
 
 class System:
     def __init__(self) -> None:
@@ -120,45 +118,41 @@ class EmailSender:
             return False
 
 
-class SqliteLog:
-    def __init__(self) -> None:
-        self.conn = None
-        self.cursor = None
+class GoogleAuthService:
+    def __init__(self):
+        self._create_service()
 
-    def _connect(self) -> None:
-        if not os.path.exists('data'):
-            os.makedirs('data')
-        self.conn = sqlite3.connect('data/server.db')
-        self.cursor = self.conn.cursor()
-
-    def _create_table(self, table_name: str) -> None:
-        self.cursor.execute(f'''
-            CREATE TABLE IF NOT EXISTS {table_name} (
-                activity TEXT,
-                timestamp TEXT
-            )
-        ''')
-        self.conn.commit()
-
-    def _close(self) -> None:
-        if self.conn:
-            self.conn.close()
-
-    def activity(self, ip: str, activity: str) -> str:
+    def _create_service(self):
         try:
-            self._connect()
-            ip = ip.replace('.', '_')
-            self._create_table(f'IP_{ip}')
-            timestamp = datetime.now().strftime('%m-%d %H:%M:%S')
-            self.cursor.execute(f'''
-                INSERT INTO IP_{ip} (activity, timestamp) VALUES (?, ?)
-            ''', (activity, timestamp))
-            self.conn.commit()
-        except Exception as error:
-            Console(ip, error, 'Red')
-        finally:
-            self._close()
+            credentials = SACC.Credentials.from_service_account_file(
+                'scripts/credentials.json',
+                scopes=['https://www.googleapis.com/auth/spreadsheets']
+            )
+            self.service = build('sheets', 'v4', credentials=credentials)
+        except Exception as e:
+            Console('127.0.0.1', e, 'Red')
 
+
+class GoogleSheet:
+    def __init__(self, service):
+        self.id_sheet = '10rs_CfL4W5uKJI-ueX1n1MVZF4DT8uzqyb7wgtp0zfo'
+        self.service = service
+        self._values = None
+
+    def AllValues(self, sheet='Sheet1'):
+        if not self._values:
+            result = self.service.spreadsheets().values().get(
+                spreadsheetId=self.id_sheet,
+                range=sheet
+            ).execute()
+            self._values = result.get('values', [])
+        return self._values
+
+    def UpdateValues(self, values, sheet='Sheet1'):
+        row = len(self.all_values(sheet)) + 1
+        range_str = f'{sheet}!A{row}:F{row}'
+        return self.update_values_in_range(values, range_str)
+    
 
 def Console(ip: str, msg: str, color: str) -> None:
     color_code = getattr(Col, color)
