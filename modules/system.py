@@ -161,9 +161,6 @@ class SqliteLog:
 
 
 def Console(ip: str, msg: str, color: str) -> None:
-
     color_code = getattr(Col, color)
-
     message = f" [{Col.Green}{ip}{Col.White}] --> {color_code}{msg}{Col.White}."
-
     print(message)

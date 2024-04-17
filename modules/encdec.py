@@ -3,6 +3,7 @@ import re
 import mmap
 import shutil
 from pathlib import Path
+import pyaml
 from cryptography.fernet import Fernet
 
 
@@ -58,40 +59,10 @@ def Contact() -> None:
                 pass
 
 
-def Safe_Load(stream) -> dict:
-    yaml_data = {}
-    current_list = []
-    current_key = None
-    pattern = re.compile(r'(-\s*)(.*)|([^:]*):(.*)')
-
-    for line in stream:
-        stripped_line = line.strip()
-        if not stripped_line:
-            continue
-
-        match = pattern.match(stripped_line)
-        if match:
-            if match.group(1):  # matched '- value'
-                current_list.append(match.group(2))
-            else:  # matched 'key: value'
-                if current_list:
-                    yaml_data[current_key] = current_list
-                    current_list = []
-
-                current_key = match.group(3).strip()
-                value = match.group(4).strip()
-                if value:
-                    yaml_data[current_key] = value
-
-    if current_list:
-        yaml_data[current_key] = current_list
-    return yaml_data
-
-
 def List_Files() -> dict:
     
     with open('scripts/extensions.yaml', 'r') as file:
-        exts = Safe_Load(file)
+        exts = pyaml.ParseYaml(file)
 
     file_categories = {category: [] for category in exts}
     extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
@@ -101,3 +72,7 @@ def List_Files() -> dict:
             file_categories[extcategory[ext]].append(str(entry))
 
     return file_categories
+
+
+with open('scripts/credentials.yaml', 'r') as file:
+    pass
