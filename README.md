@@ -5,9 +5,9 @@
   ├──[ doc ]
   │    ├── requirements.txt
   │    ├─────────────────────[ eng ]
-  │    └─[ vie ]               ├── client.en.md
-  │        ├── encdec.vi.md    ├── server.en.md
-  │        ├── system.vi.md    └── ...
+  │    └─[ vie ]               ├── client.md
+  │        ├── encdec.md       ├── server.md
+  │        ├── system.md       └── ...
   │        └── ...
   │
   ├──[ modules ]        
@@ -15,10 +15,12 @@
   │    ├── encdec.py
   │    ├── setiing.py
   │    └── system.py
+  │
   ├─────────────────────[ scripts ]
+  │                       ├── credentials.json
   ├──[ test ]             ├── extensions.yaml
-  │    ├── __init__.py    └── info.txt
-  │    ├── server.py 
+  │    ├── __init__.py    ├── info.txt
+  │    ├── server.py      └── setting.json
   │    └── client.py
   │
   ├── .gitignore 
