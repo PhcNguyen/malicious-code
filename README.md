@@ -12,23 +12,21 @@
   │
   ├──[ modules ]   
   │    ├────────────────────[ lib ]    
-  │    ├── __init__.py        ├── email.py
+  │    ├── system.py          ├── email.py
   │    ├── encdec.py          ├── sheet.py
-  │    └── system.py          └── ...
+  │    └── ...                └── ...
   │
   ├─────────────────────[ scripts ]
-  │                       ├── credentials.json
-  ├──[ test ]             ├── extensions.yaml
-  │    ├── __init__.py    ├── info.txt
-  │    ├── server.py      └── setting.json
-  │    └── client.py
+  │                       ├── extensions.yaml
+  ├──[ test ]             ├── setting.json
+  │    ├── client.py      └── ...
+  │    ├── server.py      
+  │    └── ...
   │
   ├── .gitignore 
-  ├── install-lib.py
   ├── LICENSE
-  ├── main.sh
   ├── README.md
-  └── update.py
+  └── ...
 ```
 ---
 ### Language English
