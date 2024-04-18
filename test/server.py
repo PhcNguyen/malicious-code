@@ -2,8 +2,9 @@
 from __init__ import *
 from time import sleep
 from threading import Thread
-from modules.system import System, GoogleSheet, Console
-from modules.setting import Setting
+from modules.system import System, Console
+from modules.lib.sheet import GoogleSheet
+from modules.lib.setting import Setting
 from socket import socket, AF_INET, SOCK_STREAM
 
 

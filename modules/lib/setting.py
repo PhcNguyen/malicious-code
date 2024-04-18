@@ -1,6 +1,6 @@
-from .system import Console, ConsoleInput, System
-import json
+from modules.system import Console, ConsoleInput, System
 import os.path
+import json
 
 
 def get_input(prompt: str) -> str:
