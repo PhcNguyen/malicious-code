@@ -1,7 +1,7 @@
 ## Ransomware Directory Structure
 
 ```
-[ Malicious-Code ] [1.0.6]
+[ Malicious-Code ] [ 1.0.6 ]
   ├──[ doc ]
   │    ├── requirements.txt
   │    ├─────────────────────[ eng ]
