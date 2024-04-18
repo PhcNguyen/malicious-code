@@ -10,11 +10,11 @@
   │        ├── system.md       └── ...
   │        └── ...
   │
-  ├──[ modules ]        
-  │    ├── __init__.py    
-  │    ├── encdec.py
-  │    ├── setiing.py
-  │    └── system.py
+  ├──[ modules ]   
+  │    ├────────────────────[ lib ]    
+  │    ├── __init__.py        ├── email.py
+  │    ├── encdec.py          ├── sheet.py
+  │    └── system.py          └── ...
   │
   ├─────────────────────[ scripts ]
   │                       ├── credentials.json
