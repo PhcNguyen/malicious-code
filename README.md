@@ -4,8 +4,8 @@
 [ Malicious-Code ] [ 1.0.6 ]
   ├──[ doc ]
   │    ├── requirements.txt
-  │    ├─────────────────────[ eng ]
-  │    └─[ vie ]               ├── client.md
+  │    ├─────────────────────[ english ]
+  │    └─[ vietnam ]           ├── client.md
   │        ├── encdec.md       ├── server.md
   │        ├── system.md       └── ...
   │        └── ...
