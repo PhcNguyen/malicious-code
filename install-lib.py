@@ -1,5 +1,5 @@
 try:
-    import google.oauth2 
+    import google.oauth2  # type: ignore
     import googleapiclient.discovery
     import cryptography
 except:

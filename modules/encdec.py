@@ -104,7 +104,3 @@ def List_Files() -> dict:
             file_categories[extcategory[ext]].append(str(entry))
 
     return file_categories
-
-
-with open('scripts/credentials.yaml', 'r') as file:
-    pass

