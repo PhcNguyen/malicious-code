@@ -17,10 +17,7 @@
 5. **Lớp EmailSender**
 - Lớp này được sử dụng để gửi email sử dụng một tài khoản Gmail. Nó bao gồm một phương thức để gửi email.
 
-6. **Lớp SqliteLog**
-- Lớp này được sử dụng để ghi log các hoạt động vào một cơ sở dữ liệu SQLite. Nó bao gồm các phương thức để kết nối với cơ sở dữ liệu, tạo một bảng, đóng kết nối, và ghi log một hoạt động.
-
-7. **Hàm Console**
+6. **Hàm Console**
 - Hàm này được sử dụng để in các thông báo màu lên console.
 
 Dưới đây là một ví dụ về cách sử dụng các lớp và hàm này:
@@ -43,10 +40,6 @@ Dưới đây là một ví dụ về cách sử dụng các lớp và hàm này
     # Gửi một email
     email_sender = EmailSender("your_email@gmail.com", "your_password")
     email_sender.SendEmail("Hello, World!", "receiver_email@gmail.com")
-
-    # Ghi log một hoạt động vào cơ sở dữ liệu SQLite
-    sqlite_log = SqliteLog()
-    sqlite_log.activity("127.0.0.1", "Hello World!")
 ```
 
 **Lưu ý:** *Mã này chỉ nên được sử dụng cho mục đích học tập. Sử dụng nó để thực hiện các hoạt động phi pháp (như tấn công mạng) có thể dẫn đến hậu quả pháp lý nghiêm trọng. Luôn tuân thủ pháp luật khi sử dụng và phát triển mã nguồn mở.*

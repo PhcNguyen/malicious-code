@@ -9,9 +9,11 @@
   │        ├── encdec.vi.md    ├── server.en.md
   │        ├── system.vi.md    └── ...
   │        └── ...
+  │
   ├──[ modules ]        
   │    ├── __init__.py    
   │    ├── encdec.py
+  │    ├── setiing.py
   │    └── system.py
   ├─────────────────────[ scripts ]
   ├──[ test ]             ├── extensions.yaml

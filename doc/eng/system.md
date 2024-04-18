@@ -19,10 +19,7 @@ This Python code includes several classes and functions for system operations, c
 5. **EmailSender Class**
 - This class is used to send emails using a Gmail account. It includes a method for sending an email.
 
-6. **SqliteLog Class**
-- This class is used to log activities to a SQLite database. It includes methods for connecting to the database, creating a table, closing the connection, and logging an activity.
-
-7. **Console Function**
+6. **Console Function**
 - This function is used to print colored messages to the console.
 
 Here is an example of how to use these classes and functions:
@@ -45,9 +42,5 @@ Here is an example of how to use these classes and functions:
     # Send an email
     email_sender = EmailSender("your_email@gmail.com", "your_password")
     email_sender.SendEmail("Hello, World!", "receiver_email@gmail.com")
-
-    # Log an activity to the SQLite database
-    sqlite_log = SqliteLog()
-    sqlite_log.activity("127.0.0.1", "Hello, World!")
 ```
 **Please note**: *This code should only be used for learning purposes. Using it to perform illegal activities (such as cyber attacks) can lead to serious legal consequences. Always comply with legal regulations when using and developing open source code.*
