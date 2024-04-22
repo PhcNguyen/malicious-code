@@ -13,19 +13,14 @@
   ├──[ lib ]──── system.py
   │    ├────────────────────[ cryptography ]       
   │    └── [ modules ]        ├── fernet.py      
-  │          ├── yaml.py      └── encdec.py               
+  │          ├── yaml.py      └── aes.py               
   │          └── sheet.py
   │
-  ├─────────────────────[ scripts ]
-  │                       ├── extensions.yaml
-  ├──[ test-http ]        ├── setting.yaml
-  │    ├── client.py      └── ...
-  │    └── server.py      
-  │
-  ├──[ test-socket ]
-  │    ├── client.py 
-  │    └── server.py
-  │
+  ├──────────────────[ scripts ]
+  │                    ├── extensions.yaml
+  ├──[ test ]          ├── setting.yaml
+  │    └── ...         └── ...
+  │     
   └── ...
 ```
 ---
