@@ -8,16 +8,13 @@
 2. **Lớp Colors**
 - Lớp này chứa các phương thức tĩnh để xử lý mã màu ANSI. Nó bao gồm các phương thức để tạo mã màu ANSI, loại bỏ mã màu ANSI, bắt đầu một chuỗi màu, lấy số khoảng trắng đầu tiên trong một chuỗi, và pha trộn màu.
 
-3. **Lớp Color**
-- Lớp này chứa một phương thức tĩnh để pha trộn màu.
-
-4. **Lớp Col**
+3. **Lớp Col**
 - Lớp này chứa các mã màu ANSI đã được định nghĩa trước để sử dụng dễ dàng.
 
-5. **Lớp EmailSender**
+4. **Lớp EmailSender**
 - Lớp này được sử dụng để gửi email sử dụng một tài khoản Gmail. Nó bao gồm một phương thức để gửi email.
 
-6. **Hàm Console**
+5. **Hàm Console**
 - Hàm này được sử dụng để in các thông báo màu lên console.
 
 Dưới đây là một ví dụ về cách sử dụng các lớp và hàm này:
