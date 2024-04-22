@@ -45,7 +45,7 @@ class HttpServer:
         except KeyboardInterrupt:
             print("Server stopped.")
 
-# Sử dụng:
+
 if __name__ == "__main__":
     server = HttpServer(port=8000)
     server.start()
