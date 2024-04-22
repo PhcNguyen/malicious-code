@@ -94,6 +94,14 @@ def Split_Blocks(message: bytes, block_size: int = 16, require_padding: bool = T
     return [message[i:i+16] for i in range(0, len(message), block_size)]
 
 
+def get_key_iv(password: bytes, salt: Salt) -> Tuple[Key, Key, IV]:
+    stretched = pbkdf2_hmac('sha256', password, salt, 100000, AES_KEY_SIZE + IV_SIZE + HMAC_KEY_SIZE)
+    aes_key, stretched = stretched[:AES_KEY_SIZE], stretched[AES_KEY_SIZE:]
+    hmac_key, stretched = stretched[:HMAC_KEY_SIZE], stretched[HMAC_KEY_SIZE:]
+    iv = stretched[:IV_SIZE]
+    return aes_key, hmac_key, iv
+    
+
 class AESCipher:
     rounds_by_key_size = {16: 10, 24: 12, 32: 14}
     def __init__(self, master_key: Key) -> None:
@@ -185,11 +193,3 @@ class AESCipher:
             previous = ciphertext_block
 
         return unpad(b''.join(blocks))
-
-
-def get_key_iv(password: bytes, salt: Salt) -> Tuple[Key, Key, IV]:
-    stretched = pbkdf2_hmac('sha256', password, salt, 100000, AES_KEY_SIZE + IV_SIZE + HMAC_KEY_SIZE)
-    aes_key, stretched = stretched[:AES_KEY_SIZE], stretched[AES_KEY_SIZE:]
-    hmac_key, stretched = stretched[:HMAC_KEY_SIZE], stretched[HMAC_KEY_SIZE:]
-    iv = stretched[:IV_SIZE]
-    return aes_key, hmac_key, iv
