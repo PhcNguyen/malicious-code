@@ -1,7 +1,6 @@
 # Class GoogleSheet
 from google.oauth2 import service_account as SACC # type: ignore
 from googleapiclient.discovery import build
-from lib.system import Console
 
 
 class GoogleSheet:
@@ -17,7 +16,7 @@ class GoogleSheet:
             )
             self.service = build('sheets', 'v4', credentials=credentials)
         except Exception as e:
-            Console('127.0.0.1', e, 'Red')
+            return e
 
     def AllValues(self, sheet='Sheet1') -> list:
         result = self.service.spreadsheets().values().get(
