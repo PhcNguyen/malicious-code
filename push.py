@@ -9,25 +9,25 @@ Terminal.Clear()
 
 
 try:
-    response = requests.get('github.com')
+    response = requests.get('https://github.com')
     if response.status_code == 200:
         Terminal.Console('Ping', 'Connect to github.com successful', 'Green')
     else:
         Terminal.Console('Ping', f'Error: HTTP status code {response.status_code}', 'Red')
-        Terminal.Command('exit')
+        Terminal.Exit()
 except Exception as e:
     Terminal.Console('Ping', e, 'Red')
-    Terminal.Command('exit')
+    Terminal.Exit()
 
 try:
     with open('scripts/.version', 'r') as file:
         __version__ = file.read()
 except FileNotFoundError:
     Terminal.Console('GitHub', 'File .version not found', 'Red')
-    Terminal.Command('exit')
+    Terminal.Exit()
 except Exception as e:
     Terminal.Console('GitHub', f'Error reading .version file: {e}', 'Red')
-    Terminal.Command('exit')
+    Terminal.Exit()
 
 try:
     run(['git', 'add', '.'], stdout=DEVNULL, stderr=DEVNULL)
@@ -41,7 +41,7 @@ try:
 
 except FileNotFoundError:
     Terminal.Console('GitHub', 'Git command not found', 'Red')
-    Terminal.Command('exit')
+    Terminal.Exit()
 except Exception as e:
     Terminal.Console('GitHub', f'Error executing Git command: {e}', 'Red')
-    Terminal.Command('exit')
+    Terminal.Exit()

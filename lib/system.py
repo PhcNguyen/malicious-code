@@ -1,6 +1,6 @@
 # Class System
 from os import execv, system as _system, name as _os_name
-from sys import executable, argv
+from sys import executable, argv, exit
 # Class Colors, Color
 from collections import deque
 
@@ -25,6 +25,9 @@ class System:
     
     def Reset(self) -> None:
         execv(executable, [executable] + argv) 
+    
+    def Exit(self) -> None:
+        exit()
     
     def Command(self, command: str):
         return _system(command)
