@@ -2,7 +2,7 @@
 from __init__ import *
 from time import sleep
 from lib.system import System
-from lib.encdec import Fernet, Encrypt, Decrypt
+from lib.modules.encdec import Fernet, Encrypt, Decrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
 

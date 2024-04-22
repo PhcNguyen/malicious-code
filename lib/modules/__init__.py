@@ -1,1 +1,1 @@
-__all__ = ['email', 'sheet', 'yaml']
+__all__ = ['email', 'fernet', 'sheet', 'yaml']

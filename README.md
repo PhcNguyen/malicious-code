@@ -18,9 +18,14 @@
   │
   ├─────────────────────[ scripts ]
   │                       ├── extensions.yaml
-  ├──[ test ]             ├── setting.yaml
+  ├──[ test-http ]        ├── setting.yaml
   │    ├── client.py      └── ...
   │    ├── server.py      
+  │    └── ...
+  │
+  ├──[ test-socket ]
+  │    ├── client.py 
+  │    ├── server.py
   │    └── ...
   │
   ├── .gitignore 
@@ -43,9 +48,8 @@ The `Ransomware` project consists of the following directories and files:
     - `system.py`
 - `scripts`: This directory contains script files.
     - `extensions.yaml`
-    - `info.txt`
+    - `setting.yaml`
 - `test`: This directory contains test files.
-    - `__init__.py`
     - `server.py`
     - `client.py`
 - `.gitignore`: This file specifies intentionally untracked files to ignore by Git.
@@ -66,9 +70,8 @@ Dự án `Ransomware` bao gồm các thư mục và tệp sau:
     - `system.py`
 - `scripts`: Thư mục này chứa các tệp script.
     - `extensions.yaml`
-    - `info.txt`
+    - `setting.yaml`
 - `test`: Thư mục này chứa các tệp kiểm thử.
-    - `__init__.py`
     - `server.py`
     - `client.py`
 - `.gitignore`: Tệp này dùng để chỉ định những tệp hoặc thư mục không được Git theo dõi.
