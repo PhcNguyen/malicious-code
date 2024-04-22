@@ -7,8 +7,9 @@ from collections import deque
 class System:
     def __init__(self) -> None:
         self.Windows: bool = _os_name == 'nt'
- 
-    def Init(self) -> None:
+    
+    @staticmethod
+    def Init() -> None:
         _system('')
 
     def Clear(self) -> None:
@@ -21,17 +22,21 @@ class System:
     def Size(self, x: int, y: int) -> None:
         if self.Windows:
             return _system(f"mode {x}, {y}")
-    
-    def Reset(self) -> None:
+        
+    @staticmethod
+    def Reset() -> None:
         execv(executable, [executable] + argv) 
     
-    def Exit(self) -> None:
+    @staticmethod
+    def Exit() -> None:
         exit()
     
-    def Command(self, command: str) -> Optional[int]:
+    @staticmethod
+    def Command(command: str) -> Optional[int]:
         return _system(command)
     
-    def Console(self, ip: str, msg: str, color: str) -> None:
+    @staticmethod
+    def Console(ip: str, msg: str, color: str) -> None:
         print(f" [{Col.Green}{ip}{Col.White}] --> {getattr(Col, color)}{msg}{Col.White}")
 
 
