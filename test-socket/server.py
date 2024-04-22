@@ -1,5 +1,10 @@
 # Import modules
-from __init__ import *
+import sys
+import os.path
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from time import sleep
 from threading import Thread
 from lib.system import System

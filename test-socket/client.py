@@ -1,8 +1,13 @@
 # Import modules
-from __init__ import *
+import sys
+import os.path
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from time import sleep
 from lib.system import System
-from lib.modules.encdec import Fernet, Encrypt, Decrypt
+from lib.cryptography.encdec import Fernet, Encrypt, Decrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
 
