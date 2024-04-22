@@ -1,3 +1,4 @@
+import time
 import requests
 from lib.system import System
 from subprocess import run, DEVNULL
@@ -6,7 +7,7 @@ from subprocess import run, DEVNULL
 Terminal = System()
 Terminal.Init()
 Terminal.Clear()
-
+start = time.time()
 
 try:
     response = requests.get('https://github.com')
@@ -38,6 +39,10 @@ try:
 
     run(['git', 'push', 'origin', 'main'], stdout=DEVNULL, stderr=DEVNULL)
     Terminal.Console('GitHub', 'git push origin main', 'Blue')
+
+    end = time.time()
+    elapsed_time = end - start
+    Terminal.Console('Timer', f'Elapsed time for push: {elapsed_time:.2f} seconds', 'Yellow')
 
 except FileNotFoundError:
     Terminal.Console('GitHub', 'Git command not found', 'Red')
