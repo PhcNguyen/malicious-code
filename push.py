@@ -9,6 +9,7 @@ Terminal.Init()
 Terminal.Clear()
 start = time.time()
 
+
 try:
     response = requests.get('https://github.com')
     if response.status_code == 200:
@@ -23,9 +24,11 @@ except Exception as e:
 try:
     with open('scripts/.version', 'r') as file:
         __version__ = file.read()
+        
 except FileNotFoundError:
     Terminal.Console('GitHub', 'File .version not found', 'Red')
     Terminal.Exit()
+
 except Exception as e:
     Terminal.Console('GitHub', f'Error reading .version file: {e}', 'Red')
     Terminal.Exit()
@@ -47,6 +50,7 @@ try:
 except FileNotFoundError:
     Terminal.Console('GitHub', 'Git command not found', 'Red')
     Terminal.Exit()
+
 except Exception as e:
     Terminal.Console('GitHub', f'Error executing Git command: {e}', 'Red')
     Terminal.Exit()

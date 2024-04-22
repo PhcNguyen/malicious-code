@@ -1,7 +1,7 @@
 # Class GoogleSheet
 from google.oauth2 import service_account as SACC # type: ignore
 from googleapiclient.discovery import build
-from modules.system import Console
+from lib.system import Console
 
 
 class GoogleSheet:
