@@ -6,7 +6,8 @@ from typing import Union
 from hmac import new as new_hmac, compare_digest
 from lib.cryptography.cipher import (
     SALT_SIZE, HMAC_SIZE, 
-    get_key_iv, AESCipher)
+    get_key_iv, AESCipher
+)
 
 
 class Fernet:
