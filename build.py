@@ -13,8 +13,7 @@ except ImportError as e:
     try:
         packages = ['google-auth-httplib2', 
                     'google-auth-oauthlib', 
-                    'google-api-python-client',
-                    'cryptography']
+                    'google-api-python-client']
 
         for package in packages:
             run(['pip', 'install', package, '--break-system-packages'], stdout=DEVNULL, stderr=DEVNULL)
