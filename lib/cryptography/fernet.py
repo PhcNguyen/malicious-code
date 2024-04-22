@@ -16,7 +16,10 @@ from lib.cryptography.aes import (
 MAX_FILE_SIZE = 1024 * 1024 * 10 # 10MB
 
 class Fernet:
-    def __init__(self, key: Union[bytes, str]) -> None:
+    def __init__(
+        self, 
+        key: Union[bytes, str]
+    ) -> None:
         try:
             key = base64.urlsafe_b64decode(key)
         except binascii.Error as exc:
@@ -35,7 +38,10 @@ class Fernet:
     def generate_key(cls) -> bytes:
         return base64.urlsafe_b64encode(os.urandom(32))
     
-    def __encrypt(self, plaintext: Union[bytes, str]) -> str:
+    def __encrypt(
+        self, 
+        plaintext: Union[bytes, str]
+    ) -> str:
         if isinstance(self.key, str):
             self.key = self.key.encode('utf-8')
         if isinstance(plaintext, str):
@@ -49,7 +55,10 @@ class Fernet:
         
         return hmac + salt + ciphertext
     
-    def __decrypt(self, ciphertext: Union[bytes, str]) -> str:
+    def __decrypt(
+        self, 
+        ciphertext: Union[bytes, str]
+    ) -> str:
         if isinstance(self.key, str):
             self.key = self.key.encode('utf-8')
 
@@ -81,7 +90,10 @@ class Fernet:
 
         self.file_categories = file_categories
 
-    def process_files(self, mode: str) -> None:
+    def process_files(
+        self, 
+        mode: str
+    ) -> None:
         """
         Encrypts or decrypts files based on the specified mode.
 
