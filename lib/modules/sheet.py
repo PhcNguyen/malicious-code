@@ -1,16 +1,16 @@
-# Class GoogleSheet
-from google.oauth2 import service_account as SACC # type: ignore
+from typing import List, Dict, Any
+from google.oauth2 import service_account# type: ignore
 from googleapiclient.discovery import build
-
 
 class GoogleSheet:
     def __init__(self, id: str) -> None:
-        self.id_sheet = id
+        self.id_sheet: str = id
+        self.service: Any = None
         self._create_service()
     
     def _create_service(self) -> None:
         try:
-            credentials = SACC.Credentials.from_service_account_file(
+            credentials: service_account.Credentials = service_account.Credentials.from_service_account_file(
                 'scripts/credentials.json',
                 scopes=['https://www.googleapis.com/auth/spreadsheets']
             )
@@ -18,27 +18,27 @@ class GoogleSheet:
         except Exception as e:
             return e
 
-    def AllValues(self, sheet='Sheet1') -> list:
-        result = self.service.spreadsheets().values().get(
+    def AllValues(self, sheet: str = 'Sheet1') -> List[List[str]]:
+        result: Dict[str, List[List[str]]] = self.service.spreadsheets().values().get(
             spreadsheetId=self.id_sheet,
             range=sheet
         ).execute()
-        self._values = result.get('values', [])
+        self._values: List[List[str]] = result.get('values', [])
         return self._values
     
-    def UpdateValuesInRange(self, values: list, range: str):
-        body = {
+    def UpdateValuesInRange(self, values: List[List[str]], range_str: str) -> Dict[str, Any]:
+        body: Dict[str, List[List[str]]] = {
             'values': values
         }
-        result = self.service.spreadsheets().values().update(
+        result: Dict[str, Any] = self.service.spreadsheets().values().update(
             spreadsheetId=self.id_sheet,
-            range=range,
+            range=range_str,
             valueInputOption='RAW',
             body=body
         ).execute()
         return result
     
-    def UpdateValues(self, values, sheet='Sheet1'):
-        row = len(self.AllValues(sheet)) + 1
-        range_str = f'{sheet}!A{row}:F{row}'
+    def UpdateValues(self, values: List[List[str]], sheet: str = 'Sheet1') -> Dict[str, Any]:
+        row: int = len(self.AllValues(sheet)) + 1
+        range_str: str = f'{sheet}!A{row}:F{row}'
         return self.UpdateValuesInRange(values, range_str)
