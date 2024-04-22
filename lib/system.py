@@ -1,13 +1,12 @@
-# Class System
 from os import execv, system as _system, name as _os_name
 from sys import executable, argv, exit
-# Class Colors, Color
+from typing import Optional
 from collections import deque
 
 
 class System:
     def __init__(self) -> None:
-        self.Windows = _os_name == 'nt'
+        self.Windows: bool = _os_name == 'nt'
  
     def Init(self) -> None:
         _system('')
@@ -15,7 +14,7 @@ class System:
     def Clear(self) -> None:
         return _system("cls" if self.Windows else "clear")
 
-    def Title(self, title: str):
+    def Title(self, title: str) -> None:
         if self.Windows:
             return _system(f"title {title}")
 
@@ -29,7 +28,7 @@ class System:
     def Exit(self) -> None:
         exit()
     
-    def Command(self, command: str):
+    def Command(self, command: str) -> Optional[int]:
         return _system(command)
     
     def Console(self, ip: str, msg: str, color: str) -> None:
@@ -54,12 +53,10 @@ class Colors:
         return len(text) - len(text.lstrip())
     
     @staticmethod
-    def mix_colors(col1: str, col2: str) -> list:
+    def mix_colors(col1: str, col2: str) -> deque:
         col1, col2 = Colors.remove_ansi(col=col1), Colors.remove_ansi(col=col2)
         return deque([col1, col2]) if col1 == col2 else deque([col1, Colors.static_mix([col1, col2], _start=False), col2])
 
-
-class Color:
     @staticmethod
     def static_mix(colors: list, _start: bool = True) -> str:
         rgb = [list(map(int, Colors.remove_ansi(col).split(';'))) for col in colors]
@@ -69,16 +66,16 @@ class Color:
 
 
 class Col:
-    Red = Colors.start('255;0;0')
+    Red: str = Colors.start('255;0;0')
     
-    Blue = Colors.start('28;121;255')
-    Cyan = Colors.start('0;255;255')
-    Pink = Colors.start('255,192,203')
+    Blue: str = Colors.start('28;121;255')
+    Cyan: str = Colors.start('0;255;255')
+    Pink: str = Colors.start('255,192,203')
 
-    Black = Colors.start('0;0;0')
-    White = Colors.start('255;255;255')
-    Green = Colors.start('0;255;0')
+    Black: str = Colors.start('0;0;0')
+    White: str = Colors.start('255;255;255')
+    Green: str = Colors.start('0;255;0')
 
-    Purple = Colors.start('255;0;255')
-    Yellow = Colors.start('255;255;0')
-    Orange = Colors.start('255;165;0')
+    Purple: str = Colors.start('255;0;255')
+    Yellow: str = Colors.start('255;255;0')
+    Orange: str = Colors.start('255;165;0')

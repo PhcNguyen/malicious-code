@@ -12,7 +12,7 @@
   │
   ├──[ lib ]   
   │    ├────────────────────[ modules ]    
-  │    ├── system.py          ├── email.py
+  │    ├── __init__.py        ├── email.py
   │    ├── encdec.py          ├── sheet.py
   │    └── ...                └── ...
   │

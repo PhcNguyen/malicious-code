@@ -47,7 +47,7 @@ def List_Files() -> dict:
 
     return file_categories
 ```
-- Hàm mở tệp ‘*scripts/extensions.yaml*’ để đọc và sử dụng hàm `Safe_Load(file)` để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến `exts`.
+- Hàm mở tệp ‘*scripts/extensions.yaml*’ để đọc và sử dụng hàm `safe_load(file)` để phân tích dữ liệu *YAML* từ tệp này. Kết quả được lưu vào biến `exts`.
 
 - Tạo một từ điển `file_categories` với các khóa là các danh mục từ `exts` và giá trị là các danh sách trống. Tạo một từ điển *extcategory* mà mỗi phần mở rộng tệp trong `exts` là một khóa và giá trị tương ứng là danh mục của phần mở rộng đó.
 
@@ -76,18 +76,6 @@ class System:
     def Reset(self) -> None:
         execv(executable, [executable] + argv) 
     
-    def Mac(self) -> str:
-        try:
-            address_mac = [
-                address.address 
-                for addresses in net_if_addrs().values() 
-                for address in addresses 
-                if address.family == AF_LINK
-            ]
-            return '|'.join(address_mac) if address_mac else 'nm'  
-        except:
-            return 'nm'
-    
     def Command(command: str):
         return _system(command)
 ```
@@ -99,7 +87,6 @@ class System:
         Title()    |      đặt tiêu đề của terminal, chỉ dành cho Windows
         Size()     |      đặt kích thước của terminal, chỉ dành cho Windows
         Reset()    |      khởi động lại chương trình hiện tại
-        Mac()      |      địa chỉ MAC của máy tính
         Command()  |      thực thi một lệnh shell trên hệ thống máy tính
 ```python
 def Console(ip: str, msg: str, color: str) -> None:
@@ -109,9 +96,3 @@ def Console(ip: str, msg: str, color: str) -> None:
 ```
 - Hàm getattr được sử dụng để lấy giá trị thuộc tính color từ đối tượng Col.
 - Tạo một chuỗi được định dạng và in ra chuỗi đã được định dạng.
-
-## SERVER - CLIENT
-
-**Server**: Máy chủ chấp nhận kết nối từ máy khách và xử lý dữ liệu đến. Sử dụng luồng để xử lý nhiều kết nối máy khách cùng một lúc.
-
-**Client**: kết nối thành công, gửi thông tin hệ thống và khóa đến máy chủ. Nếu không kết nối được sau 3 lần thử lại, thực hiện khởi động lại chương trình.

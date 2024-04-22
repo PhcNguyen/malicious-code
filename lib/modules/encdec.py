@@ -364,7 +364,7 @@ class Fernet:
 
         return AES(key).decrypt_cbc(ciphertext, iv).decode()
     
-    def encrypt(self, plaintext: bytes | str) -> str:
+    def encrypt(self, plaintext: Union[bytes, str]) -> str:
         """
         Mã hóa một chuỗi dữ liệu bằng AES và tạo chữ ký HMAC.
         """

@@ -73,18 +73,6 @@ class System:
     def Reset(self) -> None:
         execv(executable, [executable] + argv) 
     
-    def Mac(self) -> str:
-        try:
-            address_mac = [
-                address.address 
-                for addresses in net_if_addrs().values() 
-                for address in addresses 
-                if address.family == AF_LINK
-            ]
-            return '|'.join(address_mac) if address_mac else 'nm'  
-        except:
-            return 'nm'
-    
     def Command(command: str):
         return _system(command)
 ```
@@ -96,7 +84,6 @@ class System:
         Title()    |     Sets the title of the terminal, only applicable for Windows
         Size()     |     Sets the size of the terminal, only applicable for Windows
         Reset()    |     Restarts the current program
-        Mac()      |     Retrieves the MAC address of the computer
         Command()  |     Executes a shell command on the computer's system
 ```python
 def Console(ip: str, msg: str, color: str) -> None:
@@ -107,5 +94,3 @@ def Console(ip: str, msg: str, color: str) -> None:
 
 - The `getattr` function is used to retrieve the value of the color attribute from the `Col` object.
 - It creates a formatted string and prints the formatted string.
-
-## SERVER - CLIENT
