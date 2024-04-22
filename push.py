@@ -9,9 +9,9 @@ Terminal.Clear()
 
 
 try:
-    response = requests.get('www.github.com')
+    response = requests.get('github.com')
     if response.status_code == 200:
-        Terminal.Console('Ping', 'Connect to www.github.com successful', 'Green')
+        Terminal.Console('Ping', 'Connect to github.com successful', 'Green')
     else:
         Terminal.Console('Ping', f'Error: HTTP status code {response.status_code}', 'Red')
         Terminal.Command('exit')
