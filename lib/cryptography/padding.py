@@ -1,4 +1,6 @@
-def pad(plaintext: bytes) -> bytes:
+def pad(
+        plaintext: bytes
+    ) -> bytes:
     """
     Pads the input plaintext to a multiple of 16 bytes.
 
@@ -12,7 +14,9 @@ def pad(plaintext: bytes) -> bytes:
     padding = bytes([padding_len] * padding_len)
     return plaintext + padding
 
-def unpad(plaintext: bytes) -> bytes:
+def unpad(
+        plaintext: bytes
+    ) -> bytes:
     """
     Removes padding from the input plaintext.
 
