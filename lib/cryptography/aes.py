@@ -17,17 +17,17 @@ class AesCipher:
         16: 10, 24: 12, 32: 14
     }
     def __init__(
-            self, 
-            master_key: KEY
-        ) -> None:
+        self, 
+        master_key: KEY
+    ) -> None:
         assert len(master_key) in AesCipher.rounds_by_key_size
         self.n_rounds = AesCipher.rounds_by_key_size[len(master_key)]
         self._key_matrices = self._expand_key(master_key)
 
     def _expand_key(
-            self, 
-            master_key: KEY
-        ) -> List[List[List[int]]]:
+        self, 
+        master_key: KEY
+    ) -> List[List[List[int]]]:
         key_columns = Bytes2Matrix(master_key)
         iteration_size = len(master_key) // 4
 
@@ -49,9 +49,9 @@ class AesCipher:
         return [key_columns[4*i : 4*(i+1)] for i in range(len(key_columns) // 4)]
 
     def encrypt_block(
-            self, 
-            plaintext: BLOCK
-        ) -> BLOCK:
+        self, 
+        plaintext: BLOCK
+    ) -> BLOCK:
         assert len(plaintext) == 16
 
         plain_state = Bytes2Matrix(plaintext)
@@ -71,9 +71,9 @@ class AesCipher:
         return Matrix2Bytes(plain_state)
 
     def decrypt_block(
-            self, 
-            ciphertext: BLOCK
-        ) -> BLOCK:
+        self, 
+        ciphertext: BLOCK
+    ) -> BLOCK:
        
         assert len(ciphertext) == 16
 
@@ -94,10 +94,10 @@ class AesCipher:
         return Matrix2Bytes(cipher_state)
 
     def encrypt_cbc(
-            self, 
-            plaintext: bytes, 
-            iv: IV
-        ) -> bytes:
+        self, 
+        plaintext: bytes, 
+        iv: IV
+    ) -> bytes:
         assert len(iv) == 16
 
         plaintext = pad(plaintext)
@@ -112,10 +112,10 @@ class AesCipher:
         return b''.join(blocks)
 
     def decrypt_cbc(
-            self, 
-            ciphertext: bytes, 
-            iv: IV
-        ) -> bytes:
+        self, 
+        ciphertext: bytes, 
+        iv: IV
+    ) -> bytes:
         assert len(iv) == 16
 
         blocks = []
