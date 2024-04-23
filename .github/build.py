@@ -1,3 +1,7 @@
+import sys
+import os.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from subprocess import run, DEVNULL
 from lib.system import System
 from time import time
@@ -10,7 +14,7 @@ Terminal.Clear()
 Terminal.Init()
 
 
-def _check():
+def __check():
     global start
     end = time()
     elapsed_time = end - start
@@ -30,7 +34,7 @@ if os.path.isdir('venv'):
             "Cannot create venv", 
             'Red'
         )
-        _check()
+        __check()
         Terminal.Exit()
 
 try:
@@ -76,8 +80,8 @@ except ImportError as e:
                         'Red'
                     )
                     Terminal.Exit()
-                    _check()
+                    __check()
             except Exception as e:
                 Terminal.Console('Build', e, 'Red')
 finally:
-    _check()
+    __check()
