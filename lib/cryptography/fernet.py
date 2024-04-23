@@ -99,27 +99,19 @@ class Fernet:
         Encrypts or decrypts files based on the specified mode.
 
         Args:
-            Private (Fernet): An instance of the Fernet class.
             mode (str): Either 'encrypt' or 'decrypt'.
         """
         for _, files in self.file_categories.items():
             for file in files:
                 temp_file = file + '.temp'
                 try:
-                    file_size = os.path.getsize(file)
-                    if file_size <= MAX_FILE_SIZE:  # Nếu kích thước tệp nhỏ hơn hoặc bằng ngưỡng cho phép
-                        with open(file, 'rb') as original_file, open(temp_file, 'wb') as temp_file:
-                            chunk = original_file.read()
+                    with open(file, 'rb') as original_file, open(temp_file, 'wb') as temp_file:
+                        while True:
+                            chunk = original_file.read(MAX_FILE_SIZE)  # Đọc từng phần của tệp
+                            if not chunk:
+                                break
                             processed_chunk = self.__encrypt(chunk) if mode == 'encrypt' else self.__decrypt(chunk)
                             temp_file.write(processed_chunk)
-                    else:  # Nếu kích thước tệp lớn hơn ngưỡng cho phép
-                        with open(file, 'rb') as original_file, open(temp_file, 'wb') as temp_file:
-                            while True:
-                                chunk = original_file.read(MAX_FILE_SIZE)  # Đọc từng phần của tệp
-                                if not chunk:
-                                    break
-                                processed_chunk = self.__encrypt(chunk) if mode == 'encrypt' else self.__decrypt(chunk)
-                                temp_file.write(processed_chunk)
                     shutil.move(temp_file.name, file)
                 except Exception:
                     if os.path.exists(temp_file.name):
