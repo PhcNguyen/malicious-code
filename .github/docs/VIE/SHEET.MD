@@ -1,4 +1,4 @@
-# GoogleSheet Class
+## GoogleSheet
 
 Lớp `GoogleSheet` cung cấp các phương thức để tương tác với Google Sheets thông qua Google Sheets API.
 
