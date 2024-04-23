@@ -1,4 +1,4 @@
-# Thuật Toán AES (Advanced Encryption Standard)
+# Advanced Encryption Standard
 
 ## Khởi tạo AESCipher
 
