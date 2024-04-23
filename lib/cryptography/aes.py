@@ -11,7 +11,7 @@ from lib.cryptography.util import (
 )
 
 
-class AesCipher:
+class AESCipher:
     rounds_by_key_size = {
         16: 10, 24: 12, 32: 14
     }
