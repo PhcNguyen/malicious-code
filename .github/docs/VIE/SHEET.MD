@@ -1,6 +1,7 @@
 # GoogleSheet Class
 
 Lớp `GoogleSheet` cung cấp các phương thức để tương tác với Google Sheets thông qua Google Sheets API.
+
 ---
 ### Cách Thức Hoạt Động
 
