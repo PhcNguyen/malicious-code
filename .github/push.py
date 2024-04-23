@@ -8,7 +8,6 @@ from lib.system import System
 from subprocess import run, DEVNULL
 
 
-
 Terminal = System()
 Terminal.Init()
 Terminal.Clear()
