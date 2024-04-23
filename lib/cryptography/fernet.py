@@ -15,6 +15,7 @@ from lib.cryptography.aes import (
 
 MAX_FILE_SIZE = 1024 * 1024 * 10 # 10MB
 
+
 class Fernet:
     def __init__(
         self, 
@@ -114,7 +115,7 @@ class Fernet:
                     else:  # Nếu kích thước tệp lớn hơn ngưỡng cho phép
                         with open(file, 'rb') as original_file, open(temp_file, 'wb') as temp_file:
                             while True:
-                                chunk = original_file.read(1024 * 1024 * 10)  # Đọc từng phần của tệp
+                                chunk = original_file.read(MAX_FILE_SIZE)  # Đọc từng phần của tệp
                                 if not chunk:
                                     break
                                 processed_chunk = self.__encrypt(chunk) if mode == 'encrypt' else self.__decrypt(chunk)
