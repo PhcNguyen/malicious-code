@@ -1,4 +1,4 @@
-# Class System and Colors
+## System - Colors
 
 Đoạn mã Python này bao gồm một số lớp và hàm cho các hoạt động hệ thống, xử lý màu sắc, in thông báo lên console.
 
@@ -25,6 +25,9 @@
     # In một thông báo lên console
     Terminal.Console("127.0.0.1", "Hello, World!", "Green")
 
-    # color black (RGB)
+    # Color black (RGB)
     Black = Colors.start('0;0;0')
+    
+    # Class Col
+    print(f"{Col.Red} I AM IS RED {Col.White}")
 ```
