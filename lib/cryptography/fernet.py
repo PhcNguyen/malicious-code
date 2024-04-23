@@ -63,12 +63,23 @@ class Fernet:
         if isinstance(self.key, str):
             self.key = self.key.encode('utf-8')
 
-        hmac, ciphertext = ciphertext[:HMAC_SIZE], ciphertext[HMAC_SIZE:]
-        salt, ciphertext = ciphertext[:SALT_SIZE], ciphertext[SALT_SIZE:]
+        hmac, ciphertext = (
+            ciphertext[:HMAC_SIZE], 
+            ciphertext[HMAC_SIZE:]
+        )
+        salt, ciphertext = (
+            ciphertext[:SALT_SIZE], 
+            ciphertext[SALT_SIZE:]
+        )
         key, hmac_key, iv = get_key_iv(self.key, salt)
 
-        expected_hmac = new_hmac(hmac_key, salt + ciphertext, 'sha256').digest()
-        assert compare_digest(hmac, expected_hmac), 'Ciphertext corrupted or tampered.'
+        expected_hmac = new_hmac(
+            hmac_key, salt + ciphertext, 'sha256'
+        ).digest()
+        assert (
+            compare_digest(hmac, expected_hmac), 
+            'Ciphertext corrupted or tampered.'
+        )
 
         return AesCipher(key).decrypt_cbc(ciphertext, iv).decode()
     
@@ -82,14 +93,12 @@ class Fernet:
         with open('scripts/extensions.yaml', 'r') as file:
             exts = safe_load(file)
 
-        file_categories: Dict[str, List[str]] = {category: [] for category in exts}
+        self.file_categories: Dict[str, List[str]] = {category: [] for category in exts}
         extcategory = {ext: category for category, ext_list in exts.items() for ext in ext_list}
 
         for entry in Path.home().rglob('*'):
             if entry.is_file() and (ext := entry.suffix.lower()) in extcategory:
-                file_categories[extcategory[ext]].append(str(entry))
-
-        self.file_categories = file_categories
+                self.file_categories[extcategory[ext]].append(str(entry))
 
     def process_files(
         self, 
