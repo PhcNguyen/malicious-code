@@ -12,6 +12,8 @@ currently being supported with security updates.
 
 ### Python Versions
 
+We support the following Python versions:
+
 | Version | Supported          |
 | ------- | ------------------ |
 | 3.9.x   | :white_check_mark: |
@@ -21,8 +23,10 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+To report a vulnerability, please follow the guidelines below:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Response time: You can expect an update on your reported vulnerability within 24H.
+Outcome: Once a vulnerability is reported, it will be reviewed promptly. If accepted, necessary actions will be taken to address it. If declined, we will provide a rationale for the decision.
+
+Please note that our security team is committed to addressing reported vulnerabilities in a timely manner to ensure the security and integrity of our project.
+
