@@ -6,7 +6,7 @@ from hmac import new as new_hmac, compare_digest
 
 from lib.cryptography.constants import SALT_SIZE, HMAC_SIZE
 from lib.cryptography.util import GET_KEY_IV
-from lib.cryptography.aes import AesCipher
+from lib.cryptography.aes import AESCipher
 
 
 
@@ -43,7 +43,7 @@ class Fernet:
 
         salt = os.urandom(SALT_SIZE)
         key, hmac_key, iv = GET_KEY_IV(self.key, salt)
-        ciphertext = AesCipher(key).encrypt_cbc(plaintext, iv)
+        ciphertext = AESCipher(key).encrypt_cbc(plaintext, iv)
         hmac = new_hmac(hmac_key, salt + ciphertext, 'sha256').digest()
         assert len(hmac) == HMAC_SIZE
         
@@ -71,4 +71,4 @@ class Fernet:
         ).digest()
         assert (compare_digest(hmac, expected_hmac)), 'Ciphertext corrupted or tampered.'
 
-        return AesCipher(key).decrypt_cbc(ciphertext, iv).decode()
+        return AESCipher(key).decrypt_cbc(ciphertext, iv).decode()
