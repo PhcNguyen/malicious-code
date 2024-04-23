@@ -1,16 +1,16 @@
 # GoogleSheet Class
 
 Lớp `GoogleSheet` cung cấp các phương thức để tương tác với Google Sheets thông qua Google Sheets API.
-
-## Cách Thức Hoạt Động
+---
+### Cách Thức Hoạt Động
 
 1. **Khởi tạo**: Khi khởi tạo một đối tượng `GoogleSheet`, nó sẽ tải thông tin tài khoản dịch vụ từ tệp `credentials.json` và tạo một dịch vụ Google Sheets.
 
 2. **Lấy tất cả các giá trị**: `get_all_values()` trả về tất cả các giá trị từ một bảng tính cụ thể.
 
 3. **Cập nhật giá trị**: `update_values()` thêm một hàng mới vào bảng tính với một danh sách giá trị.
-
-## Cách Sử Dụng
+---
+### Cách Sử Dụng
 
 Đầu tiên, hãy khởi tạo một đối tượng `GoogleSheet`:
 
