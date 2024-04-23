@@ -132,7 +132,7 @@ def Split_Blocks(
     return [message[i:i+16] for i in range(0, len(message), block_size)]
 
 
-def get_key_iv(
+def GET_KEY_IV(
         password: bytes, 
         salt: SALT
     ) -> Tuple[KEY, KEY, IV]:
