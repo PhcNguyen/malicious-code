@@ -19,8 +19,8 @@ class AESCipher:
         self, 
         master_key: KEY
     ) -> None:
-        assert len(master_key) in AesCipher.rounds_by_key_size
-        self.n_rounds = AesCipher.rounds_by_key_size[len(master_key)]
+        assert len(master_key) in AESCipher.rounds_by_key_size
+        self.n_rounds = AESCipher.rounds_by_key_size[len(master_key)]
         self._key_matrices = self._expand_key(master_key)
 
     def _expand_key(

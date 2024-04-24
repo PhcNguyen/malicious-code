@@ -1,22 +1,21 @@
-## Ransomware Directory Structure
+## Malicious Code Directory Structure
 
 ```
 [ Malicious-Code ] [ 1.0.6 ]
+  │
   ├──[ .github ]──────── ...
   │     └───[ docs ]────────────[ eng]
   │           └─[ vie ]           ├── client.md
   │               ├── encdec.md   └── ...
   │               └── ...
-  │
-  ├──[ lib ]──── system.py
+  ├──[ lib ]
   │   ├─────[ cryptography ]       
   │   │       ├── fernet.py      
-  │   │       └── aes.py               
-  │   └── [ modules ]        
-  │          └── system.py      
+  │   │       └── ...            
+  │   └─────[ modules ]        
+  │           └── ...   
   │
   ├──[ scripts ]
-  │   ├── extensions.yaml
   │   ├── setting.yaml
   │   └── ...
   │

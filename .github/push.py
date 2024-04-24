@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import time
 import requests
-from lib.system import System
+from lib.modules.system import System
 from subprocess import run, DEVNULL
 
 
