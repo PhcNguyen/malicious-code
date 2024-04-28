@@ -30,12 +30,6 @@ except Exception as e:
 try:
     with open('scripts/.version', 'r+') as file:
         __version__ = file.read()
-        major, minor, patch = map(int, __version__.split('.'))
-        patch += 1
-        new_version = f"{major}.{minor}.{patch}"
-        file.seek(0)
-        file.write(new_version)
-        file.truncate()
         
 except FileNotFoundError:
     Terminal.Console('GitHub', 'File .version not found', 'Red')
