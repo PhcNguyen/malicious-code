@@ -1,7 +1,7 @@
 ## Malicious Code Directory Structure
 
 ```
-[ Malicious-Code ] [ 1.0.6 ]
+[ Malicious-Code ] [ 1.0.7 ]
   │
   ├──[ .github ]──────── ...
   │     └───[ docs ]────────────[ eng]
@@ -9,6 +9,7 @@
   │               ├── encdec.md   └── ...
   │               └── ...
   ├──[ lib ]
+  │   ├──────────[ google ]───── ...
   │   ├─────[ cryptography ]       
   │   │       ├── fernet.py      
   │   │       └── ...            
