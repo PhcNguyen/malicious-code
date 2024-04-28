@@ -52,7 +52,7 @@ try:
 
     end = time.time()
     elapsed_time = end - start
-    Terminal.Console('Timer', f'Elapsed time for push: {elapsed_time:.2f} seconds', 'Yellow')
+    Terminal.Console('Timer', f'Elapsed time for push: {elapsed_time:.3f} seconds', 'Yellow')
 
 except FileNotFoundError:
     Terminal.Console('GitHub', 'Git command not found', 'Red')

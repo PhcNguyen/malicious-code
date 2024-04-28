@@ -1,31 +1,25 @@
-## GoogleSheet
+## SheetApis
 
-Lớp `GoogleSheet` cung cấp các phương thức để tương tác với Google Sheets thông qua Google Sheets API.
+### `SheetApis` Class:
+- `__init__(self, id: str)`: Phương thức khởi tạo nhận một định danh Google Sheets ID và khởi tạo dịch vụ API Google Sheets.
+   
+- `__create_service(self)`: Phương thức tạo dịch vụ API Google Sheets bằng cách sử dụng thông tin xác thực từ một tệp JSON và khởi tạo một dịch vụ.
 
+- `get_all_values(self, sheet: str = 'Sheet1') -> List[List[str]]`: Phương thức này lấy tất cả các giá trị từ một sheet cụ thể trong Google Sheet.
+   
+- `update_values_in_range(self, values: List[List[str]], range_str: str) -> Dict[str, Any]`: Phương thức này cập nhật các giá trị trong một phạm vi được chỉ định trên Google Sheet với các giá trị mới được cung cấp.
+   
+- `update_values(self, values: List[List[str]], sheet: str = 'Sheet1') -> Dict[str, Any]`: Phương thức này cập nhật các giá trị trên Google Sheet, tăng số hàng và sử dụng một phạm vi mới cho các giá trị cập nhật.
 ---
-### Cách Thức Hoạt Động
-
-1. **Khởi tạo**: Khi khởi tạo một đối tượng `GoogleSheet`, nó sẽ tải thông tin tài khoản dịch vụ từ tệp `credentials.json` và tạo một dịch vụ Google Sheets.
-
-2. **Lấy tất cả các giá trị**: `get_all_values()` trả về tất cả các giá trị từ một bảng tính cụ thể.
-
-3. **Cập nhật giá trị**: `update_values()` thêm một hàng mới vào bảng tính với một danh sách giá trị.
----
-### Cách Sử Dụng
-
-Đầu tiên, hãy khởi tạo một đối tượng `GoogleSheet`:
-
 ```python
-sheet = GoogleSheet()
-```
-- Sau đó, bạn có thể sử dụng các phương thức của đối tượng sheet để tương tác với Google Sheets. Ví dụ, để lấy tất cả các giá trị từ bảng tính mặc định, bạn có thể gọi:
-```python
-values_get = sheet.get_all_values()
-```
-- Để cập nhật một hàng mới trong bảng tính với một danh sách giá trị, bạn có thể gọi:
-```python
-values = ['value1', 'value2', 'value3']
-sheet.update_values(values)
+# Khởi tạo một đối tượng SheetApis với ID của Google Sheets
+sheet = SheetApis("your_sheet_id")
+
+# Lấy tất cả các giá trị từ một sheet cụ thể
+all_values = sheet.get_all_values()
+
+# Cập nhật các giá trị trên Google Sheet
+new_values = [['A1', 'B1', 'C1'], ['A2', 'B2', 'C2']]
+sheet.update_values(new_values)
 ```
 
-Hy vọng rằng tệp markdown này sẽ giúp bạn hiểu rõ hơn về cách thức hoạt động và cách sử dụng lớp `GoogleSheet`. Nếu bạn có bất kỳ câu hỏi hoặc vấn đề gì khác, đừng ngần ngại liên hệ với tôi.
