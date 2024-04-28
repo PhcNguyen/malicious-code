@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from .service_account import Credentials
+from ..google import Credentials
 from googleapiclient.discovery import build
 
 
