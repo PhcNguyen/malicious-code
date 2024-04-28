@@ -12,17 +12,17 @@
 - Phương thức `generate_key` được sử dụng để tạo ra một khóa mới ngẫu nhiên với độ dài 32 bytes.
 - Khóa được tạo ra sẽ được mã hóa dưới dạng base64 và trả về dưới dạng byte string.
 ---
-### Mã Hóa (`encode`):
+### Mã Hóa (`encrypt`):
 
-- Phương thức `encode` được sử dụng để mã hóa dữ liệu đầu vào thành một chuỗi mã hóa.
+- Phương thức `encrypt` được sử dụng để mã hóa dữ liệu đầu vào thành một chuỗi mã hóa.
 - Trước khi mã hóa, dữ liệu được chuyển đổi thành dạng bytes nếu nó là một chuỗi.
 - Một salt mới được tạo ra và được kết hợp với dữ liệu trước khi mã hóa.
 - Một HMAC được tính toán dựa trên dữ liệu đã mã hóa và salt.
 - Cuối cùng, HMAC, salt và dữ liệu đã mã hóa được nối lại để tạo thành chuỗi mã hóa kết quả.
 ---
-### Giải Mã (`decode`):
+### Giải Mã (`decrypt`):
 
-- Phương thức `decode` được sử dụng để giải mã một chuỗi mã hóa thành dữ liệu gốc.
+- Phương thức `decrypt` được sử dụng để giải mã một chuỗi mã hóa thành dữ liệu gốc.
 - Trước tiên, chuỗi mã hóa được phân tách thành HMAC, salt và dữ liệu đã mã hóa.
 - HMAC mới được tính toán dựa trên dữ liệu đã mã hóa và salt.
 - Nếu HMAC tính toán khớp với HMAC trong chuỗi mã hóa, dữ liệu đã mã hóa được giải mã và trả về.

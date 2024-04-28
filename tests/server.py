@@ -4,13 +4,17 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from time import sleep
 from threading import Thread
-from lib.modules.system import System
-from lib.modules.yaml import safe_load
-from lib.modules.sheet import GoogleSheet
-from socket import socket, AF_INET, SOCK_STREAM
+from lib.modules import (
+    safe_load, 
+    Terminal,
+    GoogleSheet
+)
+from socket import (
+    socket, 
+    AF_INET, 
+    SOCK_STREAM
+)
 
-
-Terminal = System()
 
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
@@ -83,8 +87,8 @@ if __name__ == '__main__':
     try:
         Terminal.Init()
         Terminal.Clear()
-        Terminal.Title('SERVER RANSOMWARE')
-        Terminal.Size(320, 240)
+        Terminal().Title('SERVER RANSOMWARE')
+        Terminal().Size(320, 240)
 
         with open('scripts/setting.yaml', 'r') as file:
             data = safe_load(file)['server']

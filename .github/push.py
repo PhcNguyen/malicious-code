@@ -4,14 +4,15 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import time
 import requests
-from lib.modules.system import System
+from lib.modules import Terminal
 from subprocess import run, DEVNULL
 
 
-Terminal = System()
+
 Terminal.Init()
-Terminal.Clear()
+Terminal().Clear()
 start = time.time()
+
 
 
 try:
@@ -25,9 +26,16 @@ except Exception as e:
     Terminal.Console('Ping', e, 'Red')
     Terminal.Exit()
 
+
 try:
-    with open('scripts/.version', 'r') as file:
+    with open('scripts/.version', 'r+') as file:
         __version__ = file.read()
+        major, minor, patch = map(int, __version__.split('.'))
+        patch += 1
+        new_version = f"{major}.{minor}.{patch}"
+        file.seek(0)
+        file.write(new_version)
+        file.truncate()
         
 except FileNotFoundError:
     Terminal.Console('GitHub', 'File .version not found', 'Red')
@@ -36,6 +44,7 @@ except FileNotFoundError:
 except Exception as e:
     Terminal.Console('GitHub', f'Error reading .version file: {e}', 'Red')
     Terminal.Exit()
+
 
 try:
     run(['git', 'add', '.'], stdout=DEVNULL, stderr=DEVNULL)

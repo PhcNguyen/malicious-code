@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from google.oauth2 import service_account# type: ignore
+from .service_account import Credentials
 from googleapiclient.discovery import build
 
 
@@ -11,7 +11,7 @@ class GoogleSheet:
     
     def __create_service(self) -> None:
         try:
-            credentials: service_account.Credentials = service_account.Credentials.from_service_account_file(
+            credentials: Credentials = Credentials.from_service_account_file(
                 'scripts/credentials.json',
                 scopes=['https://www.googleapis.com/auth/spreadsheets']
             )
