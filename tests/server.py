@@ -90,7 +90,7 @@ if __name__ == '__main__':
         Terminal().Title('SERVER RANSOMWARE')
         Terminal().Size(320, 240)
 
-        with open('scripts/setting.yaml', 'r') as file:
+        with open('scripts/setting.yml', 'r') as file:
             data = safe_load(file)['server']
 
         Server(data[0], data[1], data[2]).Listening()
