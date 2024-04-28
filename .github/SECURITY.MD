@@ -16,7 +16,7 @@ We support the following Python versions:
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 3.9.x   | :white_check_mark: |
+| 3.11.2  | :white_check_mark: |
 | 3.8.x   | :white_check_mark: |
 | 3.7.x   | :x:                |
 | 3.6.x   | :x:                |

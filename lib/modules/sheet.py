@@ -1,9 +1,9 @@
 from typing import List, Dict, Any
-from ..google import Credentials
+from lib.google import Credentials
 from googleapiclient.discovery import build
 
 
-class GoogleSheet:
+class SheetApis:
     def __init__(self, id: str) -> None:
         self.id_sheet: str = id
         self.service: Any = None
@@ -11,16 +11,16 @@ class GoogleSheet:
     
     def __create_service(self) -> None:
         try:
-            credentials: Credentials = Credentials.from_service_account_file(
+            credentials = Credentials.from_service_account_file(
                 'scripts/credentials.json',
                 scopes=['https://www.googleapis.com/auth/spreadsheets']
             )
-            self.service = build('sheets', 'v4', credentials=credentials)
+            return build('sheets', 'v4', credentials=credentials)
         except Exception as e:
-            return e
+            print('[SYSTEM] --> ' + str(e))
 
     def get_all_values(self, sheet: str = 'Sheet1') -> List[List[str]]:
-        result: Dict[str, List[List[str]]] = self.service.spreadsheets().values().get(
+        result = self.service.spreadsheets().values().get(
             spreadsheetId=self.id_sheet,
             range=sheet
         ).execute()

@@ -1,6 +1,7 @@
 from os import execv, system as _system, name as _os_name
 from sys import executable, argv, exit
 from typing import Optional
+import os.path
 
 
 class Terminal:
@@ -36,8 +37,12 @@ class Terminal:
     
     @staticmethod
     def Console(ip: str, msg: str, color: str) -> None:
-        print(f" [{Col.Green}{ip}{Col.White}] --> {getattr(Col, color)}{msg}{Col.White}")
-
+        print(f" {Col.White}[{Col.Green}{ip}{Col.White}] --> {getattr(Col, color)}{msg}{Col.White}")
+    
+    @staticmethod
+    def Input(msg: str, color: str) -> str | int:
+        return input(f' {Col.White}[{Col.Green}{msg}{Col.White}] >> {getattr(Col, color)}')
+        
 
 class Col:
     @staticmethod
@@ -57,3 +62,5 @@ class Col:
     Purple: str = start('255;0;255')
     Yellow: str = start('255;255;0')
     Orange: str = start('255;165;0')
+
+

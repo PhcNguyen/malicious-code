@@ -1,1 +1,1 @@
-from .service_account import Credentials
+from .oauth2.service_account import Credentials
