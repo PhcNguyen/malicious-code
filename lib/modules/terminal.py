@@ -1,7 +1,6 @@
 from os import execv, system as _system, name as _os_name
 from sys import executable, argv, exit
 from typing import Optional
-from collections import deque
 
 
 class Terminal:
