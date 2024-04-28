@@ -86,7 +86,7 @@ class Server:
 if __name__ == '__main__':
     try:
         Terminal.Init()
-        Terminal.Clear()
+        Terminal().Clear()
         Terminal().Title('SERVER RANSOMWARE')
         Terminal().Size(320, 240)
 
