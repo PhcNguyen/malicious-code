@@ -1,6 +1,26 @@
 import re
 from typing import Any, Dict, List
 
+class Colors:
+    @staticmethod
+    def start(color: str) -> str:
+        return f"\033[38;2;{color}m"
+    
+    Red: str = start('255;0;0')
+    
+    Blue: str = start('28;121;255')
+    Cyan: str = start('0;255;255')
+    Pink: str = start('255,192,203')
+
+    Black: str = start('0;0;0')
+    White: str = start('255;255;255')
+    Green: str = start('0;255;0')
+
+    Purple: str = start('255;0;255')
+    Yellow: str = start('255;255;0')
+    Orange: str = start('255;165;0')
+
+
 """
 Parameters:
 stream (List[str]): A list of strings representing the YAML data stream.

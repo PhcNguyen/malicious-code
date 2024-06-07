@@ -1,27 +1,18 @@
 ## Malicious Code Directory Structure
 
 ```
-[ Malicious-Code ] [ 1.0.7 ]
+[ Malicious-Code ] [ 1.0.8 ]
   │
-  ├──[ .github ]──────── ...
-  │     └───[ docs ]────────────[ eng]
-  │           └─[ vie ]           ├── client.md
-  │               ├── encdec.md   └── ...
-  │               └── ...
-  ├──[ lib ]
+  ├──[ docs ]
+  │     └─── ...
+  ├──[ modules ]
   │   ├──────────[ google ]───── ...
   │   ├─────[ cryptography ]       
   │   │       ├── fernet.py      
   │   │       └── ...            
-  │   └─────[ modules ]        
+  │   └─────[ core ]        
   │           └── ...   
   │
-  ├──[ scripts ]
-  │   ├── setting.yaml
-  │   └── ...
-  │
-  ├──[ test ]
-  │    └── ...
   └── ...
 ```
 ---
@@ -30,15 +21,11 @@
 The `Ransomware` project consists of the following directories and files:
 
 - `doc`: This directory contains documentation files.
-- `lib`: This directory contains Python modules.
-- `scripts`: This directory contains script files.
-- `test`: This directory contains test files.
+- `modules`: This directory contains Python modules.
 ---
 ### Ngôn ngữ Tiếng Việt
 
 Dự án `Ransomware` bao gồm các thư mục và tệp sau:
 
 - `doc`: Thư mục này chứa tài liệu hướng dẫn sử dụng mã nguồn.
-- `lib`: Thư mục này chứa các module Python.
-- `scripts`: Thư mục này chứa các tệp script.
-- `test`: Thư mục này chứa các tệp kiểm thử.
+- `modules`: Thư mục này chứa các module Python.
