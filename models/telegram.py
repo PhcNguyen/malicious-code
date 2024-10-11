@@ -1,26 +1,21 @@
-from requests.exceptions import RequestException
-from typing import Union
-
 import requests
 
 
-SENDMESSAGE = "https://api.telegram.org/bot{}/sendMessage"
-SENDDOCUMENT = "https://api.telegram.org/bot{}/sendDocument"
-
 
 class Telegram:
+    SENDMESSAGE = "https://api.telegram.org/bot{}/sendMessage"
+    SENDDOCUMENT = "https://api.telegram.org/bot{}/sendDocument"
+
     def __init__(self, token: str) -> None:
         self.token = token
-        self.offset = None
-        self.handlers = []
 
     def sendMessage(
         self, 
         chat_id: str, 
         text: str
-    ) -> Union[dict, None]:
+    ) -> bool:
         
-        url = SENDMESSAGE.format(self.token)
+        url = Telegram.SENDMESSAGE.format(self.token)
         payload = {
             'chat_id': chat_id,
             'text': text
@@ -31,31 +26,25 @@ class Telegram:
                 data=payload
             )
             response.raise_for_status()
-        except RequestException as e:
-            print(f"Error sending message: {e}")
-            return None
-        return response.json()
+            return True
+        except :return False
     
     def sendDocument(
         self, 
         chat_id: str,
         dir_file: str
-    ) -> None:
+    ) -> bool:
         try:
-            url = SENDDOCUMENT.format(self.token)
+            url = Telegram.SENDDOCUMENT.format(self.token)
 
-            with open(file, 'rb') as file:
-                files = {
-                    'document': file
-                }
-                payload = {
-                    'chat_id': chat_id
-                }
+            with open(dir_file, 'rb') as file:
+                files = {'document': file}
+                payload = {'chat_id': chat_id}
                 response = requests.post(
                     url=url,
                     files=files,
                     data=payload
                 )
                 response.raise_for_status()
-        except: pass
-
+                return True
+        except: return False

@@ -11,7 +11,6 @@ provide reasonable security to encrypted messages.
 encrypt('my secret key', b'0' * 1000000) # 1 MB encrypted in 20 seconds.
 """
 import os
-import sys
 import random
 from hashlib import pbkdf2_hmac
 from hmac import new as new_hmac, compare_digest
@@ -71,7 +70,7 @@ r_con = (
 )
 
 
-def generate_key(length=32):
+def generate_key(length=32) -> bytes:
     """Generate a random AES key."""
     if length not in [16, 24, 32]:
         raise ValueError("AES key length must be 16, 24, or 32 bytes.")
