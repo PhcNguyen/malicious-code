@@ -29,4 +29,3 @@ Response time: You can expect an update on your reported vulnerability within 24
 Outcome: Once a vulnerability is reported, it will be reviewed promptly. If accepted, necessary actions will be taken to address it. If declined, we will provide a rationale for the decision.
 
 Please note that our security team is committed to addressing reported vulnerabilities in a timely manner to ensure the security and integrity of our project.
-

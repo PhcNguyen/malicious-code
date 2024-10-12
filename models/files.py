@@ -8,21 +8,20 @@ import concurrent.futures
 
 
 class AES:
-    def generate_key(length=32) -> bytes:...
-    def encrypt(key, plaintext, workload=100000) -> bytes:...
+    def encrypt(key: bytes, plaintext: str, workload: int) -> bytes:...
 
 
 
 class CommonFiles:
-    def __init__(self, aes: AES, key: bytes) -> None:
+    def __init__(
+        self, 
+        aes: AES, 
+        key: bytes, 
+        file_categories: typing.Dict[str, typing.List[str]]
+    ) -> None:
         self.aes = aes
         self.key = key
-        self.file_categories: typing.Dict[str, typing.List[str]] = {
-            'images': ['.jpg', '.png', '.gif', '.bmp', '.svg', '.tif', '.tiff', '.jpeg'],
-            'documents': ['.txt', '.docx', '.md', '.rst', '.doc', '.pdf', '.xlsx', '.xls', '.pptx', '.odt', '.odp', '.rtf', '.epub'],
-            'others': ['.eml', '.psd', '.eps', '.cdr', '.ppt', '.mp3', '.wav', '.mov', '.dmg', '.rar', '.zip', '.mp4', '.json', '.avi', '.flac'],
-            'code': ['.c', '.cpp', '.cs', '.java', '.py', '.js', '.html', '.css', '.php', '.rb', '.swift', '.sql', '.xml', '.sh', '.bat', '.ts']
-        }
+        self.file_categories = file_categories
     
     def _process_file(self, file: pathlib.Path) -> None:
         """Xử lý tệp đơn lẻ để mã hóa."""

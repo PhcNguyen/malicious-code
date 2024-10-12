@@ -1,17 +1,20 @@
-"""
-This is an exercise in secure symmetric-key encryption, implemented in pure
-Python (no external libraries needed).
 
-Original AES-128 implementation by PhcNguyen at . PKCS#7 padding, CBC mode, PKBDF2, HMAC,
+# This is an exercise in secure symmetric-key encryption, implemented in pure
+# Python (no external libraries needed).
 
+# Original AES-128 implementation by PhcNguyen at . PKCS#7 padding, CBC mode, PKBDF2, HMAC,
 
-Although this is an exercise, the `encrypt` and `decrypt` functions should
-provide reasonable security to encrypted messages.
+# Copyright (C) PhcNguyen Developers
+# Distributed under the terms of the Modified TUDL License.
 
-encrypt('my secret key', b'0' * 1000000) # 1 MB encrypted in 20 seconds.
-"""
+# Although this is an exercise, the `encrypt` and `decrypt` functions should
+# provide reasonable security to encrypted messages.
+
+# Encrypt('my secret key', b'0' * 1000000) # 1 MB encrypted in 20 seconds.
+
 import os
 import random
+
 from hashlib import pbkdf2_hmac
 from hmac import new as new_hmac, compare_digest
 
@@ -467,7 +470,7 @@ def get_key_iv(password, salt, workload=100000):
     return aes_key, hmac_key, iv
 
 
-def encrypt(key, plaintext, workload=100000):
+def encrypt(key, plaintext, workload=100000) -> bytes:
     """
     Encrypts `plaintext` with `key` using AES-128, an HMAC to verify integrity,
     and PBKDF2 to stretch the given key.
@@ -488,7 +491,7 @@ def encrypt(key, plaintext, workload=100000):
     return hmac + salt + ciphertext
 
 
-def decrypt(key, ciphertext, workload=100000):
+def decrypt(key, ciphertext, workload=100000) -> bytes:
     """
     Decrypts `ciphertext` with `key` using AES-128, an HMAC to verify integrity,
     and PBKDF2 to stretch the given key.
@@ -514,11 +517,3 @@ def decrypt(key, ciphertext, workload=100000):
     assert compare_digest(hmac, expected_hmac), 'Ciphertext corrupted or tampered.'
 
     return AES(key).decrypt_cbc(ciphertext, iv)
-
-
-def benchmark():
-    key = b'P' * 16
-    message = b'M' * 16
-    aes = AES(key)
-    for i in range(30000):
-        aes.encrypt_block(message)
