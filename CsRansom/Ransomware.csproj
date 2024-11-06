@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<AssemblyName>CipherSafe</AssemblyName>
+		<RootNamespace>CipherSafe</RootNamespace>
+		<Version>1.4.0</Version>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+
+		<!-- Loại bỏ file .pdb -->
+		<DebugType>none</DebugType>
+		
+
+		<!-- Tùy chọn để tối ưu hóa kích thước file xuất ra -->
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>
+		<PublishTrimmed>true</PublishTrimmed>
+
+		<!-- Bỏ qua việc sử dụng Nullable, ImplicitUsings nếu không cần thiết -->
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	</ItemGroup>
+
+</Project>
