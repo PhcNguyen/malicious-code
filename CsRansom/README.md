@@ -1,4 +1,4 @@
-# <img alt="Ransomware" src="https://github.com/PhcNguyen/Ransomware/blob/master/Images/icon.ico" height="100px" width="auto"> Ransomware
+# <img alt="Ransomware" src="Images/icon.ico" height="100px" width="auto"> Ransomware
 
 > [!WARNING]  
 > **Chỉ chạy trong môi trường thử nghiệm!**  
